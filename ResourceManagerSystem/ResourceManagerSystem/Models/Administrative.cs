@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace ResourceManagerSystem.Models
 {
-    public class Administrative : Operative
+    public class Administrative
     {
+       public int ID { set; get; }
         public string AdministrativeName { set; get; }
     }
 }
