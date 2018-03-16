@@ -8,6 +8,6 @@ namespace ResourceManagerSystem.Models
     public class Administrative
     {
         public int AdministrativeID { set; get; }
-        public string AdministrativeName { set; get; }
+        public string Name { set; get; }
     }
 }

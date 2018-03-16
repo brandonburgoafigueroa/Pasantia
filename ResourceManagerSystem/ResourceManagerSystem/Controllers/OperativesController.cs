@@ -49,8 +49,8 @@ namespace ResourceManagerSystem.Controllers
         // GET: Operatives/Create
         public IActionResult Create()
         {
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "AdministrativeID");
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "RegionID");
+            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name");
+            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "AdministrativeID", operative.AdministrativeID);
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "RegionID", operative.RegionID);
+            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name", operative.AdministrativeID);
+            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", operative.RegionID);
             return View(operative);
         }
 
@@ -85,8 +85,8 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "AdministrativeID", operative.AdministrativeID);
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "RegionID", operative.RegionID);
+            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name", operative.AdministrativeID);
+            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", operative.RegionID);
             return View(operative);
         }
 
@@ -122,8 +122,8 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "AdministrativeID", operative.AdministrativeID);
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "RegionID", operative.RegionID);
+            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name", operative.AdministrativeID);
+            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", operative.RegionID);
             return View(operative);
         }
 
