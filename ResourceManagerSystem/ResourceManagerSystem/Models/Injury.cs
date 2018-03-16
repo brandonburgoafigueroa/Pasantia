@@ -7,7 +7,7 @@ namespace ResourceManagerSystem.Models
 {
     public class Injury
     {
-        public int Id { set; get; }
+        public int ID { set; get; }
         public Injury RootInjury { set; get; }
         public ICollection<Injury> SubSectors { set; get; }
         public string Code { set; get; }

@@ -7,7 +7,7 @@ namespace ResourceManagerSystem.Models
 {
     public class AccidentEffect
     {
-        public int Id { set; get; }
+        public int ID { set; get; }
         public int InhabilityDays { set; get; }
         public ICollection<BodyPart> BodyPartsAffected { set; get; }
         public string Observation { set; get; }

@@ -7,7 +7,7 @@ namespace ResourceManagerSystem.Models
 {
     public class Building
     {
-        public int Id { set; get; }
+        public int ID { set; get; }
         public string Code { set; get; }
         public string Name { set; get; }
         public string Address { set; get; }

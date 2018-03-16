@@ -12,7 +12,7 @@ namespace ResourceManagerSystem.Models
 
     public class Course
     {
-        public int Id { set; get; }
+        public int ID { set; get; }
         public string Name { set; get; }
         public int DurationWeek { set; get; }
         public string Description { set; get; }

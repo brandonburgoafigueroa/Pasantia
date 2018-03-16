@@ -8,8 +8,8 @@ namespace ResourceManagerSystem.Models
 {
     public class Provider
     {
-        [Key]
-        public int Id { set; get; }
+
+        public int ID { set; get; }
         public int Code { set; get; }
         public string Name { set; get; }
         public string Address { set; get; }

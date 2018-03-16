@@ -8,8 +8,8 @@ namespace ResourceManagerSystem.Models
 {
     public abstract class Operative
     {
-        [Key]
-        public int Id { set; get; }
+
+        public int ID { set; get; }
         public string Code { set; get; }
         public string Name { set; get; }
         public Region Region { set; get; }

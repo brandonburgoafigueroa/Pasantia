@@ -8,8 +8,8 @@ namespace ResourceManagerSystem.Models
 {
     public class Lot
     {
-        [Key]
-        public int Id { set; get; }
+
+        public int ID { set; get; }
         public int Code { set; get; }
         public Provider Provider { set; get; }
         public string Description { set; get; }

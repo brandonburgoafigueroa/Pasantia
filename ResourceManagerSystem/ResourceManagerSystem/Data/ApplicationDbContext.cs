@@ -10,24 +10,8 @@ namespace ResourceManagerSystem.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Accident> Accidents { set; get; }
-        public DbSet<Administrative> Administratives { set; get; }
-        public DbSet<Contact> Contacts { set; get; }
-        public DbSet<Course> Courses { set; get; }
-        public DbSet<Delivery> Deliveries { set; get; }
-        public DbSet<Employee> Employes { set; get; }
-        public DbSet<Enrolment> Enrolments { set; get; }
-        public DbSet<Incident> Incidents { set; get; }
-        public DbSet<Lot> Lots { set; get; }
-        public DbSet<Operative> Positions { set; get; }
-        public DbSet<OrganizingEntity> OrganizingEntities { set; get; }
-        public DbSet<Person> People { set; get; }
-        public DbSet<Provider> Providers { set; get; }
-        public DbSet<REPP> Repps { set; get; }
-        public DbSet<Region> Regions { set; get; }
-        public DbSet<Sinister> Sinisters { set; get; }
-        public DbSet<Stock> Stock { set; get; }
-
+        public DbSet<Employee> Employees { set; get; }
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

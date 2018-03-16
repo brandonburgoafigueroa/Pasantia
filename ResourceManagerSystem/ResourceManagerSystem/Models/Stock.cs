@@ -8,8 +8,8 @@ namespace ResourceManagerSystem.Models
 {
     public class Stock
     {
-        [Key]
-        public int Id { set; get; }
+        
+        public int ID { set; get; }
         public REPP Repp { set; get; }
         public int Inventory { set; get; }
     }

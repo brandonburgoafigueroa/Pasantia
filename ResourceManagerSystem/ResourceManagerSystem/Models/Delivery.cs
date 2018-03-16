@@ -8,8 +8,8 @@ namespace ResourceManagerSystem.Models
 {
     public class Delivery
     {
-        [Key]
-        public int Id { set; get; }
+
+        public int ID { set; get; }
         public REPP Reep { set; get; }
         public int Quantity { set; get; }
         public string Description { set; get; }

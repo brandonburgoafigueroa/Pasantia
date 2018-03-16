@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace ResourceManagerSystem.Models
 {
-    public abstract class Sinister
+    public class Inabilities
     {
         public int ID { set; get; }
-        public DateTime Date { set; get; }
-
+        public bool Visual { set; get; }
+        public bool Motor { set; get; }
+        public bool Mental { set; get; }
     }
 }

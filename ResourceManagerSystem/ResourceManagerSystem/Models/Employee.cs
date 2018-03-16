@@ -14,20 +14,23 @@ namespace ResourceManagerSystem.Models
         public TypeContrat TypeContrat { set; get; }
         public int Height { set; get; }
         public int Weight { set; get; }
-        public virtual List<Grade> Grades { set; get; }
-        public virtual ICollection<Inability> Inabilities { set; get; }
         public DateTime AdmissionDate { set; get; }
-        public Administrative Position { set; get; }
+        //Grade
+        public bool Iliterate { set; get; }
+        public bool Basic { set; get; }
+        public bool HighSchool { set; get; }
+        public bool MiddleTechnician { set; get; }
+        public bool HighTechnician { set; get; }
+        public bool Degree { set; get; }
+        //--EndGrade
+        //Inabilities
+        public bool Visual { set; get; }
+        public bool Motor { set; get; }
+        public bool Mental { set; get; }
+        //--EndInabilities
 
+        public Administrative Position { set; get; }
     }
-    public enum Grade
-    {
-        Iliterate, Basic, HighSchool, MiddleTechnician, HighTechnician, Degree
-    }
-    public enum Inability
-    {
-        Visual, Motor, Mental
-    };
     public enum Sex
     {
         Female, Male
