@@ -10,8 +10,6 @@ namespace ResourceManagerSystem.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Employee> Employees { set; get; }
-        public DbSet<Administrative> Administratives { set; get; }
         public DbSet<CollectionREPP> CollectionsREPP { set; get; }
         public DbSet<REPP> REPPS { set; get; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -26,5 +24,11 @@ namespace ResourceManagerSystem.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<ResourceManagerSystem.Models.Region> Region { get; set; }
+
+        public DbSet<ResourceManagerSystem.Models.Administrative> Administrative { get; set; }
+
+        public DbSet<ResourceManagerSystem.Models.Operative> Operative { get; set; }
     }
 }

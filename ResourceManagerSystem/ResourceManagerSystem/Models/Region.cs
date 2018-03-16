@@ -9,7 +9,7 @@ namespace ResourceManagerSystem.Models
     public class Region
     {
 
-        public int ID { set; get; }
+        public int RegionID { set; get; }
         public string Name { set; get; }
     }
 }
