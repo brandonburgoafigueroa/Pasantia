@@ -11,7 +11,9 @@ namespace ResourceManagerSystem.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Employee> Employees { set; get; }
-        
+        public DbSet<Administrative> Administratives { set; get; }
+        public DbSet<CollectionREPP> CollectionsREPP { set; get; }
+        public DbSet<REPP> REPPS { set; get; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

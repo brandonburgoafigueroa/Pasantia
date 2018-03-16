@@ -13,7 +13,7 @@ namespace ResourceManagerSystem.Models
         public string Code { set; get; }
         public string Name { set; get; }
         public Region Region { set; get; }
-        public virtual ICollection<REPP> REPS { set; get; }
 
+        public ICollection<CollectionREPP> CollectionRepp { set; get; }
     }
 }

@@ -20,5 +20,6 @@ namespace ResourceManagerSystem.Models
         public string Brand { set; get; }
         public Color Color { set; get; }
 
+        public ICollection<CollectionREPP> collectionREPP { set; get; }
     }
 }
