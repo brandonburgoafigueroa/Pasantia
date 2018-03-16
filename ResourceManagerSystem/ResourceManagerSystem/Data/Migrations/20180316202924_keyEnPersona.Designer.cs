@@ -12,9 +12,10 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180316202924_keyEnPersona")]
+    partial class keyEnPersona
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,6 +216,8 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<int>("PersonID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AdministrativeID");
+
                     b.Property<DateTime>("AdmissionDate");
 
                     b.Property<bool>("Basic");
@@ -249,8 +252,6 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("OperativeID");
-
                     b.Property<int>("Phone");
 
                     b.Property<int>("Sex");
@@ -263,7 +264,7 @@ namespace ResourceManagerSystem.Migrations
 
                     b.HasKey("PersonID");
 
-                    b.HasIndex("OperativeID");
+                    b.HasIndex("AdministrativeID");
 
                     b.ToTable("Employee");
                 });
@@ -382,9 +383,9 @@ namespace ResourceManagerSystem.Migrations
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
                 {
-                    b.HasOne("ResourceManagerSystem.Models.Operative", "Position")
+                    b.HasOne("ResourceManagerSystem.Models.Administrative", "Position")
                         .WithMany()
-                        .HasForeignKey("OperativeID")
+                        .HasForeignKey("AdministrativeID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

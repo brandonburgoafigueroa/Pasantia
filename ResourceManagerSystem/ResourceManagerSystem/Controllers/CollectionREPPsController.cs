@@ -49,8 +49,8 @@ namespace ResourceManagerSystem.Controllers
         // GET: CollectionREPPs/Create
         public IActionResult Create()
         {
-            ViewData["OperativeID"] = new SelectList(_context.Set<Operative>(), "OperativeID", "Name");
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", null, "Color");
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "OperativeID");
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "ReppID");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OperativeID"] = new SelectList(_context.Set<Operative>(), "OperativeID", "Name", collectionREPP.OperativeID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", collectionREPP.ReppID);
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "OperativeID", collectionREPP.OperativeID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "ReppID", collectionREPP.ReppID);
             return View(collectionREPP);
         }
 
@@ -85,8 +85,8 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["OperativeID"] = new SelectList(_context.Set<Operative>(), "OperativeID", "Name", collectionREPP.OperativeID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", collectionREPP.ReppID);
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "OperativeID", collectionREPP.OperativeID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "ReppID", collectionREPP.ReppID);
             return View(collectionREPP);
         }
 
@@ -122,8 +122,8 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OperativeID"] = new SelectList(_context.Set<Operative>(), "OperativeID", "Name", collectionREPP.OperativeID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", collectionREPP.ReppID);
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "OperativeID", collectionREPP.OperativeID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "ReppID", collectionREPP.ReppID);
             return View(collectionREPP);
         }
 

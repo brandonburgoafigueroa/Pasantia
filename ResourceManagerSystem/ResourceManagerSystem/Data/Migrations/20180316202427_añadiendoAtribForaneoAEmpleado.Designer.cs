@@ -12,9 +12,10 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180316202427_añadiendoAtribForaneoAEmpleado")]
+    partial class añadiendoAtribForaneoAEmpleado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,64 +211,6 @@ namespace ResourceManagerSystem.Migrations
                     b.ToTable("CollectionsREPP");
                 });
 
-            modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
-                {
-                    b.Property<int>("PersonID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("AdmissionDate");
-
-                    b.Property<bool>("Basic");
-
-                    b.Property<DateTime>("BirthDate");
-
-                    b.Property<int>("Ci");
-
-                    b.Property<int>("CivilState");
-
-                    b.Property<bool>("Degree");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<int>("Height");
-
-                    b.Property<bool>("HighSchool");
-
-                    b.Property<bool>("HighTechnician");
-
-                    b.Property<bool>("Iliterate");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<bool>("Mental");
-
-                    b.Property<bool>("MiddleTechnician");
-
-                    b.Property<bool>("Motor");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("OperativeID");
-
-                    b.Property<int>("Phone");
-
-                    b.Property<int>("Sex");
-
-                    b.Property<int>("TypeContrat");
-
-                    b.Property<bool>("Visual");
-
-                    b.Property<int>("Weight");
-
-                    b.HasKey("PersonID");
-
-                    b.HasIndex("OperativeID");
-
-                    b.ToTable("Employee");
-                });
-
             modelBuilder.Entity("ResourceManagerSystem.Models.Operative", b =>
                 {
                     b.Property<int>("OperativeID")
@@ -377,14 +320,6 @@ namespace ResourceManagerSystem.Migrations
                     b.HasOne("ResourceManagerSystem.Models.REPP", "REEP")
                         .WithMany("CollectionsREPPs")
                         .HasForeignKey("ReppID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
-                {
-                    b.HasOne("ResourceManagerSystem.Models.Operative", "Position")
-                        .WithMany()
-                        .HasForeignKey("OperativeID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

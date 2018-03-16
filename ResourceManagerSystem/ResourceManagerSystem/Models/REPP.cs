@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,9 +10,10 @@ namespace ResourceManagerSystem.Models
     {
         White, Black, Red, Orange, Yellow, Blue
     }
+    
     public class REPP
     {
-
+        
         public int ReppID { set; get; }
         public string Code { set; get; }
         public string Name { set; get; }

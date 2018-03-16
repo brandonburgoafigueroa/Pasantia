@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@ namespace ResourceManagerSystem.Models
 {
     public class Employee : Person
     {
+        public int OperativeID { set; get; }
         public int Ci { set; get; }
         public Sex Sex { set; get; }
         public DateTime BirthDate { set; get; }
@@ -29,7 +31,9 @@ namespace ResourceManagerSystem.Models
         public bool Mental { set; get; }
         //--EndInabilities
 
-        public Administrative Position { set; get; }
+        public Operative Position { set; get; }
+        public ICollection<Enrolment> Enrolment { set; get; }
+  
     }
     public enum Sex
     {
