@@ -12,9 +12,10 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180318172201_colorless")]
+    partial class colorless
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -309,11 +310,13 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<string>("Brand");
 
+                    b.Property<string>("Code");
+
                     b.Property<int>("Color");
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("Size");
+                    b.Property<string>("Size");
 
                     b.HasKey("ReppID");
 
