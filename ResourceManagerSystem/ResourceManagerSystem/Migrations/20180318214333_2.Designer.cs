@@ -12,8 +12,8 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180318205132_employees")]
-    partial class employees
+    [Migration("20180318214333_2")]
+    partial class _2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -244,8 +244,7 @@ namespace ResourceManagerSystem.Migrations
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
                 {
-                    b.Property<int>("CI")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("CI");
 
                     b.Property<DateTime>("AdmissionDate");
 
@@ -259,7 +258,8 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
                     b.Property<int>("Height");
 
@@ -267,9 +267,10 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<bool>("HighTechnician");
 
-                    b.Property<bool>("Iliterate");
+                    b.Property<bool>("Illiterate");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
                     b.Property<bool>("Mental");
 
@@ -277,7 +278,8 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<bool>("Motor");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("OperativeID");
 

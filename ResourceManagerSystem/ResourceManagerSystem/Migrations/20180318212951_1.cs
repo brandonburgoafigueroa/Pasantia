@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ResourceManagerSystem.Migrations
 {
-    public partial class employees : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -294,8 +294,7 @@ namespace ResourceManagerSystem.Migrations
                 name: "Employee",
                 columns: table => new
                 {
-                    CI = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CI = table.Column<int>(nullable: false),
                     AdmissionDate = table.Column<DateTime>(nullable: false),
                     Basic = table.Column<bool>(nullable: false),
                     BirthDate = table.Column<DateTime>(nullable: false),

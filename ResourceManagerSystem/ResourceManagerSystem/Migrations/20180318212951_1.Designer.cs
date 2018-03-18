@@ -12,9 +12,10 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180318212951_1")]
+    partial class _1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,8 +258,7 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired();
+                    b.Property<string>("FirstName");
 
                     b.Property<int>("Height");
 
@@ -266,10 +266,9 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<bool>("HighTechnician");
 
-                    b.Property<bool>("Illiterate");
+                    b.Property<bool>("Iliterate");
 
-                    b.Property<string>("LastName")
-                        .IsRequired();
+                    b.Property<string>("LastName");
 
                     b.Property<bool>("Mental");
 
@@ -277,8 +276,7 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<bool>("Motor");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.Property<int>("OperativeID");
 
