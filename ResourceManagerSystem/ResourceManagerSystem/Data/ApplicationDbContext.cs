@@ -32,5 +32,7 @@ namespace ResourceManagerSystem.Data
         public DbSet<ResourceManagerSystem.Models.Operative> Operative { get; set; }
 
         public DbSet<ResourceManagerSystem.Models.Employee> Employee { get; set; }
+
+        public DbSet<ResourceManagerSystem.Models.OrganizingEntity> OrganizingEntity { get; set; }
     }
 }

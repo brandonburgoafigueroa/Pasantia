@@ -12,9 +12,10 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180318202354_CourseDataAnotation")]
+    partial class CourseDataAnotation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,21 +289,6 @@ namespace ResourceManagerSystem.Migrations
                     b.HasIndex("RegionID");
 
                     b.ToTable("Operative");
-                });
-
-            modelBuilder.Entity("ResourceManagerSystem.Models.OrganizingEntity", b =>
-                {
-                    b.Property<int>("OrganizingEntityID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<int>("TypeOfEntity");
-
-                    b.HasKey("OrganizingEntityID");
-
-                    b.ToTable("OrganizingEntity");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Region", b =>
