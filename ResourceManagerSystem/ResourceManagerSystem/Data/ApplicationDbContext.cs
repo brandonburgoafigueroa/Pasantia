@@ -38,5 +38,9 @@ namespace ResourceManagerSystem.Data
         public DbSet<ResourceManagerSystem.Models.Course> Course { get; set; }
 
         public DbSet<ResourceManagerSystem.Models.Enrolment> Enrolment { get; set; }
+
+        public DbSet<ResourceManagerSystem.Models.Contact> Contact { get; set; }
+
+        public DbSet<ResourceManagerSystem.Models.Provider> Provider { get; set; }
     }
 }
