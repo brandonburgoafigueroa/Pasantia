@@ -51,7 +51,7 @@ namespace ResourceManagerSystem.Controllers
         {
             ViewData["CourseID"] = new SelectList(_context.Course, "CourseID", "Name");
             ViewData["CI"] = new SelectList(_context.Employee, "CI", "CI");
-            ViewData["Date"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
+      
             return View();
         }
 
