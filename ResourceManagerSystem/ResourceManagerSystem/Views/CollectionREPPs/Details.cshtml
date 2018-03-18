@@ -1,0 +1,30 @@
+﻿@model ResourceManagerSystem.Models.CollectionREPP
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CollectionREPP</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Operative)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Operative.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.REEP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.REEP.Brand)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CollectionREPPID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

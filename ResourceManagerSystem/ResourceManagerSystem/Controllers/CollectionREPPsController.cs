@@ -10,23 +10,23 @@ using ResourceManagerSystem.Models;
 
 namespace ResourceManagerSystem.Controllers
 {
-    public class EmployeesController : Controller
+    public class CollectionREPPsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public CollectionREPPsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: CollectionREPPs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Employee.Include(e => e.Position);
+            var applicationDbContext = _context.CollectionsREPP.Include(c => c.Operative).Include(c => c.REEP);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: CollectionREPPs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,45 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee
-                .Include(e => e.Position)
-                .SingleOrDefaultAsync(m => m.CI == id);
-            if (employee == null)
+            var collectionREPP = await _context.CollectionsREPP
+                .Include(c => c.Operative)
+                .Include(c => c.REEP)
+                .SingleOrDefaultAsync(m => m.CollectionREPPID == id);
+            if (collectionREPP == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(collectionREPP);
         }
 
-        // GET: Employees/Create
+        // GET: CollectionREPPs/Create
         public IActionResult Create()
         {
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand");
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: CollectionREPPs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OperativeID,Sex,BirthDate,CivilState,TypeContrat,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,HighTechnician,Degree,Visual,Motor,Mental,CI,Name,FirstName,LastName,Phone,Email")] Employee employee)
+        public async Task<IActionResult> Create([Bind("CollectionREPPID,ReppID,OperativeID")] CollectionREPP collectionREPP)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                _context.Add(collectionREPP);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", employee.OperativeID);
-            return View(employee);
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand", collectionREPP.ReppID);
+            return View(collectionREPP);
         }
 
-        // GET: Employees/Edit/5
+        // GET: CollectionREPPs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +80,24 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee.SingleOrDefaultAsync(m => m.CI == id);
-            if (employee == null)
+            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.CollectionREPPID == id);
+            if (collectionREPP == null)
             {
                 return NotFound();
             }
-            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", employee.OperativeID);
-            return View(employee);
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand", collectionREPP.ReppID);
+            return View(collectionREPP);
         }
 
-        // POST: Employees/Edit/5
+        // POST: CollectionREPPs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OperativeID,Sex,BirthDate,CivilState,TypeContrat,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,HighTechnician,Degree,Visual,Motor,Mental,CI,Name,FirstName,LastName,Phone,Email")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("CollectionREPPID,ReppID,OperativeID")] CollectionREPP collectionREPP)
         {
-            if (id != employee.CI)
+            if (id != collectionREPP.CollectionREPPID)
             {
                 return NotFound();
             }
@@ -102,12 +106,12 @@ namespace ResourceManagerSystem.Controllers
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(collectionREPP);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.CI))
+                    if (!CollectionREPPExists(collectionREPP.CollectionREPPID))
                     {
                         return NotFound();
                     }
@@ -118,11 +122,12 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", employee.OperativeID);
-            return View(employee);
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand", collectionREPP.ReppID);
+            return View(collectionREPP);
         }
 
-        // GET: Employees/Delete/5
+        // GET: CollectionREPPs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +135,32 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var employee = await _context.Employee
-                .Include(e => e.Position)
-                .SingleOrDefaultAsync(m => m.CI == id);
-            if (employee == null)
+            var collectionREPP = await _context.CollectionsREPP
+                .Include(c => c.Operative)
+                .Include(c => c.REEP)
+                .SingleOrDefaultAsync(m => m.CollectionREPPID == id);
+            if (collectionREPP == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(collectionREPP);
         }
 
-        // POST: Employees/Delete/5
+        // POST: CollectionREPPs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employee.SingleOrDefaultAsync(m => m.CI == id);
-            _context.Employee.Remove(employee);
+            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.CollectionREPPID == id);
+            _context.CollectionsREPP.Remove(collectionREPP);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool CollectionREPPExists(int id)
         {
-            return _context.Employee.Any(e => e.CI == id);
+            return _context.CollectionsREPP.Any(e => e.CollectionREPPID == id);
         }
     }
 }
