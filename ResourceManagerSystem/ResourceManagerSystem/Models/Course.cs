@@ -9,6 +9,7 @@ namespace ResourceManagerSystem.Models
     public class Course
     {
         public int CourseID { set; get; }
+        [Display(Name="Entidad organizadora")]
         public int OrganizingEntityID { set; get; }
         [Display(Name="Nombre")]
         [Required(ErrorMessage ="El nombre no puede estar vacio")]
@@ -22,6 +23,7 @@ namespace ResourceManagerSystem.Models
         [Display(Name = "Ubicacion")]
         [Required(ErrorMessage = "La ubicacion no puede estar vacia")]
         public string Location { set; get; }
+        [Display(Name="Tipo de asistencia")]
         public AttendanceType AttendanceType { set; get; }
         [Display(Name = "¿Es un curso obligatorio?")]
         public bool IsRequired { set; get; }
