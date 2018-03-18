@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,9 +8,18 @@ namespace ResourceManagerSystem.Models
 {
     public class Enrolment
     {
-        public int ID { set; get; }
-        public virtual ICollection<Employee> Employees { set; get; }
-        public virtual ICollection<Course> Courses { set; get; }
+        public int EnrolmentID { set; get; }
+        [Display(Name ="Curso")]
+        public int CourseID { set; get; }
+        [Display(Name = "Empleado")]
+        public int CI { set; get; }
+        [Display(Name ="Fecha")]
+        [Required(ErrorMessage ="La fecha no puede estar vacia")]
         public DateTime Date { set; get; }
+
+        public Employee Employee { set; get; }
+        public Course Courses { set; get; }
+
+        
     }
 }

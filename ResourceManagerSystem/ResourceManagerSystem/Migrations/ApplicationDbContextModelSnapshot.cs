@@ -12,10 +12,9 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180318172201_colorless")]
-    partial class colorless
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,9 +210,40 @@ namespace ResourceManagerSystem.Migrations
                     b.ToTable("CollectionsREPP");
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.Course", b =>
+                {
+                    b.Property<int>("CourseID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AttendanceType");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<int>("DurationWeek");
+
+                    b.Property<bool>("IsExternal");
+
+                    b.Property<bool>("IsRequired");
+
+                    b.Property<string>("Location")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("OrganizingEntityID");
+
+                    b.HasKey("CourseID");
+
+                    b.HasIndex("OrganizingEntityID");
+
+                    b.ToTable("Course");
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
                 {
-                    b.Property<int>("PersonID")
+                    b.Property<int>("CI")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("AdmissionDate");
@@ -221,8 +251,6 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<bool>("Basic");
 
                     b.Property<DateTime>("BirthDate");
-
-                    b.Property<int>("Ci");
 
                     b.Property<int>("CivilState");
 
@@ -262,11 +290,31 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<int>("Weight");
 
-                    b.HasKey("PersonID");
+                    b.HasKey("CI");
 
                     b.HasIndex("OperativeID");
 
                     b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Enrolment", b =>
+                {
+                    b.Property<int>("EnrolmentID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CI");
+
+                    b.Property<int>("CourseID");
+
+                    b.Property<DateTime>("Date");
+
+                    b.HasKey("EnrolmentID");
+
+                    b.HasIndex("CI");
+
+                    b.HasIndex("CourseID");
+
+                    b.ToTable("Enrolment");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Operative", b =>
@@ -291,12 +339,28 @@ namespace ResourceManagerSystem.Migrations
                     b.ToTable("Operative");
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.OrganizingEntity", b =>
+                {
+                    b.Property<int>("OrganizingEntityID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("TypeOfEntity");
+
+                    b.HasKey("OrganizingEntityID");
+
+                    b.ToTable("OrganizingEntity");
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Region", b =>
                 {
                     b.Property<int>("RegionID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("RegionID");
 
@@ -308,15 +372,15 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<int>("ReppID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Brand");
-
-                    b.Property<string>("Code");
+                    b.Property<string>("Brand")
+                        .IsRequired();
 
                     b.Property<int>("Color");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
-                    b.Property<string>("Size");
+                    b.Property<int>("Size");
 
                     b.HasKey("ReppID");
 
@@ -381,11 +445,32 @@ namespace ResourceManagerSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.Course", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.OrganizingEntity", "OrganizingEntity")
+                        .WithMany()
+                        .HasForeignKey("OrganizingEntityID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
                 {
                     b.HasOne("ResourceManagerSystem.Models.Operative", "Position")
                         .WithMany()
                         .HasForeignKey("OperativeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Enrolment", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Employee", "Employee")
+                        .WithMany("Enrolment")
+                        .HasForeignKey("CI")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ResourceManagerSystem.Models.Course", "Courses")
+                        .WithMany("Enrolments")
+                        .HasForeignKey("CourseID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

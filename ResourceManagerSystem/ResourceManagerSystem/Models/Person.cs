@@ -9,7 +9,7 @@ namespace ResourceManagerSystem.Models
     public abstract class Person
     {
         [Key]
-        public int PersonID { set; get; }
+        public int CI { set; get; }
         public string Name { set; get; }
         public string FirstName { set; get; }
         public string LastName { set; get; }

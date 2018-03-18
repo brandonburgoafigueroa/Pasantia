@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ResourceManagerSystem.Migrations
 {
-    public partial class _1 : Migration
+    public partial class employees : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace ResourceManagerSystem.Migrations
                 {
                     AdministrativeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AdministrativeName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -62,12 +62,26 @@ namespace ResourceManagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrganizingEntity",
+                columns: table => new
+                {
+                    OrganizingEntityID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false),
+                    TypeOfEntity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrganizingEntity", x => x.OrganizingEntityID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Region",
                 columns: table => new
                 {
                     RegionID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,11 +94,10 @@ namespace ResourceManagerSystem.Migrations
                 {
                     ReppID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Brand = table.Column<string>(nullable: true),
-                    Code = table.Column<string>(nullable: true),
+                    Brand = table.Column<string>(nullable: false),
                     Color = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Size = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false),
+                    Size = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -198,6 +211,32 @@ namespace ResourceManagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Course",
+                columns: table => new
+                {
+                    CourseID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AttendanceType = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    DurationWeek = table.Column<int>(nullable: false),
+                    IsExternal = table.Column<bool>(nullable: false),
+                    IsRequired = table.Column<bool>(nullable: false),
+                    Location = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    OrganizingEntityID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Course", x => x.CourseID);
+                    table.ForeignKey(
+                        name: "FK_Course_OrganizingEntity_OrganizingEntityID",
+                        column: x => x.OrganizingEntityID,
+                        principalTable: "OrganizingEntity",
+                        principalColumn: "OrganizingEntityID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Operative",
                 columns: table => new
                 {
@@ -251,6 +290,73 @@ namespace ResourceManagerSystem.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Employee",
+                columns: table => new
+                {
+                    CI = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AdmissionDate = table.Column<DateTime>(nullable: false),
+                    Basic = table.Column<bool>(nullable: false),
+                    BirthDate = table.Column<DateTime>(nullable: false),
+                    CivilState = table.Column<int>(nullable: false),
+                    Degree = table.Column<bool>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    Height = table.Column<int>(nullable: false),
+                    HighSchool = table.Column<bool>(nullable: false),
+                    HighTechnician = table.Column<bool>(nullable: false),
+                    Iliterate = table.Column<bool>(nullable: false),
+                    LastName = table.Column<string>(nullable: true),
+                    Mental = table.Column<bool>(nullable: false),
+                    MiddleTechnician = table.Column<bool>(nullable: false),
+                    Motor = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    OperativeID = table.Column<int>(nullable: false),
+                    Phone = table.Column<int>(nullable: false),
+                    Sex = table.Column<int>(nullable: false),
+                    TypeContrat = table.Column<int>(nullable: false),
+                    Visual = table.Column<bool>(nullable: false),
+                    Weight = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employee", x => x.CI);
+                    table.ForeignKey(
+                        name: "FK_Employee_Operative_OperativeID",
+                        column: x => x.OperativeID,
+                        principalTable: "Operative",
+                        principalColumn: "OperativeID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Enrolment",
+                columns: table => new
+                {
+                    EnrolmentID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CI = table.Column<int>(nullable: false),
+                    CourseID = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enrolment", x => x.EnrolmentID);
+                    table.ForeignKey(
+                        name: "FK_Enrolment_Employee_CI",
+                        column: x => x.CI,
+                        principalTable: "Employee",
+                        principalColumn: "CI",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Enrolment_Course_CourseID",
+                        column: x => x.CourseID,
+                        principalTable: "Course",
+                        principalColumn: "CourseID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -301,6 +407,26 @@ namespace ResourceManagerSystem.Migrations
                 column: "ReppID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Course_OrganizingEntityID",
+                table: "Course",
+                column: "OrganizingEntityID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employee_OperativeID",
+                table: "Employee",
+                column: "OperativeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrolment_CI",
+                table: "Enrolment",
+                column: "CI");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrolment_CourseID",
+                table: "Enrolment",
+                column: "CourseID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Operative_AdministrativeID",
                 table: "Operative",
                 column: "AdministrativeID");
@@ -332,16 +458,28 @@ namespace ResourceManagerSystem.Migrations
                 name: "CollectionsREPP");
 
             migrationBuilder.DropTable(
+                name: "Enrolment");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "REPPS");
+
+            migrationBuilder.DropTable(
+                name: "Employee");
+
+            migrationBuilder.DropTable(
+                name: "Course");
+
+            migrationBuilder.DropTable(
                 name: "Operative");
 
             migrationBuilder.DropTable(
-                name: "REPPS");
+                name: "OrganizingEntity");
 
             migrationBuilder.DropTable(
                 name: "Administrative");

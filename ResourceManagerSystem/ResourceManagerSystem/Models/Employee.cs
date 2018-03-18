@@ -9,7 +9,6 @@ namespace ResourceManagerSystem.Models
     public class Employee : Person
     {
         public int OperativeID { set; get; }
-        public int Ci { set; get; }
         public Sex Sex { set; get; }
         public DateTime BirthDate { set; get; }
         public CivilState CivilState { set; get; }

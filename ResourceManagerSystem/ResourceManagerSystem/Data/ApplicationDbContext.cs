@@ -36,5 +36,7 @@ namespace ResourceManagerSystem.Data
         public DbSet<ResourceManagerSystem.Models.OrganizingEntity> OrganizingEntity { get; set; }
 
         public DbSet<ResourceManagerSystem.Models.Course> Course { get; set; }
+
+        public DbSet<ResourceManagerSystem.Models.Enrolment> Enrolment { get; set; }
     }
 }
