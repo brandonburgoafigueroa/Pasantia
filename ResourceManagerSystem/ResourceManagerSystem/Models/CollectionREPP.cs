@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,8 +18,8 @@ namespace ResourceManagerSystem.Models
         [Display(Name = "Cargo operativo")]
         [Required(ErrorMessage = "El cargo operativo no puede estar vacio")]
         public int OperativeID { set; get; }
-
-
+        [NotMapped]
+        public ICollection<int> SelectedRepp { set; get; }
         public REPP REEP { set; get; }
         public Operative Operative { set; get; }
     }

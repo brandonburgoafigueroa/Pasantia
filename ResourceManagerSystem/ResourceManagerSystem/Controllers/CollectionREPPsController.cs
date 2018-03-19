@@ -49,8 +49,9 @@ namespace ResourceManagerSystem.Controllers
         // GET: CollectionREPPs/Create
         public IActionResult Create()
         {
-            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand");
+            var IDOperatives = ListOperativeRegister();
+            ViewData["OperativeID"] = new SelectList(_context.Operative.Where(x=>!IDOperatives.Contains(x.OperativeID)), "OperativeID", "Name");
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand",null,"Color");
             return View();
         }
 
@@ -61,10 +62,20 @@ namespace ResourceManagerSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CollectionREPPID,ReppID,OperativeID")] CollectionREPP collectionREPP)
         {
+            var SelectedRepp = Request.Form["SelectedRepp"];
+            
             if (ModelState.IsValid)
             {
-                _context.Add(collectionREPP);
-                await _context.SaveChangesAsync();
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.CollectionsREPP ON");
+                foreach (var item in SelectedRepp)
+                {
+                    CollectionREPP collection = new CollectionREPP {OperativeID=collectionREPP.OperativeID};
+                    collection.ReppID = Convert.ToInt32(item);
+                    _context.Add(collection);
+                    await _context.SaveChangesAsync();
+            
+                }
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.CollectionsREPP OFF");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
@@ -161,6 +172,15 @@ namespace ResourceManagerSystem.Controllers
         private bool CollectionREPPExists(int id)
         {
             return _context.CollectionsREPP.Any(e => e.CollectionREPPID == id);
+        }
+        public List<int> ListOperativeRegister()
+        {
+            List<int> Register = new List<int>();
+            foreach (var item in _context.CollectionsREPP.ToList())
+            {
+                Register.Add(item.OperativeID);
+            }
+            return Register;
         }
     }
 }
