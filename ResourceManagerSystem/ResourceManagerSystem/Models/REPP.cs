@@ -11,7 +11,7 @@ namespace ResourceManagerSystem.Models
     public class REPP
     {
         public int ReppID { set; get; }
-        [Display(Name="Nombre")]
+        [Display(Name="Nombre REPP")]
         [Required(ErrorMessage ="El nombre no puede estar vacio")]
         public string Name { set; get; }
         [Display(Name="Talla")]

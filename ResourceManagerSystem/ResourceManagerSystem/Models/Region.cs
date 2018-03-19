@@ -10,7 +10,7 @@ namespace ResourceManagerSystem.Models
     {
         public int RegionID { set; get; }
         [Required(ErrorMessage = "El nombre no puede estar vacio")]
-        [Display(Name="Nombre")]
+        [Display(Name="Nombre Region")]
         public string Name { set; get; }
     }
 }

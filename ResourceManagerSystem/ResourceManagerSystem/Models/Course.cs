@@ -11,7 +11,7 @@ namespace ResourceManagerSystem.Models
         public int CourseID { set; get; }
         [Display(Name="Entidad organizadora")]
         public int OrganizingEntityID { set; get; }
-        [Display(Name="Nombre")]
+        [Display(Name="Nombre de Curso")]
         [Required(ErrorMessage ="El nombre no puede estar vacio")]
         public string Name { set; get; }
         [Display(Name = "Duracion (En semanas)")]

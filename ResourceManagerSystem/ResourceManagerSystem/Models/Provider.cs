@@ -9,7 +9,7 @@ namespace ResourceManagerSystem.Models
     public class Provider
     {
         public int ProviderID { set; get; }
-        [Display(Name = "Contacto")]
+        [Display(Name = "Nombre de Contacto")]
         [Required(ErrorMessage = "El contacto no puede estar vacio")]
         public int CI { set; get; }
         [Display(Name="Nombre del proveedor")]

@@ -10,7 +10,7 @@ namespace ResourceManagerSystem.Models
     public class OrganizingEntity
     {
         public int OrganizingEntityID { set; get; }
-        [Display(Name="Nombre")]
+        [Display(Name="Nombre de Entidad Organizadora")]
         [Required(ErrorMessage ="El nombre no puede estar vacio")]
         public string Name { set; get; }
         [Display(Name = "Entidad organizadora")]
