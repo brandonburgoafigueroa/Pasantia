@@ -48,7 +48,7 @@ namespace ResourceManagerSystem.Controllers
         // GET: Providers/Create
         public IActionResult Create()
         {
-            ViewData["CI"] = new SelectList(_context.Contact, "CI", "FirstName");
+            ViewData["CI"] = new SelectList(_context.Contact, "CI", "CI");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CI"] = new SelectList(_context.Contact, "CI", "FirstName", provider.CI);
+            ViewData["CI"] = new SelectList(_context.Contact, "CI", "CI", provider.CI);
             return View(provider);
         }
 
@@ -82,7 +82,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["CI"] = new SelectList(_context.Contact, "CI", "FirstName", provider.CI);
+            ViewData["CI"] = new SelectList(_context.Contact, "CI", "CI", provider.CI);
             return View(provider);
         }
 
@@ -118,7 +118,7 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CI"] = new SelectList(_context.Contact, "CI", "FirstName", provider.CI);
+            ViewData["CI"] = new SelectList(_context.Contact, "CI", "CI", provider.CI);
             return View(provider);
         }
 
