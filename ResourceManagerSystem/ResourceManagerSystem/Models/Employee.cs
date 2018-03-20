@@ -11,21 +11,30 @@ namespace ResourceManagerSystem.Models
         [Display(Name = "Cargo Operativo")]
         [Required(ErrorMessage = "El cargo operativo no pude estar vacio")]
         public int OperativeID { set; get; }
+
         [Display(Name = "Genero")]
         public Sex Sex { set; get; }
+
+        [DataType(DataType.Date)]
         [Display(Name = "Fecha de nacimiento")]
         [Required(ErrorMessage ="La fecha de nacimiento no puede estar vacia")]
         public DateTime BirthDate { set; get; }
+        
         [Display(Name = "Estado civil")]
         public CivilState CivilState { set; get; }
+
         [Display(Name = "Tipo de contrato")]
         public TypeContrat TypeContrat { set; get; }
+
         [Display(Name = "Altura")]
         [Required(ErrorMessage = "La altura no puede estar vacia")]
         public int Height { set; get; }
+
         [Display(Name = "Peso")]
         [Required(ErrorMessage = "El peso no puede estar vacio")]
         public int Weight { set; get; }
+
+        [DataType(DataType.Date)]
         [Display(Name = "Fecha de admisión")]
         [Required(ErrorMessage = "La fecha de admisión no puede estar vacia")]
         public DateTime AdmissionDate { set; get; }
@@ -44,6 +53,7 @@ namespace ResourceManagerSystem.Models
         public bool Degree { set; get; }
         //--EndGrade
         //Inabilities
+
         [Display(Name = "Visual")]
         public bool Visual { set; get; }
         [Display(Name = "Motor")]

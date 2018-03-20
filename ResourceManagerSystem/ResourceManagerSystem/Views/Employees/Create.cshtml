@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var Now = DateTime.Now.Date.ToString("yyyy-MM-dd").Replace(' ', 'T');
 }
 
 <h2>Create</h2>
@@ -13,8 +14,38 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="CI" class="control-label"></label>
+                <input asp-for="CI" class="form-control" />
+                <span asp-validation-for="CI" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="OperativeID" class="control-label"></label>
-                <select asp-for="OperativeID" class ="form-control" asp-items="ViewBag.OperativeID"></select>
+                <select asp-for="OperativeID" class="form-control" asp-items="ViewBag.OperativeID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Sex" class="control-label"></label>
@@ -48,7 +79,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="AdmissionDate" class="control-label"></label>
-                <input asp-for="AdmissionDate" class="form-control" />
+                <input asp-for="AdmissionDate" class="form-control" value="@Now"/>
                 <span asp-validation-for="AdmissionDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -114,36 +145,7 @@
                     </label>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CI" class="control-label"></label>
-                <input asp-for="CI" class="form-control" />
-                <span asp-validation-for="CI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
