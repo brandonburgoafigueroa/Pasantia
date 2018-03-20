@@ -12,8 +12,8 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180318212951_1")]
-    partial class _1
+    [Migration("20180320025506_2")]
+    partial class _2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -135,7 +135,8 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<int>("AdministrativeID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("AdministrativeID");
 
@@ -195,20 +196,51 @@ namespace ResourceManagerSystem.Migrations
 
             modelBuilder.Entity("ResourceManagerSystem.Models.CollectionREPP", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("CollectionREPPID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("OperativeID");
 
                     b.Property<int>("ReppID");
 
-                    b.HasKey("ID");
+                    b.HasKey("CollectionREPPID");
 
                     b.HasIndex("OperativeID");
 
                     b.HasIndex("ReppID");
 
                     b.ToTable("CollectionsREPP");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Color", b =>
+                {
+                    b.Property<string>("ColorName");
+
+                    b.HasKey("ColorName");
+
+                    b.ToTable("Color");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Contact", b =>
+                {
+                    b.Property<int>("CI");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("Phone");
+
+                    b.HasKey("CI");
+
+                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Course", b =>
@@ -258,7 +290,8 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
                     b.Property<int>("Height");
 
@@ -266,9 +299,10 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<bool>("HighTechnician");
 
-                    b.Property<bool>("Iliterate");
+                    b.Property<bool>("Illiterate");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
                     b.Property<bool>("Mental");
 
@@ -276,7 +310,8 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<bool>("Motor");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("OperativeID");
 
@@ -324,9 +359,8 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<int>("AdministrativeID");
 
-                    b.Property<string>("Code");
-
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("RegionID");
 
@@ -354,6 +388,30 @@ namespace ResourceManagerSystem.Migrations
                     b.ToTable("OrganizingEntity");
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.Provider", b =>
+                {
+                    b.Property<int>("ProviderID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address")
+                        .IsRequired();
+
+                    b.Property<int>("CI");
+
+                    b.Property<string>("City")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("ProviderID");
+
+                    b.HasIndex("CI")
+                        .IsUnique();
+
+                    b.ToTable("Provider");
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Region", b =>
                 {
                     b.Property<int>("RegionID")
@@ -375,16 +433,34 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<string>("Brand")
                         .IsRequired();
 
-                    b.Property<int>("Color");
+                    b.Property<int>("ColorName");
+
+                    b.Property<string>("ColorName1");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("Size");
+                    b.Property<int>("SizeName");
+
+                    b.Property<string>("SizeName1");
 
                     b.HasKey("ReppID");
 
+                    b.HasIndex("ColorName1");
+
+                    b.HasIndex("SizeName1");
+
                     b.ToTable("REPPS");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Size", b =>
+                {
+                    b.Property<string>("SizeName")
+                        .ValueGeneratedOnAdd();
+
+                    b.HasKey("SizeName");
+
+                    b.ToTable("Size");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -456,7 +532,7 @@ namespace ResourceManagerSystem.Migrations
             modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
                 {
                     b.HasOne("ResourceManagerSystem.Models.Operative", "Position")
-                        .WithMany()
+                        .WithMany("Employee")
                         .HasForeignKey("OperativeID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -485,6 +561,25 @@ namespace ResourceManagerSystem.Migrations
                         .WithMany()
                         .HasForeignKey("RegionID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Provider", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Contact", "Contact")
+                        .WithOne("Provider")
+                        .HasForeignKey("ResourceManagerSystem.Models.Provider", "CI")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.REPP", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorName1");
+
+                    b.HasOne("ResourceManagerSystem.Models.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeName1");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,12 +17,6 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Size)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Size)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Brand)
         </dt>
         <dd>
@@ -32,7 +26,13 @@
             @Html.DisplayNameFor(model => model.Color)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Color)
+            @Html.DisplayFor(model => model.Color.ColorName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Size)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Size.SizeName)
         </dd>
     </dl>
 </div>

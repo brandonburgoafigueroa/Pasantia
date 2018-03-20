@@ -211,6 +211,15 @@ namespace ResourceManagerSystem.Migrations
                     b.ToTable("CollectionsREPP");
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.Color", b =>
+                {
+                    b.Property<string>("ColorName");
+
+                    b.HasKey("ColorName");
+
+                    b.ToTable("Color");
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Contact", b =>
                 {
                     b.Property<int>("CI");
@@ -423,16 +432,29 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<string>("Brand")
                         .IsRequired();
 
-                    b.Property<int>("Color");
+                    b.Property<string>("ColorName");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("Size");
+                    b.Property<string>("SizeName");
 
                     b.HasKey("ReppID");
 
+                    b.HasIndex("ColorName");
+
+                    b.HasIndex("SizeName");
+
                     b.ToTable("REPPS");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Size", b =>
+                {
+                    b.Property<string>("SizeName");
+
+                    b.HasKey("SizeName");
+
+                    b.ToTable("Size");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -541,6 +563,17 @@ namespace ResourceManagerSystem.Migrations
                         .WithOne("Provider")
                         .HasForeignKey("ResourceManagerSystem.Models.Provider", "CI")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.REPP", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorName");
+
+                    b.HasOne("ResourceManagerSystem.Models.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeName");
                 });
 #pragma warning restore 612, 618
         }

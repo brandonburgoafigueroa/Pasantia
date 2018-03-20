@@ -16,14 +16,14 @@
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Size)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Brand)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Color)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -34,13 +34,13 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Color)
+                @Html.DisplayFor(modelItem => item.Color.ColorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size.SizeName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ReppID">Edit</a> |

@@ -15,7 +15,7 @@ namespace ResourceManagerSystem.Migrations
                 {
                     AdministrativeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,6 +62,33 @@ namespace ResourceManagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Color",
+                columns: table => new
+                {
+                    ColorName = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Color", x => x.ColorName);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contact",
+                columns: table => new
+                {
+                    CI = table.Column<int>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Phone = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contact", x => x.CI);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrganizingEntity",
                 columns: table => new
                 {
@@ -89,19 +116,14 @@ namespace ResourceManagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "REPPS",
+                name: "Size",
                 columns: table => new
                 {
-                    ReppID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Brand = table.Column<string>(nullable: false),
-                    Color = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Size = table.Column<int>(nullable: false)
+                    SizeName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_REPPS", x => x.ReppID);
+                    table.PrimaryKey("PK_Size", x => x.SizeName);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,6 +233,28 @@ namespace ResourceManagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Provider",
+                columns: table => new
+                {
+                    ProviderID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Address = table.Column<string>(nullable: false),
+                    CI = table.Column<int>(nullable: false),
+                    City = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Provider", x => x.ProviderID);
+                    table.ForeignKey(
+                        name: "FK_Provider_Contact_CI",
+                        column: x => x.CI,
+                        principalTable: "Contact",
+                        principalColumn: "CI",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Course",
                 columns: table => new
                 {
@@ -243,8 +287,7 @@ namespace ResourceManagerSystem.Migrations
                     OperativeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AdministrativeID = table.Column<int>(nullable: false),
-                    Code = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     RegionID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -265,29 +308,33 @@ namespace ResourceManagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CollectionsREPP",
+                name: "REPPS",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    OperativeID = table.Column<int>(nullable: false),
                     ReppID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Brand = table.Column<string>(nullable: false),
+                    ColorName = table.Column<int>(nullable: false),
+                    ColorName1 = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    SizeName = table.Column<int>(nullable: false),
+                    SizeName1 = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CollectionsREPP", x => x.ID);
+                    table.PrimaryKey("PK_REPPS", x => x.ReppID);
                     table.ForeignKey(
-                        name: "FK_CollectionsREPP_Operative_OperativeID",
-                        column: x => x.OperativeID,
-                        principalTable: "Operative",
-                        principalColumn: "OperativeID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_REPPS_Color_ColorName1",
+                        column: x => x.ColorName1,
+                        principalTable: "Color",
+                        principalColumn: "ColorName",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CollectionsREPP_REPPS_ReppID",
-                        column: x => x.ReppID,
-                        principalTable: "REPPS",
-                        principalColumn: "ReppID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_REPPS_Size_SizeName1",
+                        column: x => x.SizeName1,
+                        principalTable: "Size",
+                        principalColumn: "SizeName",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -301,16 +348,16 @@ namespace ResourceManagerSystem.Migrations
                     CivilState = table.Column<int>(nullable: false),
                     Degree = table.Column<bool>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
                     Height = table.Column<int>(nullable: false),
                     HighSchool = table.Column<bool>(nullable: false),
                     HighTechnician = table.Column<bool>(nullable: false),
-                    Iliterate = table.Column<bool>(nullable: false),
-                    LastName = table.Column<string>(nullable: true),
+                    Illiterate = table.Column<bool>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
                     Mental = table.Column<bool>(nullable: false),
                     MiddleTechnician = table.Column<bool>(nullable: false),
                     Motor = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     OperativeID = table.Column<int>(nullable: false),
                     Phone = table.Column<int>(nullable: false),
                     Sex = table.Column<int>(nullable: false),
@@ -326,6 +373,32 @@ namespace ResourceManagerSystem.Migrations
                         column: x => x.OperativeID,
                         principalTable: "Operative",
                         principalColumn: "OperativeID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CollectionsREPP",
+                columns: table => new
+                {
+                    CollectionREPPID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    OperativeID = table.Column<int>(nullable: false),
+                    ReppID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollectionsREPP", x => x.CollectionREPPID);
+                    table.ForeignKey(
+                        name: "FK_CollectionsREPP_Operative_OperativeID",
+                        column: x => x.OperativeID,
+                        principalTable: "Operative",
+                        principalColumn: "OperativeID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollectionsREPP_REPPS_ReppID",
+                        column: x => x.ReppID,
+                        principalTable: "REPPS",
+                        principalColumn: "ReppID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -434,6 +507,22 @@ namespace ResourceManagerSystem.Migrations
                 name: "IX_Operative_RegionID",
                 table: "Operative",
                 column: "RegionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Provider_CI",
+                table: "Provider",
+                column: "CI",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_REPPS_ColorName1",
+                table: "REPPS",
+                column: "ColorName1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_REPPS_SizeName1",
+                table: "REPPS",
+                column: "SizeName1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -460,6 +549,9 @@ namespace ResourceManagerSystem.Migrations
                 name: "Enrolment");
 
             migrationBuilder.DropTable(
+                name: "Provider");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -473,6 +565,15 @@ namespace ResourceManagerSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Course");
+
+            migrationBuilder.DropTable(
+                name: "Contact");
+
+            migrationBuilder.DropTable(
+                name: "Color");
+
+            migrationBuilder.DropTable(
+                name: "Size");
 
             migrationBuilder.DropTable(
                 name: "Operative");

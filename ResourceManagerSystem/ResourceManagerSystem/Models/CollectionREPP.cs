@@ -8,16 +8,18 @@ using System.Threading.Tasks;
 
 namespace ResourceManagerSystem.Models
 {
-    
+    [DisplayName("Coleccion De Repp")]
     public class CollectionREPP
     {
+        [DisplayName("Coleccion De Repp")]
         public int CollectionREPPID { set; get; }
-        [Display(Name ="REPP")]
-        [Required(ErrorMessage ="El REPP no puede estar vacio")]
+
+        [Display(Name = "REPP")]
         public int ReppID { set; get; }
-        [Display(Name = "Cargo operativo")]
-        [Required(ErrorMessage = "El cargo operativo no puede estar vacio")]
+
+        [DisplayName("Cargo Operativo")]
         public int OperativeID { set; get; }
+
         [NotMapped]
         public ICollection<int> SelectedRepp { set; get; }
         public REPP REEP { set; get; }

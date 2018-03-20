@@ -51,7 +51,7 @@ namespace ResourceManagerSystem.Controllers
         {
             var IDOperatives = ListOperativeRegister();
             ViewData["OperativeID"] = new SelectList(_context.Operative.Where(x=>!IDOperatives.Contains(x.OperativeID)), "OperativeID", "Name");
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand",null,"Color");
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name",null,"ColorName");
             return View();
         }
 
@@ -79,7 +79,7 @@ namespace ResourceManagerSystem.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand", collectionREPP.ReppID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", collectionREPP.ReppID);
             return View(collectionREPP);
         }
 
@@ -97,7 +97,7 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand", collectionREPP.ReppID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", collectionREPP.ReppID);
             return View(collectionREPP);
         }
 
@@ -134,7 +134,7 @@ namespace ResourceManagerSystem.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand", collectionREPP.ReppID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", collectionREPP.ReppID);
             return View(collectionREPP);
         }
 

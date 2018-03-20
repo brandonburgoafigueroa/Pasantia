@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ResourceManagerSystem.Data;
-using ResourceManagerSystem.Models;
 
-namespace ResourceManagerSystem.Controllers
+namespace ResourceManagerSystem.Models
 {
     public class REPPsController : Controller
     {
@@ -22,7 +21,8 @@ namespace ResourceManagerSystem.Controllers
         // GET: REPPs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.REPPS.ToListAsync());
+            var applicationDbContext = _context.REPPS.Include(r => r.Color).Include(r => r.Size);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: REPPs/Details/5
@@ -34,6 +34,8 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var rEPP = await _context.REPPS
+                .Include(r => r.Color)
+                .Include(r => r.Size)
                 .SingleOrDefaultAsync(m => m.ReppID == id);
             if (rEPP == null)
             {
@@ -46,6 +48,8 @@ namespace ResourceManagerSystem.Controllers
         // GET: REPPs/Create
         public IActionResult Create()
         {
+            ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName");
+            ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName");
             return View();
         }
 
@@ -54,7 +58,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReppID,Name,Size,Brand,Color")] REPP rEPP)
+        public async Task<IActionResult> Create([Bind("ReppID,Name,SizeName,ColorName,Brand")] REPP rEPP)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +66,8 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName", rEPP.ColorName);
+            ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName", rEPP.SizeName);
             return View(rEPP);
         }
 
@@ -78,6 +84,8 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName", rEPP.ColorName);
+            ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName", rEPP.SizeName);
             return View(rEPP);
         }
 
@@ -86,7 +94,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReppID,Name,Size,Brand,Color")] REPP rEPP)
+        public async Task<IActionResult> Edit(int id, [Bind("ReppID,Name,SizeName,ColorName,Brand")] REPP rEPP)
         {
             if (id != rEPP.ReppID)
             {
@@ -113,6 +121,8 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName", rEPP.ColorName);
+            ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName", rEPP.SizeName);
             return View(rEPP);
         }
 
@@ -125,6 +135,8 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var rEPP = await _context.REPPS
+                .Include(r => r.Color)
+                .Include(r => r.Size)
                 .SingleOrDefaultAsync(m => m.ReppID == id);
             if (rEPP == null)
             {
