@@ -9,8 +9,11 @@ namespace ResourceManagerSystem.Models
     public class Stock
     {
         
-        public int ID { set; get; }
+        public int StockID { set; get; }
+        public int ReppID { set; get; }
+        public int Quantity { set; get; }
+
         public REPP Repp { set; get; }
-        public int Inventory { set; get; }
+        
     }
 }
