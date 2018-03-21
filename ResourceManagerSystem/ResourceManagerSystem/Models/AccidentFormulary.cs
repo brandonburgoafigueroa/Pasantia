@@ -17,10 +17,13 @@ namespace ResourceManagerSystem.Models
         public string NatureInjury { set; get; }
         public string ObjectDescription { set; get; }
         public string MedicalDiagnostic { set; get; }
+
         [ForeignKey("AffectedEmployee")]
         public int CIAffectedEmployee { set; get; }
+
         [ForeignKey("MasterEmployee")]
         public int CIMasterEmployee { set; get; }
+
         public int EventLocationID { set; get; }
         public int AccidentEffectID { set; get; }
 
