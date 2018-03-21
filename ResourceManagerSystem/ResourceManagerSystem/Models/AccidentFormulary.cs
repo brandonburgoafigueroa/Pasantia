@@ -17,17 +17,17 @@ namespace ResourceManagerSystem.Models
         public string NatureInjury { set; get; }
         public string ObjectDescription { set; get; }
         public string MedicalDiagnostic { set; get; }
-        //Manualmente select list en la vista
         [ForeignKey("AffectedEmployee")]
         public int CIAffectedEmployee { set; get; }
-
         [ForeignKey("MasterEmployee")]
         public int CIMasterEmployee { set; get; }
+        public int EventLocationID { set; get; }
+        public int AccidentEffectID { set; get; }
 
         public Employee AffectedEmployee { set; get; }
         public Employee MasterEmployee { set; get; }
-        //public EventLocation EventLocation { set; get; }
-        //public AccidentEffect AccidentEffect { set; get; }
+        public EventLocation EventLocation { set; get; }
+        public AccidentEffect AccidentEffect { set; get; }
         ///public ICollection<Injury> Injuries { set; get; }
         //public ICollection<Person> Signer { set; get; }
 

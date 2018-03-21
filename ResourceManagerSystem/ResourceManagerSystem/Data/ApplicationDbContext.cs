@@ -47,5 +47,7 @@ namespace ResourceManagerSystem.Data
         public DbSet<ResourceManagerSystem.Models.Size> Size { get; set; }
 
         public DbSet<ResourceManagerSystem.Models.Color> Color { get; set; }
+
+        
     }
 }

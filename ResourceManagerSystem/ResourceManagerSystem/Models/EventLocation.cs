@@ -7,7 +7,7 @@ namespace ResourceManagerSystem.Models
 {
     public class EventLocation
     {
-        public int ID { set; get; }
+        public int EventLocationID { set; get; }
         public DateTime Date { set; get; }
         public Building Building { set; get; }
         public string OutsideAsociationAddress { set; get; }
