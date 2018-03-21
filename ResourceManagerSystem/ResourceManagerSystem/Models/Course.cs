@@ -9,24 +9,32 @@ namespace ResourceManagerSystem.Models
     public class Course
     {
         public int CourseID { set; get; }
+
         [Display(Name="Entidad organizadora")]
         public int OrganizingEntityID { set; get; }
+
         [Display(Name="Nombre de Curso")]
         [Required(ErrorMessage ="El nombre no puede estar vacio")]
         public string Name { set; get; }
+
         [Display(Name = "Duracion (En semanas)")]
         [Required(ErrorMessage = "La duracion no puede estar vacia")]
         public int DurationWeek { set; get; }
+
         [Display(Name = "Descripcion")]
         [Required(ErrorMessage = "La descripcion no puede estar vacia")]
         public string Description { set; get; }
+
         [Display(Name = "Ubicacion")]
         [Required(ErrorMessage = "La ubicacion no puede estar vacia")]
         public string Location { set; get; }
+
         [Display(Name="Tipo de asistencia")]
         public AttendanceType AttendanceType { set; get; }
+
         [Display(Name = "¿Es un curso obligatorio?")]
         public bool IsRequired { set; get; }
+
         [Display(Name = "¿Es un curso externo?")]
         public bool IsExternal { set; get; }
 
