@@ -8,10 +8,9 @@ namespace ResourceManagerSystem.Models
 {
     public class AccidentFormulary
     {
-        [Key]
         public int NumberOfFormulary { set; get; }
         public DateTime DateOfFullFill { set; get; }
-        //public ApplicationUser usr revisar cokies tu gfa
+        public string CurrentUser { set; get; }
         public Type TypeOfFormulary { set; get; }
         public Employee AffectedEmployee { set; get; }
         public string Description { set; get; }

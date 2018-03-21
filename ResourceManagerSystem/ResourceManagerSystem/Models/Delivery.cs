@@ -9,10 +9,12 @@ namespace ResourceManagerSystem.Models
     public class Delivery
     {
 
-        public int ID { set; get; }
-        public REPP Reep { set; get; }
+        public int DeliveryID { set; get; }
+        public int ReppID { set; get; }
         public int Quantity { set; get; }
         public string Description { set; get; }
 
+        public REPP Reep { set; get; }
+        public ICollection<LotDelivery> LotDelivery { set; get; }
     }
 }

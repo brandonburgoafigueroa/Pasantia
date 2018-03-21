@@ -10,11 +10,11 @@ namespace ResourceManagerSystem.Models
     {
 
         public string LotID { set; get; }
-        public string Description { set; get; }
         public int ProviderID { set; get; }
+        public string Description { set; get; }
+ 
 
         public Provider Provider { set; get; }
-
-        public virtual ICollection<Delivery> Delivery { set; get; }
+        public ICollection<LotDelivery> LotDelivery { set; get; }
     }
 }
