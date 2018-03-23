@@ -21,12 +21,13 @@
             @Html.DisplayNameFor(model => model.REEP)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.REEP.Name)
+            @Html.DisplayFor(model => model.REEP.Brand)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="CollectionREPPID" />
+        <input type="hidden" asp-for="ReppID" />
+        <input type="hidden" asp-for="OperativeID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

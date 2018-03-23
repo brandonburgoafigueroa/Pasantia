@@ -25,6 +25,8 @@ namespace ResourceManagerSystem.Data
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<Enrolment>()
             .HasKey(a => new { a.CourseID, a.CI });
+            builder.Entity<CollectionREPP>()
+           .HasKey(a => new { a.ReppID, a.OperativeID });
         }
        
 

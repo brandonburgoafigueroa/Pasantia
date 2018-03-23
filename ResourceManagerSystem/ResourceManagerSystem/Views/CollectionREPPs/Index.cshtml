@@ -13,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Operative.Name)
+                @Html.DisplayNameFor(model => model.Operative)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.REEP.Name)
+                @Html.DisplayNameFor(model => model.REEP)
             </th>
             <th></th>
         </tr>
@@ -28,12 +28,12 @@
                 @Html.DisplayFor(modelItem => item.Operative.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.REEP.Name)
+                @Html.DisplayFor(modelItem => item.REEP.Brand)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CollectionREPPID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CollectionREPPID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CollectionREPPID">Delete</a>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

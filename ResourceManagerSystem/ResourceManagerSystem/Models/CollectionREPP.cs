@@ -11,12 +11,11 @@ namespace ResourceManagerSystem.Models
     [DisplayName("Coleccion De Repp")]
     public class CollectionREPP
     {
-        [DisplayName("Coleccion De Repp")]
-        public int CollectionREPPID { set; get; }
-
+        [Key]
         [Display(Name = "REPP")]
         public int ReppID { set; get; }
 
+        [Key]
         [DisplayName("Cargo Operativo")]
         public int OperativeID { set; get; }
 
