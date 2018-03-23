@@ -51,10 +51,9 @@ namespace ResourceManagerSystem
                 ProgressBar = true,
                 PositionClass = ToastPositions.TopRight,
                 SuccessTitle = "Exito",
-                InfoTitle="Informacion",
-                ErrorTitle="Error",
-                WarningTitle="Advertencia",
-                
+                InfoTitle = "Informacion",
+                ErrorTitle = "Error",
+                WarningTitle = "Advertencia",                    
         });
             services.AddMvc();
         }
