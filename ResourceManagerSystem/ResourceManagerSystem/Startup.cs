@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 using ResourceManagerSystem.Services;
+using NToastNotify.Libraries;
+using NToastNotify;
 
 namespace ResourceManagerSystem
 {
@@ -43,7 +45,16 @@ namespace ResourceManagerSystem
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
 
+            {
+
+                ProgressBar = true,
+
+                PositionClass = ToastPositions.BottomRight,
+
+
+            });
             services.AddMvc();
         }
 
@@ -60,6 +71,7 @@ namespace ResourceManagerSystem
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseNToastNotify();
 
             app.UseStaticFiles();
 
