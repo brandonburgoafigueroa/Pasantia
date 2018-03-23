@@ -8,6 +8,7 @@ namespace ResourceManagerSystem.Models
 {
     public class Course
     {
+        [Key]
         public int CourseID { set; get; }
 
         [Display(Name="Entidad organizadora")]

@@ -8,11 +8,10 @@ namespace ResourceManagerSystem.Models
 {
     public class Enrolment
     {
-        public int EnrolmentID { set; get; }
-
+        [Key]
         [Display(Name ="Curso")]
         public int CourseID { set; get; }
-
+        [Key]
         [Display(Name = "Empleado")]
         public int CI { set; get; }
 

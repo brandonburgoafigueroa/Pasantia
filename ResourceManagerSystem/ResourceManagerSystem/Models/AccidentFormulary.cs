@@ -10,7 +10,7 @@ namespace ResourceManagerSystem.Models
     public class AccidentFormulary
     {
         public int AccidentFormularyID { set; get; }
-        public string Description { set; get; }
+        public string Name { set; get; }
         public Type TypeOfFormulary { set; get; }
         public DateTime DateOfFullFill { set; get; }
         public string CurrentUser { set; get; }

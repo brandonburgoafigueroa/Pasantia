@@ -26,11 +26,11 @@
             @Html.DisplayNameFor(model => model.Employee)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Employee.CI)
+            @Html.DisplayFor(model => model.Employee.FirstName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EnrolmentID">Edit</a> |
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>

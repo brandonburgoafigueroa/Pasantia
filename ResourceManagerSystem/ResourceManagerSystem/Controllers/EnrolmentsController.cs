@@ -37,7 +37,7 @@ namespace ResourceManagerSystem.Controllers
             var enrolment = await _context.Enrolment
                 .Include(e => e.Courses)
                 .Include(e => e.Employee)
-                .SingleOrDefaultAsync(m => m.EnrolmentID == id);
+                .SingleOrDefaultAsync(m => m.CourseID == id);
             if (enrolment == null)
             {
                 return NotFound();
@@ -51,7 +51,6 @@ namespace ResourceManagerSystem.Controllers
         {
             ViewData["CourseID"] = new SelectList(_context.Course, "CourseID", "Name");
             ViewData["CI"] = new SelectList(_context.Employee, "CI", "CI");
-      
             return View();
         }
 
@@ -60,7 +59,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnrolmentID,CourseID,CI,Date")] Enrolment enrolment)
+        public async Task<IActionResult> Create([Bind("CourseID,CI,Date")] Enrolment enrolment)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +80,7 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var enrolment = await _context.Enrolment.SingleOrDefaultAsync(m => m.EnrolmentID == id);
+            var enrolment = await _context.Enrolment.SingleOrDefaultAsync(m => m.CourseID == id);
             if (enrolment == null)
             {
                 return NotFound();
@@ -96,9 +95,9 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnrolmentID,CourseID,CI,Date")] Enrolment enrolment)
+        public async Task<IActionResult> Edit(int id, [Bind("CourseID,CI,Date")] Enrolment enrolment)
         {
-            if (id != enrolment.EnrolmentID)
+            if (id != enrolment.CourseID)
             {
                 return NotFound();
             }
@@ -112,7 +111,7 @@ namespace ResourceManagerSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnrolmentExists(enrolment.EnrolmentID))
+                    if (!EnrolmentExists(enrolment.CourseID))
                     {
                         return NotFound();
                     }
@@ -139,7 +138,7 @@ namespace ResourceManagerSystem.Controllers
             var enrolment = await _context.Enrolment
                 .Include(e => e.Courses)
                 .Include(e => e.Employee)
-                .SingleOrDefaultAsync(m => m.EnrolmentID == id);
+                .SingleOrDefaultAsync(m => m.CourseID == id);
             if (enrolment == null)
             {
                 return NotFound();
@@ -153,7 +152,7 @@ namespace ResourceManagerSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enrolment = await _context.Enrolment.SingleOrDefaultAsync(m => m.EnrolmentID == id);
+            var enrolment = await _context.Enrolment.SingleOrDefaultAsync(m => m.CourseID == id);
             _context.Enrolment.Remove(enrolment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -161,7 +160,7 @@ namespace ResourceManagerSystem.Controllers
 
         private bool EnrolmentExists(int id)
         {
-            return _context.Enrolment.Any(e => e.EnrolmentID == id);
+            return _context.Enrolment.Any(e => e.CourseID == id);
         }
     }
 }

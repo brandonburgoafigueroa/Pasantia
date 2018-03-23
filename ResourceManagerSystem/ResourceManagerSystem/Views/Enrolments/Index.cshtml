@@ -16,10 +16,10 @@
                     @Html.DisplayNameFor(model => model.Date)
                 </th>
             <th>
-                @Html.DisplayNameFor(model => model.Courses.Name)
+                @Html.DisplayNameFor(model => model.Courses)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Employee.CI)
+                @Html.DisplayNameFor(model => model.Employee)
             </th>
             <th></th>
         </tr>
@@ -34,12 +34,12 @@
                 @Html.DisplayFor(modelItem => item.Courses.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.CI)
+                @Html.DisplayFor(modelItem => item.Employee.FirstName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EnrolmentID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EnrolmentID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EnrolmentID">Delete</a>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }
