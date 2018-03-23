@@ -48,13 +48,14 @@ namespace ResourceManagerSystem
             services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
 
             {
-
                 ProgressBar = true,
-
-                PositionClass = ToastPositions.BottomRight,
-
-
-            });
+                PositionClass = ToastPositions.TopRight,
+                SuccessTitle = "Exito",
+                InfoTitle="Informacion",
+                ErrorTitle="Error",
+                WarningTitle="Advertencia",
+                
+        });
             services.AddMvc();
         }
 

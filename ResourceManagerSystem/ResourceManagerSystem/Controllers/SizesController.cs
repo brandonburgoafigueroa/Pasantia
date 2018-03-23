@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -13,10 +14,12 @@ namespace ResourceManagerSystem.Controllers
     public class SizesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public SizesController(ApplicationDbContext context)
+        public SizesController(ApplicationDbContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Sizes
@@ -60,6 +63,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 _context.Add(size);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Tamaño de repp creado exitosamente");
                 return RedirectToAction(nameof(Index));
             }
             return View(size);

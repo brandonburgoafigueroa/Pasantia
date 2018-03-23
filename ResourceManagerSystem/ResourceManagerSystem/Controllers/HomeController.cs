@@ -5,16 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using NToastNotify.Libraries;
+using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
+using ResourceManagerSystem.Services;
 
 namespace ResourceManagerSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IToastNotification _toastNotification;
-
-        public HomeController(IToastNotification toastNotification)
+        private readonly ApplicationDbContext _context;
+        protected readonly IToastNotification _toastNotification;
+        public HomeController(ApplicationDbContext context, IToastNotification toastNotification)
         {
+            _context = context;
             _toastNotification = toastNotification;
         }
         public IActionResult Index()

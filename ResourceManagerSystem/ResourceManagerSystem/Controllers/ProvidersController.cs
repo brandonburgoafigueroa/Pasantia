@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -13,10 +14,11 @@ namespace ResourceManagerSystem.Controllers
     public class ProvidersController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public ProvidersController(ApplicationDbContext context)
+        protected readonly IToastNotification _toastNotification;
+        public ProvidersController(ApplicationDbContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Providers
@@ -63,6 +65,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 _context.Add(provider);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Proveedor creado exitosamente");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ContactID"] = new SelectList(_context.Contact, "ContactID", "CompleteName", provider.ContactID);

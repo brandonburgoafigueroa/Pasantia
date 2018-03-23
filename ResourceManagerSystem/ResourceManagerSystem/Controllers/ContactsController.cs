@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -13,10 +14,11 @@ namespace ResourceManagerSystem.Controllers
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public ContactsController(ApplicationDbContext context)
+        protected readonly IToastNotification _toastNotification;
+        public ContactsController(ApplicationDbContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Contacts
@@ -60,6 +62,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Contacto creado exitosamente");
                 return RedirectToAction(nameof(Index));
             }
             return View(contact);

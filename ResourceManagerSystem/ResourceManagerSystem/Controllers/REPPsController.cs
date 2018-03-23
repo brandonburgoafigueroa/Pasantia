@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using ResourceManagerSystem.Data;
 
 namespace ResourceManagerSystem.Models
@@ -12,10 +13,11 @@ namespace ResourceManagerSystem.Models
     public class REPPsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public REPPsController(ApplicationDbContext context)
+        protected readonly IToastNotification _toastNotification;
+        public REPPsController(ApplicationDbContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: REPPs
@@ -64,6 +66,7 @@ namespace ResourceManagerSystem.Models
             {
                 _context.Add(rEPP);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Repp creado exitosamente");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName", rEPP.ColorName);

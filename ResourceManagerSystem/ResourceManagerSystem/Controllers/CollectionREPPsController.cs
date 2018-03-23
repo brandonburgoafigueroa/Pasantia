@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -13,10 +14,11 @@ namespace ResourceManagerSystem.Controllers
     public class CollectionREPPsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public CollectionREPPsController(ApplicationDbContext context)
+        protected readonly IToastNotification _toastNotification;
+        public CollectionREPPsController(ApplicationDbContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: CollectionREPPs
@@ -73,8 +75,9 @@ namespace ResourceManagerSystem.Controllers
                         CollectionREPP c = new CollectionREPP() { ReppID = reppID, OperativeID = collectionREPP.OperativeID };
                         _context.CollectionsREPP.Add(c);
                     }
-                    
+
                 }
+                _toastNotification.AddSuccessToastMessage("Coleccion de repps añadida exitosamente");
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

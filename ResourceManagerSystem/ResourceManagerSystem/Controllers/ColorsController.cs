@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -13,10 +14,11 @@ namespace ResourceManagerSystem.Controllers
     public class ColorsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public ColorsController(ApplicationDbContext context)
+        protected readonly IToastNotification _toastNotification;
+        public ColorsController(ApplicationDbContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Colors
@@ -61,9 +63,11 @@ namespace ResourceManagerSystem.Controllers
             {
                 _context.Add(color);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Color creado exitosamente");
                 return RedirectToAction(nameof(Index));
 
             }
+            _toastNotification.AddErrorToastMessage("El color "+color.ColorName+" ya existe");
             return View(color);
         }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -13,10 +14,11 @@ namespace ResourceManagerSystem.Controllers
     public class EnrolmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public EnrolmentsController(ApplicationDbContext context)
+        protected readonly IToastNotification _toastNotification;
+        public EnrolmentsController(ApplicationDbContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Enrolments
@@ -65,6 +67,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 _context.Add(enrolment);
                 await _context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Se inscribio al empleado a curso exitosamente");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CourseID"] = new SelectList(_context.Course, "CourseID", "Name", enrolment.CourseID);
