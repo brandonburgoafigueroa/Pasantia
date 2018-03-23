@@ -20,7 +20,9 @@ namespace ResourceManagerSystem.Models
         [Required(ErrorMessage ="La fecha no puede estar vacia")]
         public DateTime Date { set; get; }
 
+        [Display(Name ="Empleado")]
         public Employee Employee { set; get; }
+        [Display(Name = "Curso")]
         public Course Courses { set; get; }
 
         

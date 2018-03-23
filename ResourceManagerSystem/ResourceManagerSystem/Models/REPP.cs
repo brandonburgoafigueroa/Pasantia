@@ -35,7 +35,7 @@ namespace ResourceManagerSystem.Models
         [NotMapped]
         public string ReppName {
             get {
-                return Name + "-" + Color;
+                return Name + "-" + ColorName;
             }
         }
     }

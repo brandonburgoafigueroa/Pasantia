@@ -33,5 +33,14 @@ namespace ResourceManagerSystem.Models
         [Display(Name = "Correo electronico")]
         public string Email { set; get; }
 
+        [NotMapped]
+        public string CompleteName
+        {
+            get
+            {
+                return LastName + " " + FirstName + " " + Name;
+            }
+        }
+
     }
 }
