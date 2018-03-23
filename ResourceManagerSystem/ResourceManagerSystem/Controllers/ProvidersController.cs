@@ -48,7 +48,7 @@ namespace ResourceManagerSystem.Controllers
         // GET: Providers/Create
         public IActionResult Create()
         {
-            ViewData["CI"] = new SelectList(_context.Contact, "CI", "CI");
+            ViewData["ContactID"] = new SelectList(_context.Contact, "ContactID", "CompleteName");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProviderID,CI,Name,Address,City")] Provider provider)
+        public async Task<IActionResult> Create([Bind("ProviderID,ContactID,Name,Address,City")] Provider provider)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CI"] = new SelectList(_context.Contact, "CI", "CI", provider.CI);
+            ViewData["ContactID"] = new SelectList(_context.Contact, "ContactID", "CompleteName", provider.ContactID);
             return View(provider);
         }
 
@@ -82,7 +82,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["CI"] = new SelectList(_context.Contact, "CI", "CI", provider.CI);
+            ViewData["ContactID"] = new SelectList(_context.Contact, "ContactID", "CompleteName", provider.ContactID);
             return View(provider);
         }
 
@@ -91,7 +91,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProviderID,CI,Name,Address,City")] Provider provider)
+        public async Task<IActionResult> Edit(int id, [Bind("ProviderID,ContactID,Name,Address,City")] Provider provider)
         {
             if (id != provider.ProviderID)
             {
@@ -118,7 +118,7 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CI"] = new SelectList(_context.Contact, "CI", "CI", provider.CI);
+            ViewData["ContactID"] = new SelectList(_context.Contact, "ContactID", "CompleteName", provider.ContactID);
             return View(provider);
         }
 

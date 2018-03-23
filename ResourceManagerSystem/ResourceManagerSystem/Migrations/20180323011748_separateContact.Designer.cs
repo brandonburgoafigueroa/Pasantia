@@ -12,9 +12,10 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180323011748_separateContact")]
+    partial class separateContact
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,7 +234,13 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<int>("Phone");
 
+                    b.Property<int?>("ProviderID");
+
                     b.HasKey("ContactID");
+
+                    b.HasIndex("ProviderID")
+                        .IsUnique()
+                        .HasFilter("[ProviderID] IS NOT NULL");
 
                     b.ToTable("Contact");
                 });
@@ -386,18 +393,15 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<string>("Address")
                         .IsRequired();
 
+                    b.Property<int>("CI");
+
                     b.Property<string>("City")
                         .IsRequired();
-
-                    b.Property<int>("ContactID");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
                     b.HasKey("ProviderID");
-
-                    b.HasIndex("ContactID")
-                        .IsUnique();
 
                     b.ToTable("Provider");
                 });
@@ -506,6 +510,13 @@ namespace ResourceManagerSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.Contact", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Provider", "Provider")
+                        .WithOne("Contact")
+                        .HasForeignKey("ResourceManagerSystem.Models.Contact", "ProviderID");
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Course", b =>
                 {
                     b.HasOne("ResourceManagerSystem.Models.OrganizingEntity", "OrganizingEntity")
@@ -545,14 +556,6 @@ namespace ResourceManagerSystem.Migrations
                     b.HasOne("ResourceManagerSystem.Models.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ResourceManagerSystem.Models.Provider", b =>
-                {
-                    b.HasOne("ResourceManagerSystem.Models.Contact", "Contact")
-                        .WithOne("Provider")
-                        .HasForeignKey("ResourceManagerSystem.Models.Provider", "ContactID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -34,7 +34,7 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var contact = await _context.Contact
-                .SingleOrDefaultAsync(m => m.CI == id);
+                .SingleOrDefaultAsync(m => m.ContactID == id);
             if (contact == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CI,Name,FirstName,LastName,Phone,Email")] Contact contact)
+        public async Task<IActionResult> Create([Bind("ContactID,Name,FirstName,LastName,Phone,Email")] Contact contact)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact.SingleOrDefaultAsync(m => m.CI == id);
+            var contact = await _context.Contact.SingleOrDefaultAsync(m => m.ContactID == id);
             if (contact == null)
             {
                 return NotFound();
@@ -86,9 +86,9 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CI,Name,FirstName,LastName,Phone,Email")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("ContactID,Name,FirstName,LastName,Phone,Email")] Contact contact)
         {
-            if (id != contact.CI)
+            if (id != contact.ContactID)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace ResourceManagerSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactExists(contact.CI))
+                    if (!ContactExists(contact.ContactID))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var contact = await _context.Contact
-                .SingleOrDefaultAsync(m => m.CI == id);
+                .SingleOrDefaultAsync(m => m.ContactID == id);
             if (contact == null)
             {
                 return NotFound();
@@ -139,7 +139,7 @@ namespace ResourceManagerSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contact = await _context.Contact.SingleOrDefaultAsync(m => m.CI == id);
+            var contact = await _context.Contact.SingleOrDefaultAsync(m => m.ContactID == id);
             _context.Contact.Remove(contact);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -147,7 +147,7 @@ namespace ResourceManagerSystem.Controllers
 
         private bool ContactExists(int id)
         {
-            return _context.Contact.Any(e => e.CI == id);
+            return _context.Contact.Any(e => e.ContactID == id);
         }
     }
 }

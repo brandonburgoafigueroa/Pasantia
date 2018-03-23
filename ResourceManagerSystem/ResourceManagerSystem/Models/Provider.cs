@@ -12,7 +12,7 @@ namespace ResourceManagerSystem.Models
 
         [Display(Name = "Nombre de Contacto")]
         [Required(ErrorMessage = "El contacto no puede estar vacio")]
-        public int CI { set; get; }
+        public int ContactID { set; get; }
 
         [Display(Name="Nombre del proveedor")]
         [Required(ErrorMessage ="El nombre no puede estar vacia")]
@@ -26,6 +26,7 @@ namespace ResourceManagerSystem.Models
         [Required(ErrorMessage = "La ciudad no puede estar vacia")]
         public string City { set; get; }
 
+        [Display(Name="Contacto")]
         public Contact Contact { set; get; }
 
 
