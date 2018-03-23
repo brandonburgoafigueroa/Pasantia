@@ -12,9 +12,10 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180323022922_farolada")]
+    partial class farolada
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,18 +196,14 @@ namespace ResourceManagerSystem.Migrations
 
             modelBuilder.Entity("ResourceManagerSystem.Models.CollectionREPP", b =>
                 {
-                    b.Property<int>("CollectionREPPID")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("ReppID");
 
                     b.Property<int>("OperativeID");
 
-                    b.Property<int>("ReppID");
+                    b.HasKey("ReppID", "OperativeID")
+                        .HasName("ID");
 
-                    b.HasKey("CollectionREPPID");
-
-                    b.HasIndex("OperativeID");
-
-                    b.HasIndex("ReppID");
+                    b.HasAlternateKey("OperativeID", "ReppID");
 
                     b.ToTable("CollectionsREPP");
                 });

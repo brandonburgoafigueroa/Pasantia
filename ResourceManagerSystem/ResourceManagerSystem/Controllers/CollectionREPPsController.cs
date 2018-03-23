@@ -37,7 +37,7 @@ namespace ResourceManagerSystem.Controllers
             var collectionREPP = await _context.CollectionsREPP
                 .Include(c => c.Operative)
                 .Include(c => c.REEP)
-                .SingleOrDefaultAsync(m => m.ReppID == id);
+                .SingleOrDefaultAsync(m => m.CollectionREPPID == id);
             if (collectionREPP == null)
             {
                 return NotFound();
@@ -50,7 +50,7 @@ namespace ResourceManagerSystem.Controllers
         public IActionResult Create()
         {
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name");
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", null, "ColorName");
             return View();
         }
 
@@ -59,11 +59,22 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReppID,OperativeID")] CollectionREPP collectionREPP)
+        public async Task<IActionResult> Create([Bind("CollectionREPPID,ReppID,OperativeID")] CollectionREPP collectionREPP)
         {
+            var items = Request.Form["SelectedRepp"];
+            _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.CollectionsREPP ON");
             if (ModelState.IsValid)
             {
-                _context.Add(collectionREPP);
+                foreach (var item in items)
+                {
+                    int reppID = Convert.ToInt32(item);
+                    if (!CollectionREPPExists(collectionREPP.OperativeID, reppID))
+                    {
+                        CollectionREPP c = new CollectionREPP() { ReppID = reppID, OperativeID = collectionREPP.OperativeID };
+                        _context.CollectionsREPP.Add(c);
+                    }
+                    
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -80,7 +91,7 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.ReppID == id);
+            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.CollectionREPPID == id);
             if (collectionREPP == null)
             {
                 return NotFound();
@@ -95,9 +106,9 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReppID,OperativeID")] CollectionREPP collectionREPP)
+        public async Task<IActionResult> Edit(int id, [Bind("CollectionREPPID,ReppID,OperativeID")] CollectionREPP collectionREPP)
         {
-            if (id != collectionREPP.ReppID)
+            if (id != collectionREPP.CollectionREPPID)
             {
                 return NotFound();
             }
@@ -111,7 +122,7 @@ namespace ResourceManagerSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CollectionREPPExists(collectionREPP.ReppID))
+                    if (!CollectionREPPExists(collectionREPP.CollectionREPPID))
                     {
                         return NotFound();
                     }
@@ -138,7 +149,7 @@ namespace ResourceManagerSystem.Controllers
             var collectionREPP = await _context.CollectionsREPP
                 .Include(c => c.Operative)
                 .Include(c => c.REEP)
-                .SingleOrDefaultAsync(m => m.ReppID == id);
+                .SingleOrDefaultAsync(m => m.CollectionREPPID == id);
             if (collectionREPP == null)
             {
                 return NotFound();
@@ -152,7 +163,7 @@ namespace ResourceManagerSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.ReppID == id);
+            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.CollectionREPPID == id);
             _context.CollectionsREPP.Remove(collectionREPP);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -160,7 +171,11 @@ namespace ResourceManagerSystem.Controllers
 
         private bool CollectionREPPExists(int id)
         {
-            return _context.CollectionsREPP.Any(e => e.ReppID == id);
+            return _context.CollectionsREPP.Any(e => e.CollectionREPPID == id);
+        }
+        private bool CollectionREPPExists(int idOperative, int idRepp)
+        {
+            return _context.CollectionsREPP.Any(e => e.OperativeID == idOperative && e.ReppID == idRepp);
         }
     }
 }
