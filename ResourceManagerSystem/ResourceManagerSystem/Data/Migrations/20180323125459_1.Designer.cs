@@ -12,8 +12,8 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180323022853_farolad")]
-    partial class farolad
+    [Migration("20180323125459_1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -196,14 +196,18 @@ namespace ResourceManagerSystem.Migrations
 
             modelBuilder.Entity("ResourceManagerSystem.Models.CollectionREPP", b =>
                 {
-                    b.Property<int>("ReppID");
+                    b.Property<int>("CollectionREPPID")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("OperativeID");
 
-                    b.HasKey("ReppID", "OperativeID")
-                        .HasName("ID");
+                    b.Property<int>("ReppID");
+
+                    b.HasKey("CollectionREPPID");
 
                     b.HasIndex("OperativeID");
+
+                    b.HasIndex("ReppID");
 
                     b.ToTable("CollectionsREPP");
                 });

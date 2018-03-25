@@ -76,7 +76,8 @@ namespace ResourceManagerSystem.Migrations
                 name: "Contact",
                 columns: table => new
                 {
-                    CI = table.Column<int>(nullable: false),
+                    ContactID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
@@ -85,7 +86,7 @@ namespace ResourceManagerSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contact", x => x.CI);
+                    table.PrimaryKey("PK_Contact", x => x.ContactID);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,18 +240,18 @@ namespace ResourceManagerSystem.Migrations
                     ProviderID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Address = table.Column<string>(nullable: false),
-                    CI = table.Column<int>(nullable: false),
                     City = table.Column<string>(nullable: false),
+                    ContactID = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Provider", x => x.ProviderID);
                     table.ForeignKey(
-                        name: "FK_Provider_Contact_CI",
-                        column: x => x.CI,
+                        name: "FK_Provider_Contact_ContactID",
+                        column: x => x.ContactID,
                         principalTable: "Contact",
-                        principalColumn: "CI",
+                        principalColumn: "ContactID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -314,24 +315,22 @@ namespace ResourceManagerSystem.Migrations
                     ReppID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Brand = table.Column<string>(nullable: false),
-                    ColorName = table.Column<int>(nullable: false),
-                    ColorName1 = table.Column<string>(nullable: true),
+                    ColorName = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: false),
-                    SizeName = table.Column<int>(nullable: false),
-                    SizeName1 = table.Column<string>(nullable: true)
+                    SizeName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_REPPS", x => x.ReppID);
                     table.ForeignKey(
-                        name: "FK_REPPS_Color_ColorName1",
-                        column: x => x.ColorName1,
+                        name: "FK_REPPS_Color_ColorName",
+                        column: x => x.ColorName,
                         principalTable: "Color",
                         principalColumn: "ColorName",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_REPPS_Size_SizeName1",
-                        column: x => x.SizeName1,
+                        name: "FK_REPPS_Size_SizeName",
+                        column: x => x.SizeName,
                         principalTable: "Size",
                         principalColumn: "SizeName",
                         onDelete: ReferentialAction.Restrict);
@@ -406,15 +405,14 @@ namespace ResourceManagerSystem.Migrations
                 name: "Enrolment",
                 columns: table => new
                 {
-                    EnrolmentID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CI = table.Column<int>(nullable: false),
                     CourseID = table.Column<int>(nullable: false),
+                    CI = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enrolment", x => x.EnrolmentID);
+                    table.PrimaryKey("PK_Enrolment", x => new { x.CourseID, x.CI });
+                    table.UniqueConstraint("AK_Enrolment_CI_CourseID", x => new { x.CI, x.CourseID });
                     table.ForeignKey(
                         name: "FK_Enrolment_Employee_CI",
                         column: x => x.CI,
@@ -489,16 +487,6 @@ namespace ResourceManagerSystem.Migrations
                 column: "OperativeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrolment_CI",
-                table: "Enrolment",
-                column: "CI");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Enrolment_CourseID",
-                table: "Enrolment",
-                column: "CourseID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Operative_AdministrativeID",
                 table: "Operative",
                 column: "AdministrativeID");
@@ -509,20 +497,20 @@ namespace ResourceManagerSystem.Migrations
                 column: "RegionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Provider_CI",
+                name: "IX_Provider_ContactID",
                 table: "Provider",
-                column: "CI",
+                column: "ContactID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_REPPS_ColorName1",
+                name: "IX_REPPS_ColorName",
                 table: "REPPS",
-                column: "ColorName1");
+                column: "ColorName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_REPPS_SizeName1",
+                name: "IX_REPPS_SizeName",
                 table: "REPPS",
-                column: "SizeName1");
+                column: "SizeName");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
