@@ -51,6 +51,8 @@ namespace ResourceManagerSystem.Data
 
         public DbSet<ResourceManagerSystem.Models.Color> Color { get; set; }
 
+        public DbSet<ResourceManagerSystem.Models.Contrat> Contrat { get; set; }
+
         
     }
 }

@@ -1,16 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ResourceManagerSystem.Models
 {
-    public class Employee : Person
+    public class Employee
     {
-        [Display(Name = "Cargo Operativo")]
-        [Required(ErrorMessage = "El cargo operativo no pude estar vacio")]
-        public int OperativeID { set; get; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public string CI { set; get; }
+
+        [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "El nombre no puede estar vacio")]
+        public string Name { set; get; }
+
+        [Display(Name = "Apellido paterno")]
+        [Required(ErrorMessage = "El apellido paterno no puede estar vacio")]
+        public string FirstName { set; get; }
+
+        [Display(Name = "Apellido materno")]
+        [Required(ErrorMessage = "El apellido materno no puede estar vacio")]
+        public string LastName { set; get; }
+
+        [Display(Name = "Telefono/Celular")]
+        [Required(ErrorMessage = "El Telefono/Celular no puede estar vacio")]
+        public int Phone { set; get; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Correo electronico")]
+        public string Email { set; get; }
+
+        [NotMapped]
+        public string CompleteName
+        {
+            get
+            {
+                return LastName + " " + FirstName + " " + Name;
+            }
+        }
 
         [Display(Name = "Genero")]
         public Sex Sex { set; get; }
@@ -22,10 +52,6 @@ namespace ResourceManagerSystem.Models
         
         [Display(Name = "Estado civil")]
         public CivilState CivilState { set; get; }
-
-        [Display(Name = "Tipo de contrato")]
-        public TypeContrat TypeContrat { set; get; }
-
         [Display(Name = "Altura")]
         [Required(ErrorMessage = "La altura no puede estar vacia")]
         public int Height { set; get; }
@@ -47,8 +73,6 @@ namespace ResourceManagerSystem.Models
         public bool HighSchool { set; get; }
         [Display(Name = "Tecnico medio")]
         public bool MiddleTechnician { set; get; }
-        [Display(Name = "-----")]
-        public bool HighTechnician { set; get; }
         [Display(Name = "Licenciatura")]
         public bool Degree { set; get; }
         //--EndGrade
@@ -62,7 +86,7 @@ namespace ResourceManagerSystem.Models
         public bool Mental { set; get; }
         //--EndInabilities
 
-        public Operative Position { set; get; }
+        public ICollection<Contrat> Contrats { set; get; }
         public ICollection<Enrolment> Enrolment { set; get; }
   
     }

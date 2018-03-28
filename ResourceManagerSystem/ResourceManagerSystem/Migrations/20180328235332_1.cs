@@ -340,7 +340,7 @@ namespace ResourceManagerSystem.Migrations
                 name: "Employee",
                 columns: table => new
                 {
-                    CI = table.Column<int>(nullable: false),
+                    CI = table.Column<string>(nullable: false),
                     AdmissionDate = table.Column<DateTime>(nullable: false),
                     Basic = table.Column<bool>(nullable: false),
                     BirthDate = table.Column<DateTime>(nullable: false),
@@ -350,17 +350,15 @@ namespace ResourceManagerSystem.Migrations
                     FirstName = table.Column<string>(nullable: false),
                     Height = table.Column<int>(nullable: false),
                     HighSchool = table.Column<bool>(nullable: false),
-                    HighTechnician = table.Column<bool>(nullable: false),
                     Illiterate = table.Column<bool>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     Mental = table.Column<bool>(nullable: false),
                     MiddleTechnician = table.Column<bool>(nullable: false),
                     Motor = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    OperativeID = table.Column<int>(nullable: false),
+                    OperativeID = table.Column<int>(nullable: true),
                     Phone = table.Column<int>(nullable: false),
                     Sex = table.Column<int>(nullable: false),
-                    TypeContrat = table.Column<int>(nullable: false),
                     Visual = table.Column<bool>(nullable: false),
                     Weight = table.Column<int>(nullable: false)
                 },
@@ -372,7 +370,7 @@ namespace ResourceManagerSystem.Migrations
                         column: x => x.OperativeID,
                         principalTable: "Operative",
                         principalColumn: "OperativeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -402,29 +400,59 @@ namespace ResourceManagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contrat",
+                columns: table => new
+                {
+                    ContratID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CI = table.Column<string>(nullable: true),
+                    DateEnd = table.Column<DateTime>(nullable: false),
+                    DateStart = table.Column<DateTime>(nullable: false),
+                    OperativeID = table.Column<int>(nullable: false),
+                    TypeContrat = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contrat", x => x.ContratID);
+                    table.ForeignKey(
+                        name: "FK_Contrat_Employee_CI",
+                        column: x => x.CI,
+                        principalTable: "Employee",
+                        principalColumn: "CI",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Contrat_Operative_OperativeID",
+                        column: x => x.OperativeID,
+                        principalTable: "Operative",
+                        principalColumn: "OperativeID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Enrolment",
                 columns: table => new
                 {
                     CourseID = table.Column<int>(nullable: false),
                     CI = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    Date = table.Column<DateTime>(nullable: false),
+                    EmployeeCI = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Enrolment", x => new { x.CourseID, x.CI });
                     table.UniqueConstraint("AK_Enrolment_CI_CourseID", x => new { x.CI, x.CourseID });
                     table.ForeignKey(
-                        name: "FK_Enrolment_Employee_CI",
-                        column: x => x.CI,
-                        principalTable: "Employee",
-                        principalColumn: "CI",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Enrolment_Course_CourseID",
                         column: x => x.CourseID,
                         principalTable: "Course",
                         principalColumn: "CourseID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Enrolment_Employee_EmployeeCI",
+                        column: x => x.EmployeeCI,
+                        principalTable: "Employee",
+                        principalColumn: "CI",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -477,6 +505,16 @@ namespace ResourceManagerSystem.Migrations
                 column: "ReppID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Contrat_CI",
+                table: "Contrat",
+                column: "CI");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contrat_OperativeID",
+                table: "Contrat",
+                column: "OperativeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Course_OrganizingEntityID",
                 table: "Course",
                 column: "OrganizingEntityID");
@@ -485,6 +523,11 @@ namespace ResourceManagerSystem.Migrations
                 name: "IX_Employee_OperativeID",
                 table: "Employee",
                 column: "OperativeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrolment_EmployeeCI",
+                table: "Enrolment",
+                column: "EmployeeCI");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Operative_AdministrativeID",
@@ -534,6 +577,9 @@ namespace ResourceManagerSystem.Migrations
                 name: "CollectionsREPP");
 
             migrationBuilder.DropTable(
+                name: "Contrat");
+
+            migrationBuilder.DropTable(
                 name: "Enrolment");
 
             migrationBuilder.DropTable(
@@ -549,10 +595,10 @@ namespace ResourceManagerSystem.Migrations
                 name: "REPPS");
 
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "Course");
 
             migrationBuilder.DropTable(
-                name: "Course");
+                name: "Employee");
 
             migrationBuilder.DropTable(
                 name: "Contact");
@@ -564,10 +610,10 @@ namespace ResourceManagerSystem.Migrations
                 name: "Size");
 
             migrationBuilder.DropTable(
-                name: "Operative");
+                name: "OrganizingEntity");
 
             migrationBuilder.DropTable(
-                name: "OrganizingEntity");
+                name: "Operative");
 
             migrationBuilder.DropTable(
                 name: "Administrative");

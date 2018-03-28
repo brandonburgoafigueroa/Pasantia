@@ -12,7 +12,7 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180323125459_1")]
+    [Migration("20180328235332_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -244,6 +244,30 @@ namespace ResourceManagerSystem.Migrations
                     b.ToTable("Contact");
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.Contrat", b =>
+                {
+                    b.Property<int>("ContratID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CI");
+
+                    b.Property<DateTime>("DateEnd");
+
+                    b.Property<DateTime>("DateStart");
+
+                    b.Property<int>("OperativeID");
+
+                    b.Property<int>("TypeContrat");
+
+                    b.HasKey("ContratID");
+
+                    b.HasIndex("CI");
+
+                    b.HasIndex("OperativeID");
+
+                    b.ToTable("Contrat");
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Course", b =>
                 {
                     b.Property<int>("CourseID")
@@ -277,7 +301,7 @@ namespace ResourceManagerSystem.Migrations
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
                 {
-                    b.Property<int>("CI");
+                    b.Property<string>("CI");
 
                     b.Property<DateTime>("AdmissionDate");
 
@@ -298,8 +322,6 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<bool>("HighSchool");
 
-                    b.Property<bool>("HighTechnician");
-
                     b.Property<bool>("Illiterate");
 
                     b.Property<string>("LastName")
@@ -314,13 +336,11 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("OperativeID");
+                    b.Property<int?>("OperativeID");
 
                     b.Property<int>("Phone");
 
                     b.Property<int>("Sex");
-
-                    b.Property<int>("TypeContrat");
 
                     b.Property<bool>("Visual");
 
@@ -341,9 +361,13 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<DateTime>("Date");
 
+                    b.Property<string>("EmployeeCI");
+
                     b.HasKey("CourseID", "CI");
 
                     b.HasAlternateKey("CI", "CourseID");
+
+                    b.HasIndex("EmployeeCI");
 
                     b.ToTable("Enrolment");
                 });
@@ -512,6 +536,18 @@ namespace ResourceManagerSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.Contrat", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Employee", "Employee")
+                        .WithMany("Contrats")
+                        .HasForeignKey("CI");
+
+                    b.HasOne("ResourceManagerSystem.Models.Operative", "Position")
+                        .WithMany()
+                        .HasForeignKey("OperativeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Course", b =>
                 {
                     b.HasOne("ResourceManagerSystem.Models.OrganizingEntity", "OrganizingEntity")
@@ -522,23 +558,21 @@ namespace ResourceManagerSystem.Migrations
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
                 {
-                    b.HasOne("ResourceManagerSystem.Models.Operative", "Position")
+                    b.HasOne("ResourceManagerSystem.Models.Operative")
                         .WithMany("Employee")
-                        .HasForeignKey("OperativeID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OperativeID");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Enrolment", b =>
                 {
-                    b.HasOne("ResourceManagerSystem.Models.Employee", "Employee")
-                        .WithMany("Enrolment")
-                        .HasForeignKey("CI")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("ResourceManagerSystem.Models.Course", "Courses")
                         .WithMany("Enrolments")
                         .HasForeignKey("CourseID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ResourceManagerSystem.Models.Employee", "Employee")
+                        .WithMany("Enrolment")
+                        .HasForeignKey("EmployeeCI");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Operative", b =>

@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Create";
-    var Now = DateTime.Now.Date.ToString("yyyy-MM-dd").Replace(' ', 'T');
 }
 
 <h2>Create</h2>
@@ -44,12 +43,8 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OperativeID" class="control-label"></label>
-                <select asp-for="OperativeID" class="form-control" asp-items="ViewBag.OperativeID"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="Sex" class="control-label"></label>
-                <select asp-for="Sex" class="form-control" asp-items="Html.GetEnumSelectList<Sex>()"></select>
+                <select asp-for="Sex" class="form-control"></select>
                 <span asp-validation-for="Sex" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -59,13 +54,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="CivilState" class="control-label"></label>
-                <select asp-for="CivilState" class="form-control" asp-items="Html.GetEnumSelectList<CivilState>()"></select>
+                <select asp-for="CivilState" class="form-control"></select>
                 <span asp-validation-for="CivilState" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TypeContrat" class="control-label"></label>
-                <select asp-for="TypeContrat" class="form-control" asp-items="Html.GetEnumSelectList<TypeContrat>()"></select>
-                <span asp-validation-for="TypeContrat" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Height" class="control-label"></label>
@@ -79,7 +69,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="AdmissionDate" class="control-label"></label>
-                <input asp-for="AdmissionDate" class="form-control" value="@Now"/>
+                <input asp-for="AdmissionDate" class="form-control" />
                 <span asp-validation-for="AdmissionDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -113,13 +103,6 @@
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="HighTechnician" /> @Html.DisplayNameFor(model => model.HighTechnician)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
                         <input asp-for="Degree" /> @Html.DisplayNameFor(model => model.Degree)
                     </label>
                 </div>
@@ -145,7 +128,6 @@
                     </label>
                 </div>
             </div>
-
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

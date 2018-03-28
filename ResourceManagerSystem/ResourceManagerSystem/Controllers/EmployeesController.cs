@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -14,22 +13,20 @@ namespace ResourceManagerSystem.Controllers
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        protected readonly IToastNotification _toastNotification;
-        public EmployeesController(ApplicationDbContext context, IToastNotification toastNotification)
+
+        public EmployeesController(ApplicationDbContext context)
         {
             _context = context;
-            _toastNotification = toastNotification;
         }
 
         // GET: Employees
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Employee.Include(e => e.Position);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Employee.ToListAsync());
         }
 
         // GET: Employees/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -37,7 +34,6 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var employee = await _context.Employee
-                .Include(e => e.Position)
                 .SingleOrDefaultAsync(m => m.CI == id);
             if (employee == null)
             {
@@ -50,7 +46,6 @@ namespace ResourceManagerSystem.Controllers
         // GET: Employees/Create
         public IActionResult Create()
         {
-            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
             return View();
         }
 
@@ -59,21 +54,19 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OperativeID,Sex,BirthDate,CivilState,TypeContrat,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,HighTechnician,Degree,Visual,Motor,Mental,CI,Name,FirstName,LastName,Phone,Email")] Employee employee)
+        public async Task<IActionResult> Create([Bind("CI,Name,FirstName,LastName,Phone,Email,Sex,BirthDate,CivilState,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,Degree,Visual,Motor,Mental")] Employee employee)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
-                _toastNotification.AddSuccessToastMessage("Empleado creado exitosamente");
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", employee.OperativeID);
             return View(employee);
         }
 
         // GET: Employees/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -85,7 +78,6 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", employee.OperativeID);
             return View(employee);
         }
 
@@ -94,7 +86,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OperativeID,Sex,BirthDate,CivilState,TypeContrat,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,HighTechnician,Degree,Visual,Motor,Mental,CI,Name,FirstName,LastName,Phone,Email")] Employee employee)
+        public async Task<IActionResult> Edit(string id, [Bind("CI,Name,FirstName,LastName,Phone,Email,Sex,BirthDate,CivilState,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,Degree,Visual,Motor,Mental")] Employee employee)
         {
             if (id != employee.CI)
             {
@@ -121,12 +113,11 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", employee.OperativeID);
             return View(employee);
         }
 
         // GET: Employees/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -134,7 +125,6 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var employee = await _context.Employee
-                .Include(e => e.Position)
                 .SingleOrDefaultAsync(m => m.CI == id);
             if (employee == null)
             {
@@ -147,7 +137,7 @@ namespace ResourceManagerSystem.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var employee = await _context.Employee.SingleOrDefaultAsync(m => m.CI == id);
             _context.Employee.Remove(employee);
@@ -155,7 +145,7 @@ namespace ResourceManagerSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool EmployeeExists(string id)
         {
             return _context.Employee.Any(e => e.CI == id);
         }
