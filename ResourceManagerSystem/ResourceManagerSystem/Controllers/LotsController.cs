@@ -174,8 +174,8 @@ namespace ResourceManagerSystem.Controllers
         }
         public IActionResult AddItems(int quantity, string lot)
         {
-            
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name",null, "ColorName");
+
+            ViewData["ReppID"] = new SelectList(_context.REPPS.GroupBy(x=>x.Name).Select(x=>x.FirstOrDefault()), "ReppID", "Name");
             ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName");
             ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName");
             List<DeliveryModelView> model = new List<DeliveryModelView>();
@@ -197,36 +197,58 @@ namespace ResourceManagerSystem.Controllers
             {
                 foreach (var item in model)
                 {
-                    REPP reference = _context.REPPS.Find(item.ReppID);
-                    REPP repp = new REPP() { Brand = item.Brand, ColorName = item.ColorName, SizeName = item.SizeName, Name=reference.Name};
-                    REPP ReppExist = _context.REPPS.ToList().Find(x => x.ReppName==repp.ReppName && x.ColorName==repp.ColorName && x.SizeName==repp.SizeName);
-                    if (ReppExist==null)
-                    {
-                        _context.REPPS.Add(repp);
-                        await _context.SaveChangesAsync();
-                    }
-                    ReppExist = _context.REPPS.ToList().Find(x => x.ReppName == repp.ReppName && x.ColorName == repp.ColorName && x.SizeName == repp.SizeName);
-                    Delivery delivery = new Delivery() { ReppID=ReppExist.ReppID, LotID=item.LotID, Description=item.Description, Quantity=item.Quantity};
-                    _context.Deliveries.Add(delivery);
-                    Stock stockExist = _context.Stock.ToList().Find(x => x.ReppID == ReppExist.ReppID);
-                    if (stockExist == null)
-                    {
-                        _context.Stock.Add(new Stock() { ReppID = ReppExist.ReppID, Quantity = item.Quantity });
-                        await _context.SaveChangesAsync();
-                    }
-                    else {
-                        var stock = _context.Stock.ToList().Find(x=>x.ReppID==ReppExist.ReppID);
-                        var update = _context.Stock.Find(stock.ReppID);
-                        update.Quantity += item.Quantity;
-                        await _context.SaveChangesAsync();
-                    }
+                  await AddItemAsync(item);
                 }
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
-          //  ViewData["ProviderID"] = new SelectList(_context.Provider, "ProviderID", "Address", lot.ProviderID);
             return View();
+        }
+
+        private async Task AddItemAsync(DeliveryModelView item)
+        {
+            REPP ReppExist = await GetInfoOfReppAsync(item);
+            await AddDeliveryAsync(item, ReppExist);
+            await AddQuantityToStockAsync(item, ReppExist);
+        }
+
+        private async Task AddQuantityToStockAsync(DeliveryModelView item, REPP ReppExist)
+        {
+            Stock stockExist = _context.Stock.ToList().Find(x => x.ReppID == ReppExist.ReppID);
+            if (stockExist == null)
+            {
+                _context.Stock.Add(new Stock() { ReppID = ReppExist.ReppID, Quantity = item.Quantity });
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                var stock = _context.Stock.ToList().Find(x => x.ReppID == ReppExist.ReppID);
+                var update = _context.Stock.Find(stock.ReppID);
+                update.Quantity += item.Quantity;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task AddDeliveryAsync(DeliveryModelView item, REPP ReppExist)
+        {
+            Delivery delivery = new Delivery() { ReppID = ReppExist.ReppID, LotID = item.LotID, Description = item.Description, Quantity = item.Quantity };
+            _context.Deliveries.Add(delivery);
+            await _context.SaveChangesAsync();
+        }
+
+        private async Task<REPP> GetInfoOfReppAsync(DeliveryModelView item)
+        {
+            REPP reference = _context.REPPS.Find(item.ReppID);
+            REPP repp = new REPP() { Brand = item.Brand, ColorName = item.ColorName, SizeName = item.SizeName, Name = reference.Name };
+            REPP ReppExist = _context.REPPS.ToList().Find(x => x.ReppName == repp.ReppName && x.ColorName == repp.ColorName && x.SizeName == repp.SizeName);
+            if (ReppExist == null)
+            {
+                _context.REPPS.Add(repp);
+                await _context.SaveChangesAsync();
+            }
+            ReppExist = _context.REPPS.ToList().Find(x => x.ReppName == repp.ReppName && x.ColorName == repp.ColorName && x.SizeName == repp.SizeName);
+            return ReppExist;
         }
 
         private bool LotExists(string id)
