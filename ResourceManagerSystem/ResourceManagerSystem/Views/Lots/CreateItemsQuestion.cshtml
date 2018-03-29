@@ -1,0 +1,10 @@
+﻿@model List<string>
+@{
+    ViewData["Title"] = "CreateItemsQuestion";
+}
+
+<h2>Lote creado. Desea añadir items a este lote?</h2>
+
+<a class="btn btn-success" asp-action="VerifyProductsAvaiable" asp-route-lot="@Model[0]">Si</a> |
+<a class="btn btn-success" asp-action="Index">No</a> |
+

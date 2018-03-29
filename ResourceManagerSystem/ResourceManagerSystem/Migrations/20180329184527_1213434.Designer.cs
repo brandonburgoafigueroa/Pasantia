@@ -12,8 +12,8 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180328235332_1")]
-    partial class _1
+    [Migration("20180329184527_1213434")]
+    partial class _1213434
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -299,6 +299,61 @@ namespace ResourceManagerSystem.Migrations
                     b.ToTable("Course");
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.Delivery", b =>
+                {
+                    b.Property<int>("DeliveryID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("LotID");
+
+                    b.Property<string>("LotID1");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<int>("ReppID");
+
+                    b.HasKey("DeliveryID");
+
+                    b.HasIndex("LotID1");
+
+                    b.HasIndex("ReppID");
+
+                    b.ToTable("Deliveries");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.DeliveryModelView", b =>
+                {
+                    b.Property<int>("DeliveryModelViewID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Brand")
+                        .IsRequired();
+
+                    b.Property<string>("ColorName");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("LotID");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<int>("ReppID");
+
+                    b.Property<string>("SizeName");
+
+                    b.HasKey("DeliveryModelViewID");
+
+                    b.HasIndex("ColorName");
+
+                    b.HasIndex("ReppID");
+
+                    b.HasIndex("SizeName");
+
+                    b.ToTable("DeliveryModelView");
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
                 {
                     b.Property<string>("CI");
@@ -370,6 +425,42 @@ namespace ResourceManagerSystem.Migrations
                     b.HasIndex("EmployeeCI");
 
                     b.ToTable("Enrolment");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Lot", b =>
+                {
+                    b.Property<string>("LotID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("ProviderID");
+
+                    b.HasKey("LotID");
+
+                    b.HasIndex("ProviderID");
+
+                    b.ToTable("Lot");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.LotDelivery", b =>
+                {
+                    b.Property<int>("LotDeliveryID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DeliveryID");
+
+                    b.Property<int>("LotID");
+
+                    b.Property<string>("LotID1");
+
+                    b.HasKey("LotDeliveryID");
+
+                    b.HasIndex("DeliveryID");
+
+                    b.HasIndex("LotID1");
+
+                    b.ToTable("LotDelivery");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Operative", b =>
@@ -556,6 +647,34 @@ namespace ResourceManagerSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.Delivery", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Lot", "Lot")
+                        .WithMany()
+                        .HasForeignKey("LotID1");
+
+                    b.HasOne("ResourceManagerSystem.Models.REPP", "Reep")
+                        .WithMany()
+                        .HasForeignKey("ReppID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.DeliveryModelView", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorName");
+
+                    b.HasOne("ResourceManagerSystem.Models.REPP", "Repp")
+                        .WithMany()
+                        .HasForeignKey("ReppID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ResourceManagerSystem.Models.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeName");
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Employee", b =>
                 {
                     b.HasOne("ResourceManagerSystem.Models.Operative")
@@ -573,6 +692,26 @@ namespace ResourceManagerSystem.Migrations
                     b.HasOne("ResourceManagerSystem.Models.Employee", "Employee")
                         .WithMany("Enrolment")
                         .HasForeignKey("EmployeeCI");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Lot", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Provider", "Provider")
+                        .WithMany()
+                        .HasForeignKey("ProviderID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.LotDelivery", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Delivery", "Delivery")
+                        .WithMany()
+                        .HasForeignKey("DeliveryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ResourceManagerSystem.Models.Lot", "Lot")
+                        .WithMany("LotDelivery")
+                        .HasForeignKey("LotID1");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Operative", b =>

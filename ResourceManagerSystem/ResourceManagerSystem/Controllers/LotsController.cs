@@ -44,7 +44,7 @@ namespace ResourceManagerSystem.Controllers
 
             return View(lot);
         }
-
+       
         // GET: Lots/Create
         public IActionResult Create()
         {
@@ -63,7 +63,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 _context.Add(lot);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(CreateItemsQuestion), new { id=lot.LotID});
             }
             ViewData["ProviderID"] = new SelectList(_context.Provider, "ProviderID", "Address", lot.ProviderID);
             return View(lot);
@@ -151,13 +151,18 @@ namespace ResourceManagerSystem.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult VerifyProductsAvaiable(int lot)
+        public IActionResult CreateItemsQuestion(string id)
+        {
+            List<string> Params = new List<string>() { id };
+            return View(Params);
+        }
+        public IActionResult VerifyProductsAvaiable(string lot)
         {
             IEnumerable<string> ReppsAvaiable = _context.REPPS.ToList().Select(x=>x.Name);
             IEnumerable<string> ColorsAvaiable = _context.Color.ToList().Select(x => x.ColorName);
             IEnumerable<string> SizesAvaiables= _context.Size.ToList().Select(x => x.SizeName);
             IEnumerable<string> InfoAditional = new List<string>() {
-               Convert.ToString(lot)
+               lot
             };
             
             Dictionary<string, IEnumerable<string>> ComponentsAvaiable = new Dictionary<string, IEnumerable<string>>();
@@ -167,7 +172,7 @@ namespace ResourceManagerSystem.Controllers
             ComponentsAvaiable.Add("Lot",InfoAditional);
             return View(ComponentsAvaiable);
         }
-        public IActionResult AddItems(int quantity, int lot)
+        public IActionResult AddItems(int quantity, string lot)
         {
             
             ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name",null, "ColorName");
@@ -176,7 +181,7 @@ namespace ResourceManagerSystem.Controllers
             List<DeliveryModelView> model = new List<DeliveryModelView>();
             for (int i = 0; i < quantity; i++)
             {
-                model.Add(new DeliveryModelView() { LotID=Convert.ToInt16(lot)});
+                model.Add(new DeliveryModelView() { LotID=lot});
             }
             return View(model);
         }

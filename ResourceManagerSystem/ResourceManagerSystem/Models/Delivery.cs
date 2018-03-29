@@ -14,7 +14,7 @@ namespace ResourceManagerSystem.Models
         [DisplayName("Repp")]
         public int ReppID { set; get; }
         [DisplayName("Lote")]
-        public int LotID { set; get; }
+        public string LotID { set; get; }
         [DisplayName("Cantidad")]
         public int Quantity { set; get; }
         [DisplayName("Description")]

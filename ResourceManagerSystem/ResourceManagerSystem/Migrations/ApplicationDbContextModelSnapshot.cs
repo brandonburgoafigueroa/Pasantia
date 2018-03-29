@@ -305,15 +305,21 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<int>("LotID");
+
+                    b.Property<string>("LotID1");
+
                     b.Property<int>("Quantity");
 
                     b.Property<int>("ReppID");
 
                     b.HasKey("DeliveryID");
 
+                    b.HasIndex("LotID1");
+
                     b.HasIndex("ReppID");
 
-                    b.ToTable("Delivery");
+                    b.ToTable("Deliveries");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.DeliveryModelView", b =>
@@ -642,6 +648,10 @@ namespace ResourceManagerSystem.Migrations
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Delivery", b =>
                 {
+                    b.HasOne("ResourceManagerSystem.Models.Lot", "Lot")
+                        .WithMany()
+                        .HasForeignKey("LotID1");
+
                     b.HasOne("ResourceManagerSystem.Models.REPP", "Reep")
                         .WithMany()
                         .HasForeignKey("ReppID")
@@ -694,7 +704,7 @@ namespace ResourceManagerSystem.Migrations
             modelBuilder.Entity("ResourceManagerSystem.Models.LotDelivery", b =>
                 {
                     b.HasOne("ResourceManagerSystem.Models.Delivery", "Delivery")
-                        .WithMany("LotDelivery")
+                        .WithMany()
                         .HasForeignKey("DeliveryID")
                         .OnDelete(DeleteBehavior.Cascade);
 

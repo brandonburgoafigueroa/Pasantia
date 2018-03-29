@@ -88,13 +88,13 @@
             </table>
         </div>
         <div class="col-lg-3">
-            
-            <form asp-action="AddItems" method="get" enctype="multipart/form-data">
-                <div>Ingrese la cantidad de repps que agregara en el lote</div>
-                <input type="text" name="lot" id="lot" value="@Model["Lot"].First()" />
-                <input type="number" class="input-group" id="quantity" name="quantity" />
-                <input type="submit" class="affix btn btn-success" value="Continuar" /> 
-            </form>
-            
+            <div class="affix form-group">
+                <form asp-action="AddItems" method="get" enctype="multipart/form-data">
+                    <div>Ingrese la cantidad de repps que agregara en el lote</div>
+                    <input type="hidden" name="lot" id="lot" value="@Model["Lot"].First()" />
+                    <input type="number" class="form-controL" id="quantity" name="quantity" />
+                    <input type="submit" class="btn btn-success" value="Continuar" />
+                </form>
+            </div>
         </div>
-        </div>
+</div>

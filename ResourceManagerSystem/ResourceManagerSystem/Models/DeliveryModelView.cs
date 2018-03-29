@@ -12,7 +12,7 @@ namespace ResourceManagerSystem.Models
         [Key]
         public int DeliveryModelViewID { set; get; }
         [ScaffoldColumn(false)]
-        public int LotID { set; get; }
+        public string LotID { set; get; }
         [DisplayName("Repp")]
         [ForeignKey("Repp")]
         public int ReppID { set; get; }
