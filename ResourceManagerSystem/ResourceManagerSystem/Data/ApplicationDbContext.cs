@@ -57,6 +57,8 @@ namespace ResourceManagerSystem.Data
 
         public DbSet<ResourceManagerSystem.Models.DeliveryModelView> DeliveryModelView { get; set; }
 
+        public DbSet<ResourceManagerSystem.Models.Stock> Stock { get; set; }
+
         
     }
 }

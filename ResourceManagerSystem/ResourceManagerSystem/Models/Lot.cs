@@ -15,6 +15,6 @@ namespace ResourceManagerSystem.Models
  
 
         public Provider Provider { set; get; }
-        public ICollection<LotDelivery> LotDelivery { set; get; }
+        public ICollection<Delivery> Delivery { set; get; }
     }
 }
