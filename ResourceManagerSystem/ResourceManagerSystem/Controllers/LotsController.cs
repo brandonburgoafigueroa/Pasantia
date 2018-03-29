@@ -158,18 +158,20 @@ namespace ResourceManagerSystem.Controllers
         }
         public IActionResult VerifyProductsAvaiable(string lot)
         {
-            IEnumerable<string> ReppsAvaiable = _context.REPPS.ToList().Select(x=>x.Name);
+            IEnumerable<string> ReppsAvaiable = _context.REPPS.GroupBy(x => x.Name).Select(x => x.FirstOrDefault()).Select(x => x.Name);
             IEnumerable<string> ColorsAvaiable = _context.Color.ToList().Select(x => x.ColorName);
             IEnumerable<string> SizesAvaiables= _context.Size.ToList().Select(x => x.SizeName);
             IEnumerable<string> InfoAditional = new List<string>() {
                lot
             };
-            
-            Dictionary<string, IEnumerable<string>> ComponentsAvaiable = new Dictionary<string, IEnumerable<string>>();
-            ComponentsAvaiable.Add("Repps", ReppsAvaiable);
-            ComponentsAvaiable.Add("Colors", ColorsAvaiable);
-            ComponentsAvaiable.Add("Sizes", SizesAvaiables);
-            ComponentsAvaiable.Add("Lot",InfoAditional);
+
+            Dictionary<string, IEnumerable<string>> ComponentsAvaiable = new Dictionary<string, IEnumerable<string>>
+            {
+                { "Repps", ReppsAvaiable },
+                { "Colors", ColorsAvaiable },
+                { "Sizes", SizesAvaiables },
+                { "Lot", InfoAditional }
+            };
             return View(ComponentsAvaiable);
         }
         public IActionResult AddItems(int quantity, string lot)
