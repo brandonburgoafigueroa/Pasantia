@@ -151,16 +151,26 @@ namespace ResourceManagerSystem.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        public IActionResult AddItems()
+        public IActionResult VerifyProductsAvaiable()
+        {
+            IEnumerable<string> ReppsAvaiable = _context.REPPS.ToList().Select(x=>x.Name);
+            IEnumerable<string> ColorsAvaiable = _context.REPPS.ToList().Select(x => x.Name);
+            IEnumerable<string> SizesAvaiables= _context.REPPS.ToList().Select(x => x.Name);
+            Dictionary<string, IEnumerable<string>> ComponentsAvaiable = new Dictionary<string, IEnumerable<string>>();
+            ComponentsAvaiable.Add("Repps", ReppsAvaiable);
+            ComponentsAvaiable.Add("Colors", ColorsAvaiable);
+            ComponentsAvaiable.Add("Sizes", SizesAvaiables);
+            return View(ComponentsAvaiable);
+        }
+        public IActionResult AddItems(int quantity, int lot)
         {
             ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name",null, "ColorName");
             ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName");
             ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName");
             List<DeliveryModelView> model = new List<DeliveryModelView>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < quantity; i++)
             {
-                model.Add(new DeliveryModelView() { LotID=1});
+                model.Add(new DeliveryModelView() { LotID=lot});
             }
             return View(model);
         }

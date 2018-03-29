@@ -1,0 +1,91 @@
+﻿@model Dictionary<string, IEnumerable<string>>
+@{
+    ViewData["Title"] = "VerifyProductsAvaiable";
+}
+
+<h2>VerifyProductsAvaiable</h2>
+
+<p>
+    <div class="row">
+        <div class="alert-warning col-lg-5">Antes de añadir Repp de entrada a su lote verifique que los repps, colores y tamaños que requiera estan en la lista</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="Create">Crear nuevo Repp</a>
+                        <br />
+                        Repps Disponibles
+
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model["Repps"])
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item)
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="Create">Crear nuevo Color</a>
+                        <br />
+                        Colores Disponibles
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model["Colors"])
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item)
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="Create">Crear nuevo Tamaño</a>
+                        <br />
+                        Tamaños Disponibles
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model["Sizes"])
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item)
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
