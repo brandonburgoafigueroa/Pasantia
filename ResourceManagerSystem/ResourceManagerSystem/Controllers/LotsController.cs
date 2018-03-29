@@ -197,23 +197,16 @@ namespace ResourceManagerSystem.Controllers
             {
                 foreach (var item in model)
                 {
-                    var reppResult = _context.REPPS.Find(Convert.ToInt32(item.ReppID));
-                    var colorResult = _context.Color.Find(item.ColorName);
-                    var sizeResult = _context.Size.Find(item.SizeName);
-                    if (reppResult==null)
+                    REPP reference = _context.REPPS.Find(item.ReppID);
+                    REPP repp = new REPP() { Brand = item.Brand, ColorName = item.ColorName, SizeName = item.SizeName, Name=reference.Name};
+                    REPP ReppExist = _context.REPPS.ToList().Find(x => x.ReppName==repp.ReppName && x.ColorName==repp.ColorName && x.SizeName==repp.SizeName);
+                    if (ReppExist==null)
                     {
-                        REPP repp = new REPP() {Name=Convert.ToString(item.ReppID), Brand = item.Brand, SizeName = item.SizeName, ColorName = item.ColorName};
-                        _context.Add(repp);
+                        _context.REPPS.Add(repp);
+                        await _context.SaveChangesAsync();
                     }
-                    if (colorResult==null)
-                    {
-                        _context.Add(new Color() { ColorName=item.ColorName});
-                    }
-                    if (sizeResult == null)
-                    {
-                        _context.Add(new Size() { SizeName = item.SizeName });
-                    }
-                    _context.Deliveries.Add(new Delivery() { ReppID=item.ReppID, Quantity=item.Quantity, Description=item.Description, LotID=item.LotID});
+                    ReppExist = _context.REPPS.ToList().Find(x => x.ReppName == repp.ReppName && x.ColorName == repp.ColorName && x.SizeName == repp.SizeName);
+                    Delivery delivery = new Delivery() { ReppID=ReppExist.ReppID, LotID=item.LotID, Description=item.Description, Quantity=item.Quantity};
                 }
                 await _context.SaveChangesAsync();
 
