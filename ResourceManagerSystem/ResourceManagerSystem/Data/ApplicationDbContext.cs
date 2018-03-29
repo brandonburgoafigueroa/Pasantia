@@ -53,6 +53,10 @@ namespace ResourceManagerSystem.Data
 
         public DbSet<ResourceManagerSystem.Models.Contrat> Contrat { get; set; }
 
+        public DbSet<ResourceManagerSystem.Models.Lot> Lot { get; set; }
+
+        public DbSet<ResourceManagerSystem.Models.DeliveryModelView> DeliveryModelView { get; set; }
+
         
     }
 }

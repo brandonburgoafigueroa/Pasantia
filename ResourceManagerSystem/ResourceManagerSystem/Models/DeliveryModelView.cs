@@ -5,47 +5,32 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace ResourceManagerSystem.Models
 {
-    [DisplayName("REPP")]
-    public class REPP
+    public class DeliveryModelView
     {
-        [Display(Name = "REPP")]
+        [Key]
+        public int DeliveryModelViewID { set; get; }
+        [ScaffoldColumn(false)]
+        public int LotID { set; get; }
+        [DisplayName("Repp")]
+        [ForeignKey("Repp")]
         public int ReppID { set; get; }
-
-        [Display(Name="Nombre REPP")]
-        [Required(ErrorMessage ="El nombre no puede estar vacio")]
-        public string Name { set; get; }
-
+        [DisplayName("Description")]
+        public string Description { set; get; }
         [DisplayName("Talla")]
         public string SizeName { set; get; }
-
         [Display(Name = "Color")]
         public string ColorName { set; get; }
-
-        [Display(Name="Marca")]
+        [Display(Name = "Marca")]
         [Required(ErrorMessage = "La marca no puede esta vacia")]
         public string Brand { set; get; }
-
+        [DisplayName("Cantidad")]
+        public int Quantity { set; get; }
 
         public Color Color { set; get; }
         public Size Size { set; get; }
-        public virtual ICollection<CollectionREPP> CollectionsREPPs { set; get; }
-        [NotMapped]
-        public string ReppName {
-            get {
-                return Name + "-" + ColorName;
-            }
-        }
-        [NotMapped]
-        public string ReppNameSize
-        {
-            get
-            {
-                return Name + "-" + Size;
-            }
-        }
+        public REPP Repp { set; get; }
+
     }
-    
 }
