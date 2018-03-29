@@ -13,12 +13,14 @@ namespace ResourceManagerSystem.Models
         public int DeliveryID { set; get; }
         [DisplayName("Repp")]
         public int ReppID { set; get; }
+        [DisplayName("Lote")]
+        public int LotID { set; get; }
         [DisplayName("Cantidad")]
         public int Quantity { set; get; }
         [DisplayName("Description")]
         public string Description { set; get; }
 
         public REPP Reep { set; get; }
-        public ICollection<LotDelivery> LotDelivery { set; get; }
+        public Lot Lot { set; get; }
     }
 }

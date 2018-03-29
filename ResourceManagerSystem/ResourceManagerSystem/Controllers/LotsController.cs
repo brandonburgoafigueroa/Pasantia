@@ -174,8 +174,28 @@ namespace ResourceManagerSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-             //   _context.Add(Items);
+                foreach (var item in model)
+                {
+                    var reppResult = _context.REPPS.Find(Convert.ToInt32(item.ReppID));
+                    var colorResult = _context.Color.Find(item.ColorName);
+                    var sizeResult = _context.Size.Find(item.SizeName);
+                    if (reppResult==null)
+                    {
+                        REPP repp = new REPP() {Name=Convert.ToString(item.ReppID), Brand = item.Brand, SizeName = item.SizeName, ColorName = item.ColorName};
+                        _context.Add(repp);
+                    }
+                    if (colorResult==null)
+                    {
+                        _context.Add(new Color() { ColorName=item.ColorName});
+                    }
+                    if (sizeResult == null)
+                    {
+                        _context.Add(new Size() { SizeName = item.SizeName });
+                    }
+                    _context.Deliveries.Add(new Delivery() { ReppID=item.ReppID, Quantity=item.Quantity, Description=item.Description, LotID=item.LotID});
+                }
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
           //  ViewData["ProviderID"] = new SelectList(_context.Provider, "ProviderID", "Address", lot.ProviderID);

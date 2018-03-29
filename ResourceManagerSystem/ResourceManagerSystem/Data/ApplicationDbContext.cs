@@ -27,8 +27,8 @@ namespace ResourceManagerSystem.Data
             .HasKey(a => new { a.CourseID, a.CI }
             );
         }
-       
 
+        public DbSet<ResourceManagerSystem.Models.Delivery> Deliveries { get; set; }
         public DbSet<ResourceManagerSystem.Models.Region> Region { get; set; }
 
         public DbSet<ResourceManagerSystem.Models.Administrative> Administrative { get; set; }
