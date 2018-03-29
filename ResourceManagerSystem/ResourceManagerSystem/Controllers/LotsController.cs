@@ -207,6 +207,19 @@ namespace ResourceManagerSystem.Controllers
                     }
                     ReppExist = _context.REPPS.ToList().Find(x => x.ReppName == repp.ReppName && x.ColorName == repp.ColorName && x.SizeName == repp.SizeName);
                     Delivery delivery = new Delivery() { ReppID=ReppExist.ReppID, LotID=item.LotID, Description=item.Description, Quantity=item.Quantity};
+                    _context.Deliveries.Add(delivery);
+                    Stock stockExist = _context.Stock.ToList().Find(x => x.ReppID == ReppExist.ReppID);
+                    if (stockExist == null)
+                    {
+                        _context.Stock.Add(new Stock() { ReppID = ReppExist.ReppID, Quantity = item.Quantity });
+                        await _context.SaveChangesAsync();
+                    }
+                    else {
+                        var stock = _context.Stock.ToList().Find(x=>x.ReppID==ReppExist.ReppID);
+                        var update = _context.Stock.Find(stock.ReppID);
+                        update.Quantity += item.Quantity;
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 await _context.SaveChangesAsync();
 

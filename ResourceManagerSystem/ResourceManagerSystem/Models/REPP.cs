@@ -43,7 +43,15 @@ namespace ResourceManagerSystem.Models
         {
             get
             {
-                return Name + "-" + Size;
+                return Name + "-" + SizeName;
+            }
+        }
+        [NotMapped]
+        public string ReppCompleteName
+        {
+            get
+            {
+                return Name + "-" +"-"+ColorName + "-" + SizeName;
             }
         }
     }
