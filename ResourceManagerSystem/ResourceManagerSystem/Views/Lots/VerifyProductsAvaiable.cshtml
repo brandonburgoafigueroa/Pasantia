@@ -4,29 +4,28 @@
 }
 
 <h2>VerifyProductsAvaiable</h2>
-
-<p>
     <div class="row">
         <div class="alert-warning col-lg-5">Antes de añadir Repp de entrada a su lote verifique que los repps, colores y tamaños que requiera estan en la lista</div>
-</div>
 
-<div class="row">
-    <div class="col-lg-3">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <a asp-action="Create">Crear nuevo Repp</a>
-                        <br />
-                        Repps Disponibles
+    </div>
 
+   
+    <div class="row">
+        <div class="col-lg-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <a asp-action="Create">Crear nuevo Repp</a>
+                            <br />
+                            Repps Disponibles
 
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                @foreach (var item in Model["Repps"])
+                    @foreach (var item in Model["Repps"])
                 {
                     <tr>
                         <td>
@@ -34,24 +33,24 @@
                         </td>
                     </tr>
 
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="col-lg-3">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <a asp-action="Create">Crear nuevo Color</a>
-                        <br />
-                        Colores Disponibles
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+            }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <a asp-action="Create">Crear nuevo Color</a>
+                            <br />
+                            Colores Disponibles
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                @foreach (var item in Model["Colors"])
+                    @foreach (var item in Model["Colors"])
                 {
                     <tr>
                         <td>
@@ -59,24 +58,24 @@
                         </td>
                     </tr>
 
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="col-lg-3">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        <a asp-action="Create">Crear nuevo Tamaño</a>
-                        <br />
-                        Tamaños Disponibles
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+            }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <a asp-action="Create">Crear nuevo Tamaño</a>
+                            <br />
+                            Tamaños Disponibles
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                @foreach (var item in Model["Sizes"])
+                    @foreach (var item in Model["Sizes"])
                 {
                     <tr>
                         <td>
@@ -84,8 +83,18 @@
                         </td>
                     </tr>
 
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
+            }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3">
+            
+            <form asp-action="AddItems" method="get" enctype="multipart/form-data">
+                <div>Ingrese la cantidad de repps que agregara en el lote</div>
+                <input type="text" name="lot" id="lot" value="@Model["Lot"].First()" />
+                <input type="number" class="input-group" id="quantity" name="quantity" />
+                <input type="submit" class="affix btn btn-success" value="Continuar" /> 
+            </form>
+            
+        </div>
+        </div>
