@@ -49,7 +49,6 @@ namespace ResourceManagerSystem.Controllers
         // GET: Contrats/Create
         public IActionResult Create()
         {
-            ViewData["CI"] = new SelectList(_context.Employee, "CI", "FirstName");
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
             return View();
         }

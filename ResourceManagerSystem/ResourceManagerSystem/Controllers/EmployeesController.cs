@@ -144,7 +144,33 @@ namespace ResourceManagerSystem.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult AddMasiveEmployees()
+        {
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
+            List<EmployeModelView> model=new List<EmployeModelView>();
+            for (int i = 0; i < 10; i++)
+            {
+                model.Add(new EmployeModelView() { });
+            }
+            return View(model);
+        }
 
+        // POST: Employees/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddMasiveEmployees(List<EmployeModelView> model)
+        {/*
+            if (ModelState.IsValid)
+            {
+                _context.Add(employee);
+                
+            }
+            return View(employee);*/
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         private bool EmployeeExists(string id)
         {
             return _context.Employee.Any(e => e.CI == id);

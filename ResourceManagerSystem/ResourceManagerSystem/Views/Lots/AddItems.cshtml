@@ -20,49 +20,62 @@
                     <br />
                     <br />
                     <br />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 </div>
             </div>
-            @for (int i = 0; i < Model.Count; i++)
-        {
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="jumbotron">
-                <div class="container">
-
-                    <div>
-                        <input asp-for="@Model[i].LotID" class="control-label" hidden>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label asp-for="@Model[i].ReppID" class="control-label"></label>
-                        <select asp-for="@Model[i].ReppID" class="form-control" asp-items="ViewBag.ReppID" onload="editableSelect()"></select>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="@Model[i].Description" class="control-label"></label>
-                        <input asp-for="@Model[i].Description" class="form-control" />
-                        <span asp-validation-for="@Model[i].Description" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="@Model[i].SizeName" class="control-label"></label>
-                        <select asp-for="@Model[i].SizeName" class="form-control" asp-items="ViewBag.SizeName"></select>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="@Model[i].ColorName" class="control-label"></label>
-                        <select asp-for="@Model[i].ColorName" class="form-control" asp-items="ViewBag.ColorName"></select>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="@Model[i].Brand" class="control-label"></label>
-                        <input asp-for="@Model[i].Brand" class="form-control" />
-                        <span asp-validation-for="@Model[i].Brand" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="@Model[i].Quantity" class="control-label"></label>
-                        <input asp-for="@Model[i].Quantity" class="form-control" />
-                        <span asp-validation-for="@Model[i].Quantity" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
+            <div id="exTab1" class="container">
+                <ul class="nav nav-pills">
+                    @for (int i = 0; i < Model.Count; i++)
+            {
+                <li>
+                    <a href="#@i" data-toggle="tab">@i</a>
+                </li>
     }
+      
 
+                </ul>
+
+                <div class="tab-content clearfix">
+                    @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="tab-pane" id="@i">
+                    <div>
+                        <div>
+                            <input asp-for="@Model[i].LotID" class="control-label" hidden>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="@Model[i].ReppID" class="control-label"></label>
+                            <select asp-for="@Model[i].ReppID" class="form-control" asp-items="ViewBag.ReppID" onload="editableSelect()"></select>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="@Model[i].Description" class="control-label"></label>
+                            <input asp-for="@Model[i].Description" class="form-control" />
+                            <span asp-validation-for="@Model[i].Description" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="@Model[i].SizeName" class="control-label"></label>
+                            <select asp-for="@Model[i].SizeName" class="form-control" asp-items="ViewBag.SizeName"></select>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="@Model[i].ColorName" class="control-label"></label>
+                            <select asp-for="@Model[i].ColorName" class="form-control" asp-items="ViewBag.ColorName"></select>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="@Model[i].Brand" class="control-label"></label>
+                            <input asp-for="@Model[i].Brand" class="form-control" />
+                            <span asp-validation-for="@Model[i].Brand" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="@Model[i].Quantity" class="control-label"></label>
+                            <input asp-for="@Model[i].Quantity" class="form-control" />
+                            <span asp-validation-for="@Model[i].Quantity" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+    }
+                </div>
+            </div>
         </form>
 
     </div>
