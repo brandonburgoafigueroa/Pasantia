@@ -24,9 +24,7 @@ namespace ResourceManagerSystem.Models
         [Display(Name = "Color")]
         public string ColorName { set; get; }
 
-        [Display(Name="Marca")]
-        [Required(ErrorMessage = "La marca no puede esta vacia")]
-        public string Brand { set; get; }
+   
 
 
         public Color Color { set; get; }

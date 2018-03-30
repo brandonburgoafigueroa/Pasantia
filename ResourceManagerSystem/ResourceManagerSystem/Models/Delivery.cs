@@ -19,6 +19,8 @@ namespace ResourceManagerSystem.Models
         public int Quantity { set; get; }
         [DisplayName("Description")]
         public string Description { set; get; }
+        [DisplayName("Marca")]
+        public string Brand { set; get; }
 
         public REPP Reep { set; get; }
         public Lot Lot { set; get; }

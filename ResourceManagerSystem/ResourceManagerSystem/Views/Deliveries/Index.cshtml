@@ -18,6 +18,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Brand)
+                </th>
             <th>
                 @Html.DisplayNameFor(model => model.Lot)
             </th>
@@ -37,10 +40,13 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Lot.LotID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Reep.Brand)
+                @Html.DisplayFor(modelItem => item.Reep.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.DeliveryID">Edit</a> |

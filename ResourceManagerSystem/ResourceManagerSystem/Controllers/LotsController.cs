@@ -234,7 +234,7 @@ namespace ResourceManagerSystem.Controllers
 
         private async Task AddDeliveryAsync(DeliveryModelView item, REPP ReppExist)
         {
-            Delivery delivery = new Delivery() { ReppID = ReppExist.ReppID, LotID = item.LotID, Description = item.Description, Quantity = item.Quantity };
+            Delivery delivery = new Delivery() {Brand=item.Brand, ReppID = ReppExist.ReppID, LotID = item.LotID, Description = item.Description, Quantity = item.Quantity };
             _context.Deliveries.Add(delivery);
             await _context.SaveChangesAsync();
         }
@@ -242,7 +242,7 @@ namespace ResourceManagerSystem.Controllers
         private async Task<REPP> GetInfoOfReppAsync(DeliveryModelView item)
         {
             REPP reference = _context.REPPS.Find(item.ReppID);
-            REPP repp = new REPP() { Brand = item.Brand, ColorName = item.ColorName, SizeName = item.SizeName, Name = reference.Name };
+            REPP repp = new REPP() {ColorName = item.ColorName, SizeName = item.SizeName, Name = reference.Name };
             REPP ReppExist = _context.REPPS.ToList().Find(x => x.ReppName == repp.ReppName && x.ColorName == repp.ColorName && x.SizeName == repp.SizeName);
             if (ReppExist == null)
             {
