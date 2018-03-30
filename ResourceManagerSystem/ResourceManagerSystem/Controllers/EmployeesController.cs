@@ -144,11 +144,11 @@ namespace ResourceManagerSystem.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult AddMasiveEmployees()
+        public IActionResult AddMasiveEmployees(int quantity)
         {
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
             List<EmployeModelView> model=new List<EmployeModelView>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < quantity; i++)
             {
                 model.Add(new EmployeModelView() { });
             }
@@ -161,14 +161,45 @@ namespace ResourceManagerSystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddMasiveEmployees(List<EmployeModelView> model)
-        {/*
-            if (ModelState.IsValid)
+        {
+            foreach (var item in model)
             {
-                _context.Add(employee);
-                
+                Employee employee = new Employee() {
+                    CI =item.CI,
+                    AdmissionDate =item.AdmissionDate,
+                    Basic =item.Basic,
+                    BirthDate =item.BirthDate,
+                    CivilState =item.CivilState,
+                    Degree =item.Degree,
+                    Email=item.Email,
+                    FirstName=item.FirstName,
+                    LastName=item.LastName,
+                    Name=item.Name,
+                    Height=item.Height,
+                    Weight=item.Weight,
+                    HighSchool=item.HighSchool,
+                    Illiterate=item.Illiterate,
+                    Mental=item.Mental,
+                    MiddleTechnician=item.MiddleTechnician,
+                    Motor=item.Motor,
+                    Sex=item.Sex,
+                    Visual=item.Visual,
+                    Phone=item.Phone,
+                };
+                Contrat contrat = new Contrat() {
+                    CI=item.CI,
+                    DateEnd=item.DateEnd,
+                    DateStart=item.DateStart,
+                    OperativeID=item.OperativeID,
+                    TypeContrat=item.TypeContrat,
+                };
+                if (!EmployeeExists(employee.CI))
+                {
+                    _context.Employee.Add(employee);                    
+                    _context.Contrat.Add(contrat);
+                    await _context.SaveChangesAsync();
+                }
             }
-            return View(employee);*/
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
         private bool EmployeeExists(string id)

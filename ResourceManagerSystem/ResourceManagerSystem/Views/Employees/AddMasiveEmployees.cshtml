@@ -4,14 +4,8 @@
     ViewData["Title"] = "AddMasiveEmployees";
 }
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 
-<h2>AddMasiveEmployees</h2>
-
-<h4>EmployeModelView</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,16 +17,18 @@
                 <ul class="nav nav-pills">
 
                     @for (int i = 0; i < Model.Count; i++)
-                    {
-                        <li>
-                            <a href="#@i" data-toggle="tab">@i</a>
-                        </li>
-                    }
+    {
+                <li>
+                    <a href="#@i" data-toggle="tab">@i</a>
+                </li>
+}
 
                     <div class="col-md-1">
                         <input type="submit" value="Create" class="btn btn-default" />
                     </div>
-
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
 
 
                 </ul>
@@ -79,7 +75,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="@Model[i].Sex" class="control-label"></label>
-                                <select asp-for="@Model[i].Sex" class="form-control"></select>
+                                <select asp-for="@Model[i].Sex" class="form-control" asp-items="Html.GetEnumSelectList<Sex>()"></select>
                                 <span asp-validation-for="@Model[i].Sex" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">

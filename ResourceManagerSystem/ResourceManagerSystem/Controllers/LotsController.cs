@@ -164,7 +164,8 @@ namespace ResourceManagerSystem.Controllers
             IEnumerable<string> InfoAditional = new List<string>() {
                lot
             };
-
+            ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName");
+            ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName");
             Dictionary<string, IEnumerable<string>> ComponentsAvaiable = new Dictionary<string, IEnumerable<string>>
             {
                 { "Repps", ReppsAvaiable },

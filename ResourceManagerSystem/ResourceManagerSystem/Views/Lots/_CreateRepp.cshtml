@@ -1,0 +1,70 @@
+﻿@model ResourceManagerSystem.Models.REPP
+
+
+<hr />
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Crear nuevo repp
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear repp</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-controller="REPPApi" asp-action="PostREPP" data-ajax="true" data-ajax-method="POST">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SizeName" class="control-label"></label>
+                                <select asp-for="SizeName" class="form-control" asp-items="ViewBag.SizeName"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ColorName" class="control-label"></label>
+                                <select asp-for="ColorName" class="form-control" asp-items="ViewBag.ColorName"></select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" id="Save" value="Create" class="btn btn-default" />
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+           
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $("form").on("submit", function (event) {
+        var $this = $(this);
+        var frmValues = $this.serialize();
+        $.ajax({
+            type: $this.attr('method'),
+            url: $this.attr('action'),
+            data: frmValues
+        })
+            .done(function () {
+                location.reload();
+            })
+        event.preventDefault();
+    });
+</script>

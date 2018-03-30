@@ -91,6 +91,6 @@ namespace ResourceManagerSystem.Models
         public DateTime DateEnd { set; get; }
 
         public Operative Position { set; get; }
-
+        public Employee Employee { set; get; }
     }
 }
