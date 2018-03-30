@@ -2,12 +2,12 @@
 
 
 <hr />
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Crear nuevo repp
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Repp">
+    Crear nuevo repp
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Repp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -20,7 +20,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <form asp-controller="REPPApi" asp-action="PostREPP" data-ajax="true" data-ajax-method="POST">
+                        <form asp-controller="REPPApi" asp-action="PostREPP" data-ajax="true" data-ajax-method="POST" id="ReppForm">
 
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
@@ -41,30 +41,15 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
 
-           
+
             </div>
 
         </div>
     </div>
 </div>
 
-
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script>
-    $("form").on("submit", function (event) {
-        var $this = $(this);
-        var frmValues = $this.serialize();
-        $.ajax({
-            type: $this.attr('method'),
-            url: $this.attr('action'),
-            data: frmValues
-        })
-            .done(function () {
-                location.reload();
-            })
-        event.preventDefault();
-    });
-</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

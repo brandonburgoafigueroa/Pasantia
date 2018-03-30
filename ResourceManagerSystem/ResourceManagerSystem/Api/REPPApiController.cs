@@ -30,7 +30,7 @@ namespace ResourceManagerSystem.Controllers
 
         // GET: api/REPPApi/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetREPP([FromRoute] int id)
+        public async Task<IActionResult> GetREPP( int id)
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +49,7 @@ namespace ResourceManagerSystem.Controllers
 
         // PUT: api/REPPApi/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutREPP([FromRoute] int id, [FromBody] REPP rEPP)
+        public async Task<IActionResult> PutREPP( int id,  REPP rEPP)
         {
             if (!ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace ResourceManagerSystem.Controllers
 
         // DELETE: api/REPPApi/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteREPP([FromRoute] int id)
+        public async Task<IActionResult> DeleteREPP( int id)
         {
             if (!ModelState.IsValid)
             {

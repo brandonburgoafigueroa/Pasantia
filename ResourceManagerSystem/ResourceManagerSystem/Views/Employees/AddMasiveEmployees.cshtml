@@ -85,7 +85,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label asp-for="@Model[i].CivilState" class="control-label"></label>
-                                <select asp-for="@Model[i].CivilState" class="form-control"></select>
+                                <select asp-for="@Model[i].CivilState" class="form-control" asp-items="Html.GetEnumSelectList<CivilState>()"></select>
                                 <span asp-validation-for="@Model[i].CivilState" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
@@ -169,7 +169,7 @@
 
                             <div class="col-md-4">
                                 <label asp-for="@Model[i].TypeContrat" class="control-label"></label>
-                                <select asp-for="@Model[i].TypeContrat" class="form-control"></select>
+                                <select asp-for="@Model[i].TypeContrat" class="form-control" asp-items="Html.GetEnumSelectList<TypeContrat>()"></select>
                                 <span asp-validation-for="@Model[i].TypeContrat" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
