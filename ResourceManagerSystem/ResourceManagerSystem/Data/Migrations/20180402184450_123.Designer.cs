@@ -12,8 +12,8 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180329201807_8765432")]
-    partial class _8765432
+    [Migration("20180402184450_123")]
+    partial class _123
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -304,6 +304,8 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<int>("DeliveryID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Brand");
+
                     b.Property<string>("Description");
 
                     b.Property<string>("LotID");
@@ -404,6 +406,70 @@ namespace ResourceManagerSystem.Migrations
                     b.HasIndex("OperativeID");
 
                     b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.EmployeModelView", b =>
+                {
+                    b.Property<string>("CI");
+
+                    b.Property<DateTime>("AdmissionDate");
+
+                    b.Property<bool>("Basic");
+
+                    b.Property<DateTime>("BirthDate");
+
+                    b.Property<int>("CivilState");
+
+                    b.Property<DateTime>("DateEnd");
+
+                    b.Property<DateTime>("DateStart");
+
+                    b.Property<bool>("Degree");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("EmployeeCI");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<int>("Height");
+
+                    b.Property<bool>("HighSchool");
+
+                    b.Property<bool>("Illiterate");
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<bool>("Mental");
+
+                    b.Property<bool>("MiddleTechnician");
+
+                    b.Property<bool>("Motor");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("OperativeID");
+
+                    b.Property<int>("Phone");
+
+                    b.Property<int>("Sex");
+
+                    b.Property<int>("TypeContrat");
+
+                    b.Property<bool>("Visual");
+
+                    b.Property<int>("Weight");
+
+                    b.HasKey("CI");
+
+                    b.HasIndex("EmployeeCI");
+
+                    b.HasIndex("OperativeID");
+
+                    b.ToTable("EmployeModelView");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Enrolment", b =>
@@ -518,9 +584,6 @@ namespace ResourceManagerSystem.Migrations
                 {
                     b.Property<int>("ReppID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Brand")
-                        .IsRequired();
 
                     b.Property<string>("ColorName");
 
@@ -674,6 +737,18 @@ namespace ResourceManagerSystem.Migrations
                     b.HasOne("ResourceManagerSystem.Models.Operative")
                         .WithMany("Employee")
                         .HasForeignKey("OperativeID");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.EmployeModelView", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeCI");
+
+                    b.HasOne("ResourceManagerSystem.Models.Operative", "Position")
+                        .WithMany()
+                        .HasForeignKey("OperativeID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Enrolment", b =>

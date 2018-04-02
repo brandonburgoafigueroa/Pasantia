@@ -12,10 +12,9 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180329184527_1213434")]
-    partial class _1213434
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,11 +303,11 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<int>("DeliveryID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Brand");
+
                     b.Property<string>("Description");
 
-                    b.Property<int>("LotID");
-
-                    b.Property<string>("LotID1");
+                    b.Property<string>("LotID");
 
                     b.Property<int>("Quantity");
 
@@ -316,7 +315,7 @@ namespace ResourceManagerSystem.Migrations
 
                     b.HasKey("DeliveryID");
 
-                    b.HasIndex("LotID1");
+                    b.HasIndex("LotID");
 
                     b.HasIndex("ReppID");
 
@@ -335,7 +334,7 @@ namespace ResourceManagerSystem.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<int>("LotID");
+                    b.Property<string>("LotID");
 
                     b.Property<int>("Quantity");
 
@@ -408,6 +407,70 @@ namespace ResourceManagerSystem.Migrations
                     b.ToTable("Employee");
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.EmployeModelView", b =>
+                {
+                    b.Property<string>("CI");
+
+                    b.Property<DateTime>("AdmissionDate");
+
+                    b.Property<bool>("Basic");
+
+                    b.Property<DateTime>("BirthDate");
+
+                    b.Property<int>("CivilState");
+
+                    b.Property<DateTime>("DateEnd");
+
+                    b.Property<DateTime>("DateStart");
+
+                    b.Property<bool>("Degree");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("EmployeeCI");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<int>("Height");
+
+                    b.Property<bool>("HighSchool");
+
+                    b.Property<bool>("Illiterate");
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<bool>("Mental");
+
+                    b.Property<bool>("MiddleTechnician");
+
+                    b.Property<bool>("Motor");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("OperativeID");
+
+                    b.Property<int>("Phone");
+
+                    b.Property<int>("Sex");
+
+                    b.Property<int>("TypeContrat");
+
+                    b.Property<bool>("Visual");
+
+                    b.Property<int>("Weight");
+
+                    b.HasKey("CI");
+
+                    b.HasIndex("EmployeeCI");
+
+                    b.HasIndex("OperativeID");
+
+                    b.ToTable("EmployeModelView");
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Enrolment", b =>
                 {
                     b.Property<int>("CourseID");
@@ -441,26 +504,6 @@ namespace ResourceManagerSystem.Migrations
                     b.HasIndex("ProviderID");
 
                     b.ToTable("Lot");
-                });
-
-            modelBuilder.Entity("ResourceManagerSystem.Models.LotDelivery", b =>
-                {
-                    b.Property<int>("LotDeliveryID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("DeliveryID");
-
-                    b.Property<int>("LotID");
-
-                    b.Property<string>("LotID1");
-
-                    b.HasKey("LotDeliveryID");
-
-                    b.HasIndex("DeliveryID");
-
-                    b.HasIndex("LotID1");
-
-                    b.ToTable("LotDelivery");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Operative", b =>
@@ -541,9 +584,6 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<int>("ReppID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Brand")
-                        .IsRequired();
-
                     b.Property<string>("ColorName");
 
                     b.Property<string>("Name")
@@ -567,6 +607,22 @@ namespace ResourceManagerSystem.Migrations
                     b.HasKey("SizeName");
 
                     b.ToTable("Size");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Stock", b =>
+                {
+                    b.Property<int>("StockID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<int>("ReppID");
+
+                    b.HasKey("StockID");
+
+                    b.HasIndex("ReppID");
+
+                    b.ToTable("Stock");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -650,8 +706,8 @@ namespace ResourceManagerSystem.Migrations
             modelBuilder.Entity("ResourceManagerSystem.Models.Delivery", b =>
                 {
                     b.HasOne("ResourceManagerSystem.Models.Lot", "Lot")
-                        .WithMany()
-                        .HasForeignKey("LotID1");
+                        .WithMany("Delivery")
+                        .HasForeignKey("LotID");
 
                     b.HasOne("ResourceManagerSystem.Models.REPP", "Reep")
                         .WithMany()
@@ -682,6 +738,18 @@ namespace ResourceManagerSystem.Migrations
                         .HasForeignKey("OperativeID");
                 });
 
+            modelBuilder.Entity("ResourceManagerSystem.Models.EmployeModelView", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeCI");
+
+                    b.HasOne("ResourceManagerSystem.Models.Operative", "Position")
+                        .WithMany()
+                        .HasForeignKey("OperativeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("ResourceManagerSystem.Models.Enrolment", b =>
                 {
                     b.HasOne("ResourceManagerSystem.Models.Course", "Courses")
@@ -700,18 +768,6 @@ namespace ResourceManagerSystem.Migrations
                         .WithMany()
                         .HasForeignKey("ProviderID")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ResourceManagerSystem.Models.LotDelivery", b =>
-                {
-                    b.HasOne("ResourceManagerSystem.Models.Delivery", "Delivery")
-                        .WithMany()
-                        .HasForeignKey("DeliveryID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ResourceManagerSystem.Models.Lot", "Lot")
-                        .WithMany("LotDelivery")
-                        .HasForeignKey("LotID1");
                 });
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Operative", b =>
@@ -744,6 +800,14 @@ namespace ResourceManagerSystem.Migrations
                     b.HasOne("ResourceManagerSystem.Models.Size", "Size")
                         .WithMany()
                         .HasForeignKey("SizeName");
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Stock", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.REPP", "Repp")
+                        .WithMany()
+                        .HasForeignKey("ReppID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

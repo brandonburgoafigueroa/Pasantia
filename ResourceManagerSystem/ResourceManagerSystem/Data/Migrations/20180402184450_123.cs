@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ResourceManagerSystem.Migrations
 {
-    public partial class _1213434 : Migration
+    public partial class _123 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -314,7 +314,6 @@ namespace ResourceManagerSystem.Migrations
                 {
                     ReppID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Brand = table.Column<string>(nullable: false),
                     ColorName = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: false),
                     SizeName = table.Column<string>(nullable: true)
@@ -427,7 +426,7 @@ namespace ResourceManagerSystem.Migrations
                     Brand = table.Column<string>(nullable: false),
                     ColorName = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    LotID = table.Column<int>(nullable: false),
+                    LotID = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
                     ReppID = table.Column<int>(nullable: false),
                     SizeName = table.Column<string>(nullable: true)
@@ -456,14 +455,34 @@ namespace ResourceManagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Stock",
+                columns: table => new
+                {
+                    StockID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Quantity = table.Column<int>(nullable: false),
+                    ReppID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stock", x => x.StockID);
+                    table.ForeignKey(
+                        name: "FK_Stock_REPPS_ReppID",
+                        column: x => x.ReppID,
+                        principalTable: "REPPS",
+                        principalColumn: "ReppID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Deliveries",
                 columns: table => new
                 {
                     DeliveryID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Brand = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    LotID = table.Column<int>(nullable: false),
-                    LotID1 = table.Column<string>(nullable: true),
+                    LotID = table.Column<string>(nullable: true),
                     Quantity = table.Column<int>(nullable: false),
                     ReppID = table.Column<int>(nullable: false)
                 },
@@ -471,8 +490,8 @@ namespace ResourceManagerSystem.Migrations
                 {
                     table.PrimaryKey("PK_Deliveries", x => x.DeliveryID);
                     table.ForeignKey(
-                        name: "FK_Deliveries_Lot_LotID1",
-                        column: x => x.LotID1,
+                        name: "FK_Deliveries_Lot_LotID",
+                        column: x => x.LotID,
                         principalTable: "Lot",
                         principalColumn: "LotID",
                         onDelete: ReferentialAction.Restrict);
@@ -514,6 +533,53 @@ namespace ResourceManagerSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmployeModelView",
+                columns: table => new
+                {
+                    CI = table.Column<string>(nullable: false),
+                    AdmissionDate = table.Column<DateTime>(nullable: false),
+                    Basic = table.Column<bool>(nullable: false),
+                    BirthDate = table.Column<DateTime>(nullable: false),
+                    CivilState = table.Column<int>(nullable: false),
+                    DateEnd = table.Column<DateTime>(nullable: false),
+                    DateStart = table.Column<DateTime>(nullable: false),
+                    Degree = table.Column<bool>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    EmployeeCI = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
+                    Height = table.Column<int>(nullable: false),
+                    HighSchool = table.Column<bool>(nullable: false),
+                    Illiterate = table.Column<bool>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Mental = table.Column<bool>(nullable: false),
+                    MiddleTechnician = table.Column<bool>(nullable: false),
+                    Motor = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    OperativeID = table.Column<int>(nullable: false),
+                    Phone = table.Column<int>(nullable: false),
+                    Sex = table.Column<int>(nullable: false),
+                    TypeContrat = table.Column<int>(nullable: false),
+                    Visual = table.Column<bool>(nullable: false),
+                    Weight = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeModelView", x => x.CI);
+                    table.ForeignKey(
+                        name: "FK_EmployeModelView_Employee_EmployeeCI",
+                        column: x => x.EmployeeCI,
+                        principalTable: "Employee",
+                        principalColumn: "CI",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EmployeModelView_Operative_OperativeID",
+                        column: x => x.OperativeID,
+                        principalTable: "Operative",
+                        principalColumn: "OperativeID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Enrolment",
                 columns: table => new
                 {
@@ -537,33 +603,6 @@ namespace ResourceManagerSystem.Migrations
                         column: x => x.EmployeeCI,
                         principalTable: "Employee",
                         principalColumn: "CI",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LotDelivery",
-                columns: table => new
-                {
-                    LotDeliveryID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DeliveryID = table.Column<int>(nullable: false),
-                    LotID = table.Column<int>(nullable: false),
-                    LotID1 = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LotDelivery", x => x.LotDeliveryID);
-                    table.ForeignKey(
-                        name: "FK_LotDelivery_Deliveries_DeliveryID",
-                        column: x => x.DeliveryID,
-                        principalTable: "Deliveries",
-                        principalColumn: "DeliveryID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LotDelivery_Lot_LotID1",
-                        column: x => x.LotID1,
-                        principalTable: "Lot",
-                        principalColumn: "LotID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -632,9 +671,9 @@ namespace ResourceManagerSystem.Migrations
                 column: "OrganizingEntityID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Deliveries_LotID1",
+                name: "IX_Deliveries_LotID",
                 table: "Deliveries",
-                column: "LotID1");
+                column: "LotID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deliveries_ReppID",
@@ -662,6 +701,16 @@ namespace ResourceManagerSystem.Migrations
                 column: "OperativeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmployeModelView_EmployeeCI",
+                table: "EmployeModelView",
+                column: "EmployeeCI");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeModelView_OperativeID",
+                table: "EmployeModelView",
+                column: "OperativeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Enrolment_EmployeeCI",
                 table: "Enrolment",
                 column: "EmployeeCI");
@@ -670,16 +719,6 @@ namespace ResourceManagerSystem.Migrations
                 name: "IX_Lot_ProviderID",
                 table: "Lot",
                 column: "ProviderID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LotDelivery_DeliveryID",
-                table: "LotDelivery",
-                column: "DeliveryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LotDelivery_LotID1",
-                table: "LotDelivery",
-                column: "LotID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Operative_AdministrativeID",
@@ -706,6 +745,11 @@ namespace ResourceManagerSystem.Migrations
                 name: "IX_REPPS_SizeName",
                 table: "REPPS",
                 column: "SizeName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stock_ReppID",
+                table: "Stock",
+                column: "ReppID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -732,13 +776,19 @@ namespace ResourceManagerSystem.Migrations
                 name: "Contrat");
 
             migrationBuilder.DropTable(
+                name: "Deliveries");
+
+            migrationBuilder.DropTable(
                 name: "DeliveryModelView");
+
+            migrationBuilder.DropTable(
+                name: "EmployeModelView");
 
             migrationBuilder.DropTable(
                 name: "Enrolment");
 
             migrationBuilder.DropTable(
-                name: "LotDelivery");
+                name: "Stock");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -747,34 +797,25 @@ namespace ResourceManagerSystem.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Lot");
+
+            migrationBuilder.DropTable(
                 name: "Course");
 
             migrationBuilder.DropTable(
                 name: "Employee");
 
             migrationBuilder.DropTable(
-                name: "Deliveries");
+                name: "REPPS");
+
+            migrationBuilder.DropTable(
+                name: "Provider");
 
             migrationBuilder.DropTable(
                 name: "OrganizingEntity");
 
             migrationBuilder.DropTable(
                 name: "Operative");
-
-            migrationBuilder.DropTable(
-                name: "Lot");
-
-            migrationBuilder.DropTable(
-                name: "REPPS");
-
-            migrationBuilder.DropTable(
-                name: "Administrative");
-
-            migrationBuilder.DropTable(
-                name: "Region");
-
-            migrationBuilder.DropTable(
-                name: "Provider");
 
             migrationBuilder.DropTable(
                 name: "Color");
@@ -784,6 +825,12 @@ namespace ResourceManagerSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Contact");
+
+            migrationBuilder.DropTable(
+                name: "Administrative");
+
+            migrationBuilder.DropTable(
+                name: "Region");
         }
     }
 }
