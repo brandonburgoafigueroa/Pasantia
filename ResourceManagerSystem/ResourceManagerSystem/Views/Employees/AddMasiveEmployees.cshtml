@@ -22,13 +22,17 @@
                     <a href="#@i" data-toggle="tab">@i</a>
                 </li>
 }
-
-                    <div class="col-md-1">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                    <div class="navbar-fixed-bottom">
+                        <div class="col-lg-1">
+                            <input type="submit" value="Guardar" class="btn btn-success" />
+                            <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+                            <br />
+                            <br />
+                            <br />
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </div>
                     </div>
-                    <div>
-                        <a asp-action="Index">Back to List</a>
-                    </div>
+                   
 
 
                 </ul>

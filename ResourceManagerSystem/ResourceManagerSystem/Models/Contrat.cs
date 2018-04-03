@@ -19,8 +19,10 @@ namespace ResourceManagerSystem.Models
         [DisplayName("Tipo de contrato")]
         public TypeContrat TypeContrat { set; get; }
         [DisplayName("Fecha Inicio de contrato")]
+        [DataType(DataType.Date)]
         public DateTime DateStart{ set; get; }
         [DisplayName("Fecha Fin de contrato ")]
+        [DataType(DataType.Date)]
         public DateTime DateEnd { set; get; }
 
         public Employee Employee { set; get; }
