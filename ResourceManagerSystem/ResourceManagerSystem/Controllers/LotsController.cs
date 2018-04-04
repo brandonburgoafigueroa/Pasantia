@@ -48,7 +48,7 @@ namespace ResourceManagerSystem.Controllers
         // GET: Lots/Create
         public IActionResult Create()
         {
-            ViewData["ProviderID"] = new SelectList(_context.Provider, "ProviderID", "Address");
+            ViewData["ProviderID"] = new SelectList(_context.Provider, "ProviderID", "CompleteName", null, "City");
             return View();
         }
 

@@ -26,6 +26,9 @@ namespace ResourceManagerSystem.Models
         [Required(ErrorMessage = "La ciudad no puede estar vacia")]
         public string City { set; get; }
 
+        public string CompleteName => Name + "-" + Address;
+
+
         [Display(Name="Contacto")]
         public Contact Contact { set; get; }
 

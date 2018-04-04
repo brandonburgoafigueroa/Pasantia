@@ -44,7 +44,7 @@
             </div>
             <div class="col-md-4">
                 <label asp-for="Sex" class="control-label"></label>
-                <select asp-for="Sex" class="form-control"></select>
+                <select asp-for="Sex" class="form-control" asp-items="Html.GetEnumSelectList<Sex>()"></select>
                 <span asp-validation-for="Sex" class="text-danger"></span>
             </div>
             <div class="col-md-4">
@@ -54,7 +54,7 @@
             </div>
             <div class="col-md-4">
                 <label asp-for="CivilState" class="control-label"></label>
-                <select asp-for="CivilState" class="form-control"></select>
+                <select asp-for="CivilState" class="form-control" asp-items="Html.GetEnumSelectList<CivilState>()"></select>
                 <span asp-validation-for="CivilState" class="text-danger"></span>
             </div>
             <div class="col-md-4">

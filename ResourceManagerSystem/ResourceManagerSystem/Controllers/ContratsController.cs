@@ -50,6 +50,7 @@ namespace ResourceManagerSystem.Controllers
         public IActionResult Create()
         {
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
+            ViewData["CI"] = new SelectList(_context.Employee, "CI", "CI");
             return View();
         }
 
@@ -66,7 +67,7 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CI"] = new SelectList(_context.Employee, "CI", "FirstName", contrat.CI);
+            ViewData["CI"] = new SelectList(_context.Employee, "CI", "CI", contrat.CI);
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", contrat.OperativeID);
             return View(contrat);
         }
@@ -84,7 +85,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["CI"] = new SelectList(_context.Employee, "CI", "FirstName", contrat.CI);
+            ViewData["CI"] = new SelectList(_context.Employee, "CI", "CI", contrat.CI);
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", contrat.OperativeID);
             return View(contrat);
         }

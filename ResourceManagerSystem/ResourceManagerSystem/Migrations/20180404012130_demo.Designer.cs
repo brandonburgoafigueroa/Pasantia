@@ -12,8 +12,8 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180402184450_123")]
-    partial class _123
+    [Migration("20180404012130_demo")]
+    partial class demo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
