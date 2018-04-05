@@ -166,7 +166,7 @@ namespace ResourceManagerSystem.Controllers
             };
             ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName");
             ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName");
-            Dictionary<string, IEnumerable<string>> ComponentsAvaiable = new Dictionary<string, IEnumerable<string>>
+            Dictionary<string, IEnumerable<string>> ComponentsAvaiable = new Dictionary<string, IEnumerable<string>> 
             {
                 { "Repps", ReppsAvaiable },
                 { "Colors", ColorsAvaiable },
