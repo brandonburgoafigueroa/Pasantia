@@ -7,7 +7,8 @@ namespace ResourceManagerSystem.Models
 {
     public abstract class Sinister
     {
-        public int ID { set; get; }
+        public int SinisterID { set; get; }
+        public string Description { set; get; }
         public DateTime Date { set; get; }
 
     }

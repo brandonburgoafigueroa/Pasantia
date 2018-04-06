@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NToastNotify;
 using ResourceManagerSystem.Models;
 using ResourceManagerSystem.Models.AccountViewModels;
 using ResourceManagerSystem.Services;
@@ -24,17 +25,19 @@ namespace ResourceManagerSystem.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
-
+        protected readonly IToastNotification _toastNotification;
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+             IToastNotification toastNotification)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _toastNotification = toastNotification;
         }
 
         [TempData]
@@ -65,6 +68,7 @@ namespace ResourceManagerSystem.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    _toastNotification.AddSuccessToastMessage("Bienvenido "+model.Email+" ¡¡¡¡");
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -82,7 +86,7 @@ namespace ResourceManagerSystem.Controllers
                     return View(model);
                 }
             }
-
+            _toastNotification.AddWarningToastMessage("Credenciales incorrectos");
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -232,6 +236,7 @@ namespace ResourceManagerSystem.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
+                    _toastNotification.AddSuccessToastMessage("Usuario "+model.Email+" registrado");
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);

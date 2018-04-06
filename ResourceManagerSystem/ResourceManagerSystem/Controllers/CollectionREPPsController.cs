@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -13,10 +14,11 @@ namespace ResourceManagerSystem.Controllers
     public class CollectionREPPsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public CollectionREPPsController(ApplicationDbContext context)
+        protected readonly IToastNotification _toastNotification;
+        public CollectionREPPsController(ApplicationDbContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: CollectionREPPs
@@ -37,7 +39,7 @@ namespace ResourceManagerSystem.Controllers
             var collectionREPP = await _context.CollectionsREPP
                 .Include(c => c.Operative)
                 .Include(c => c.REEP)
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(m => m.CollectionREPPID == id);
             if (collectionREPP == null)
             {
                 return NotFound();
@@ -49,8 +51,8 @@ namespace ResourceManagerSystem.Controllers
         // GET: CollectionREPPs/Create
         public IActionResult Create()
         {
-            ViewData["OperativeID"] = new SelectList(_context.Set<Operative>(), "OperativeID", "OperativeID");
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "ReppID");
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", null, "ColorName");
             return View();
         }
 
@@ -59,16 +61,28 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ReppID,OperativeID")] CollectionREPP collectionREPP)
+        public async Task<IActionResult> Create([Bind("CollectionREPPID,ReppID,OperativeID")] CollectionREPP collectionREPP)
         {
+            var items = Request.Form["SelectedRepp"];
+            _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.CollectionsREPP ON");
             if (ModelState.IsValid)
             {
-                _context.Add(collectionREPP);
+                foreach (var item in items)
+                {
+                    int reppID = Convert.ToInt32(item);
+                    if (!CollectionREPPExists(collectionREPP.OperativeID, reppID))
+                    {
+                        CollectionREPP c = new CollectionREPP() { ReppID = reppID, OperativeID = collectionREPP.OperativeID };
+                        _context.CollectionsREPP.Add(c);
+                    }
+
+                }
+                _toastNotification.AddSuccessToastMessage("Coleccion de repps añadida exitosamente");
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OperativeID"] = new SelectList(_context.Set<Operative>(), "OperativeID", "OperativeID", collectionREPP.OperativeID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "ReppID", collectionREPP.ReppID);
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", collectionREPP.ReppID);
             return View(collectionREPP);
         }
 
@@ -80,13 +94,13 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.ID == id);
+            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.CollectionREPPID == id);
             if (collectionREPP == null)
             {
                 return NotFound();
             }
-            ViewData["OperativeID"] = new SelectList(_context.Set<Operative>(), "OperativeID", "OperativeID", collectionREPP.OperativeID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "ReppID", collectionREPP.ReppID);
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", collectionREPP.ReppID);
             return View(collectionREPP);
         }
 
@@ -95,9 +109,9 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ReppID,OperativeID")] CollectionREPP collectionREPP)
+        public async Task<IActionResult> Edit(int id, [Bind("CollectionREPPID,ReppID,OperativeID")] CollectionREPP collectionREPP)
         {
-            if (id != collectionREPP.ID)
+            if (id != collectionREPP.CollectionREPPID)
             {
                 return NotFound();
             }
@@ -111,7 +125,7 @@ namespace ResourceManagerSystem.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CollectionREPPExists(collectionREPP.ID))
+                    if (!CollectionREPPExists(collectionREPP.CollectionREPPID))
                     {
                         return NotFound();
                     }
@@ -122,8 +136,8 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OperativeID"] = new SelectList(_context.Set<Operative>(), "OperativeID", "OperativeID", collectionREPP.OperativeID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "ReppID", collectionREPP.ReppID);
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", collectionREPP.OperativeID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", collectionREPP.ReppID);
             return View(collectionREPP);
         }
 
@@ -138,7 +152,7 @@ namespace ResourceManagerSystem.Controllers
             var collectionREPP = await _context.CollectionsREPP
                 .Include(c => c.Operative)
                 .Include(c => c.REEP)
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(m => m.CollectionREPPID == id);
             if (collectionREPP == null)
             {
                 return NotFound();
@@ -152,7 +166,7 @@ namespace ResourceManagerSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.ID == id);
+            var collectionREPP = await _context.CollectionsREPP.SingleOrDefaultAsync(m => m.CollectionREPPID == id);
             _context.CollectionsREPP.Remove(collectionREPP);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -160,7 +174,11 @@ namespace ResourceManagerSystem.Controllers
 
         private bool CollectionREPPExists(int id)
         {
-            return _context.CollectionsREPP.Any(e => e.ID == id);
+            return _context.CollectionsREPP.Any(e => e.CollectionREPPID == id);
+        }
+        private bool CollectionREPPExists(int idOperative, int idRepp)
+        {
+            return _context.CollectionsREPP.Any(e => e.OperativeID == idOperative && e.ReppID == idRepp);
         }
     }
 }

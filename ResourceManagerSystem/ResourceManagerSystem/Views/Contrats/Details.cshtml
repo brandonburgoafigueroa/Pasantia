@@ -1,0 +1,54 @@
+﻿@model ResourceManagerSystem.Models.Contrat
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Contrat</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeContrat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TypeContrat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateStart)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateStart)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateEnd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateEnd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Administrative)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Administrative.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Employee.CI)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Operative)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Operative.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ContratID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -54,7 +54,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReppID,Code,Name,Size,Brand,Color")] REPP rEPP)
+        public async Task<IActionResult> Create([Bind("ReppID,Name,Description")] REPP rEPP)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReppID,Code,Name,Size,Brand,Color")] REPP rEPP)
+        public async Task<IActionResult> Edit(int id, [Bind("ReppID,Name,Description")] REPP rEPP)
         {
             if (id != rEPP.ReppID)
             {

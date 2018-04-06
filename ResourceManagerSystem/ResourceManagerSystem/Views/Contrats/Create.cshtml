@@ -1,0 +1,77 @@
+﻿@model ResourceManagerSystem.Models.Contrat
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Contrat</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CI" class="control-label"></label>
+                <select asp-for="CI" class ="form-control" asp-items="ViewBag.CI"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="OperativeID" class="control-label"></label>
+                <select asp-for="OperativeID" class ="form-control" asp-items="ViewBag.OperativeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdministrativeID" class="control-label"></label>
+                <select asp-for="AdministrativeID" class ="form-control" asp-items="ViewBag.AdministrativeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeContrat" class="control-label"></label>
+                <select asp-for="TypeContrat" class="form-control" asp-items="Html.GetEnumSelectList<TypeContrat>()"></select>
+                <span asp-validation-for="TypeContrat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateStart" class="control-label"></label>
+                <input asp-for="DateStart" class="form-control" />
+                <span asp-validation-for="DateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="EndDate">
+                <label asp-for="DateEnd" class="control-label"></label>
+                <input asp-for="DateEnd" class="form-control" />
+                <span asp-validation-for="DateEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    var Select = $("#TypeContrat");
+    var EndDate = $("#EndDate");
+    Select.change(function () {
+        var val = $("#TypeContrat option:selected").val();
+        if (val == 2) {
+            EndDate.hide();
+            var now = new Date();
+
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            $("#DateEnd").val(today);
+        }
+        else {
+            EndDate.show();
+            $("#DateEnd").val("");
+        }
+    });
+</script>

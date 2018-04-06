@@ -14,7 +14,5 @@ namespace ResourceManagerSystem.Models
         public bool MiddleTechnician { set; get; }
         public bool HighTechnician { set; get; }
         public bool Degree { set; get; }
-
-
     }
 }

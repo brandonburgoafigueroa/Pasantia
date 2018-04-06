@@ -7,9 +7,9 @@ namespace ResourceManagerSystem.Models
 {
     public class BodyPart
     {
-        public int ID { set; get; }
-        public BodyPart RootPart { set; get; }
-        public ICollection<BodyPart> SubSectors { set; get; }
-        public string Code { set; get; }
+        public int BodyPartID { set; get; }
+        public string Name { set; get; }
+
+        public ICollection<BodyPartsAffected> BodyPartsAffected { set; get; }
     }
 }

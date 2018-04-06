@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ResourceManagerSystem</title>
-
+    <title>@ViewData["Title"] - Sistema Gestor de Recursos Obras Publicas</title>
+    <script src="~/lib/toastr/toastr.js"></script>
+    <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -26,13 +27,64 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ResourceManagerSystem</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Obras Publicas</a></li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Empleados <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Employees" asp-action="Index">Gestionar empleados</a></li>
+                            <li><a asp-area="" asp-controller="Contrats" asp-action="Index">Gestionar Contratos</a></li>
+                        </ul>
+
+                    </li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Gestionar Cargos <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Administratives" asp-action="Index">Gestionar Cargos Administrativos</a></li>
+                            <li><a asp-area="" asp-controller="Operatives" asp-action="Index">Gestionar Cargos Operativos</a></li>
+                            <li><a asp-area="" asp-controller="Regions" asp-action="Index">Gestionar Regiones</a></li>
+
+                        </ul>
+                    </li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Gestionar Cursos <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Courses" asp-action="Index">Gestionar Cursos</a></li>
+                            <li><a asp-area="" asp-controller="Enrolments" asp-action="Index">Gestionar Inscripciones</a></li>
+                            <li><a asp-area="" asp-controller="OrganizingEntities" asp-action="Index">Gestionar Entidades organizadoras</a></li>
+                        </ul>
+                    </li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Gestionar REPP <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="REPPs" asp-action="Index">Gestionar REPPS</a></li>
+                            <li><a asp-area="" asp-controller="Sizes" asp-action="Index">Gestionar Tamaños</a></li>
+                            <li><a asp-area="" asp-controller="Colors" asp-action="Index">Gestionar Colores</a></li>
+                            <li><a asp-area="" asp-controller="CollectionREPPs" asp-action="Index">Gestionar Colecciones de REPP</a></li>
+                            <li><a asp-area="" asp-controller="Lots" asp-action="Index">Gestionar Lotes</a></li>
+                            <li><a asp-area="" asp-controller="Stocks" asp-action="Index">Gestionar Stock</a></li>
+                        </ul>
+                    </li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Gestionar Proveedores <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Providers" asp-action="Index">Gestionar Proveedores</a></li>
+                            <li><a asp-area="" asp-controller="Contacts" asp-action="Index">Gestionar Contactos</a></li>
+                        </ul>
+                    </li>
+
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -42,7 +94,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - ResourceManagerSystem</p>
+            <p>&copy; 2018 - Sistema Gestor de Recursos Obras Publicas</p>
         </footer>
     </div>
 
@@ -66,7 +118,8 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
+    @await Component.InvokeAsync("NToastNotify")
+    <script src="~/lib/toastr/toastr.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

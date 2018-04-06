@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 using ResourceManagerSystem.Services;
+using NToastNotify.Libraries;
+using NToastNotify;
 
 namespace ResourceManagerSystem
 {
@@ -29,13 +31,30 @@ namespace ResourceManagerSystem
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+                
+ 
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
 
+            {
+                ProgressBar = true,
+                PositionClass = ToastPositions.TopRight,
+                SuccessTitle = "Exito",
+                InfoTitle = "Informacion",
+                ErrorTitle = "Error",
+                WarningTitle = "Advertencia",                    
+        });
             services.AddMvc();
         }
 
@@ -52,6 +71,7 @@ namespace ResourceManagerSystem
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseNToastNotify();
 
             app.UseStaticFiles();
 

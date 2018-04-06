@@ -22,8 +22,7 @@ namespace ResourceManagerSystem.Controllers
         // GET: Operatives
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Operative.Include(o => o.Administrative).Include(o => o.Region);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Operative.ToListAsync());
         }
 
         // GET: Operatives/Details/5
@@ -35,8 +34,6 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var operative = await _context.Operative
-                .Include(o => o.Administrative)
-                .Include(o => o.Region)
                 .SingleOrDefaultAsync(m => m.OperativeID == id);
             if (operative == null)
             {
@@ -49,8 +46,6 @@ namespace ResourceManagerSystem.Controllers
         // GET: Operatives/Create
         public IActionResult Create()
         {
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "AdministrativeID");
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "RegionID");
             return View();
         }
 
@@ -59,7 +54,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OperativeID,RegionID,AdministrativeID,Code,Name")] Operative operative)
+        public async Task<IActionResult> Create([Bind("OperativeID,Name")] Operative operative)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +62,6 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "AdministrativeID", operative.AdministrativeID);
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "RegionID", operative.RegionID);
             return View(operative);
         }
 
@@ -85,8 +78,6 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "AdministrativeID", operative.AdministrativeID);
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "RegionID", operative.RegionID);
             return View(operative);
         }
 
@@ -95,7 +86,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OperativeID,RegionID,AdministrativeID,Code,Name")] Operative operative)
+        public async Task<IActionResult> Edit(int id, [Bind("OperativeID,Name")] Operative operative)
         {
             if (id != operative.OperativeID)
             {
@@ -122,8 +113,6 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "AdministrativeID", operative.AdministrativeID);
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "RegionID", operative.RegionID);
             return View(operative);
         }
 
@@ -136,8 +125,6 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var operative = await _context.Operative
-                .Include(o => o.Administrative)
-                .Include(o => o.Region)
                 .SingleOrDefaultAsync(m => m.OperativeID == id);
             if (operative == null)
             {

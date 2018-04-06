@@ -22,7 +22,8 @@ namespace ResourceManagerSystem.Controllers
         // GET: Administratives
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Administrative.ToListAsync());
+            var applicationDbContext = _context.Administrative.Include(a => a.Region);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Administratives/Details/5
@@ -34,6 +35,7 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var administrative = await _context.Administrative
+                .Include(a => a.Region)
                 .SingleOrDefaultAsync(m => m.AdministrativeID == id);
             if (administrative == null)
             {
@@ -46,6 +48,7 @@ namespace ResourceManagerSystem.Controllers
         // GET: Administratives/Create
         public IActionResult Create()
         {
+            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AdministrativeID,AdministrativeName")] Administrative administrative)
+        public async Task<IActionResult> Create([Bind("AdministrativeID,Name,RegionID")] Administrative administrative)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", administrative.RegionID);
             return View(administrative);
         }
 
@@ -78,6 +82,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", administrative.RegionID);
             return View(administrative);
         }
 
@@ -86,7 +91,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AdministrativeID,AdministrativeName")] Administrative administrative)
+        public async Task<IActionResult> Edit(int id, [Bind("AdministrativeID,Name,RegionID")] Administrative administrative)
         {
             if (id != administrative.AdministrativeID)
             {
@@ -113,6 +118,7 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", administrative.RegionID);
             return View(administrative);
         }
 
@@ -125,6 +131,7 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var administrative = await _context.Administrative
+                .Include(a => a.Region)
                 .SingleOrDefaultAsync(m => m.AdministrativeID == id);
             if (administrative == null)
             {

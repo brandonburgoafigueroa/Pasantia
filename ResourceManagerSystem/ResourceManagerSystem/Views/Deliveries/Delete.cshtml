@@ -1,0 +1,57 @@
+﻿@model ResourceManagerSystem.Models.Delivery
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Delivery</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Brand)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Brand)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Unit)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Lot)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Lot.LotID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Reep)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reep.Description)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="DeliveryID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
