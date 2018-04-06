@@ -73,12 +73,12 @@ namespace ResourceManagerSystem.Models
         //--EndGrade
         //Inabilities
 
-        [Display(Name = "Visual")]
-        public bool Visual { set; get; }
-        [Display(Name = "Motor")]
-        public bool Motor { set; get; }
-        [Display(Name = "Mental")]
-        public bool Mental { set; get; }
+        [DisplayName("Es discapacitado?")]
+        public bool IsDisabled { set; get; }
+        [Required]
+        [DisplayName("Grado de inhabilidad")]
+        [Range(0, 100,ErrorMessage ="El rango debe estar entre 0 y 100")]
+        public int InhabilitiesGrade { set; get; }
         //--EndInabilities
         [NotMapped]
         public string CompleteName

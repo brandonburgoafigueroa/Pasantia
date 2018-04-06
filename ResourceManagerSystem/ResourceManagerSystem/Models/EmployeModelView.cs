@@ -72,17 +72,19 @@ namespace ResourceManagerSystem.Models
         public bool Degree { set; get; }
         //--EndGrade
         //Inabilities
-
-        [Display(Name = "Visual")]
-        public bool Visual { set; get; }
-        [Display(Name = "Motor")]
-        public bool Motor { set; get; }
-        [Display(Name = "Mental")]
-        public bool Mental { set; get; }
-
+        [DisplayName("Grado de inhabilidad")]
+        public bool IsDisabled { set; get; }
+        [Required]
+        [DisplayName("Grado de inhabilidad")]
+        [Range(0, 100, ErrorMessage = "El rango debe estar entre 0 y 100")]
+        public int InhabilitiesGrade { set; get; }
         //contrat sector
         [DisplayName("Cargo operativo")]
         public int OperativeID { set; get; }
+
+        [ForeignKey("Administrative")]
+        [DisplayName("Cargo administrativo")]
+        public int AdministrativeID { set; get; }
         [DisplayName("Tipo de contrato")]
         public TypeContrat TypeContrat { set; get; }
         [DisplayName("Fecha Inicio de contrato")]
@@ -94,5 +96,7 @@ namespace ResourceManagerSystem.Models
 
         public Operative Position { set; get; }
         public Employee Employee { set; get; }
+        public Administrative Administrative { set; get; }
+
     }
 }

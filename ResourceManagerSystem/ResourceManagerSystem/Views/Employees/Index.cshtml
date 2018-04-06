@@ -6,6 +6,7 @@
 
 <h2>Index</h2>
 
+
 <!-- Modal -->
 <div class="modal fade" id="Masive" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -36,6 +37,10 @@
     <a asp-action="Create">Create New</a>
     |
     <a href="" data-toggle="modal" data-target="#Masive">Create Masive with contract</a>
+</p>
+
+<p>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -70,7 +75,30 @@
             <th>
                 @Html.DisplayNameFor(model => model.Weight)
             </th>
-            
+            <th>
+                @Html.DisplayNameFor(model => model.AdmissionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Illiterate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Basic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HighSchool)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiddleTechnician)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Degree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDisabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InhabilitiesGrade)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -108,7 +136,30 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Weight)
                 </td>
-               
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdmissionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Illiterate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Basic)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HighSchool)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MiddleTechnician)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Degree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDisabled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InhabilitiesGrade)
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.CI">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.CI">Details</a> |
@@ -118,4 +169,3 @@
         }
     </tbody>
 </table>
-@Html.Partial("_ContentDataTable")

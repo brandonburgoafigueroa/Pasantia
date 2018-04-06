@@ -54,7 +54,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CI,Name,FirstName,LastName,Phone,Email,Sex,BirthDate,CivilState,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,Degree,Visual,Motor,Mental")] Employee employee)
+        public async Task<IActionResult> Create([Bind("CI,Name,FirstName,LastName,Phone,Email,Sex,BirthDate,CivilState,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,Degree,IsDisabled,InhabilitiesGrade")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CI,Name,FirstName,LastName,Phone,Email,Sex,BirthDate,CivilState,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,Degree,Visual,Motor,Mental")] Employee employee)
+        public async Task<IActionResult> Edit(string id, [Bind("CI,Name,FirstName,LastName,Phone,Email,Sex,BirthDate,CivilState,Height,Weight,AdmissionDate,Illiterate,Basic,HighSchool,MiddleTechnician,Degree,IsDisabled,InhabilitiesGrade")] Employee employee)
         {
             if (id != employee.CI)
             {
@@ -147,7 +147,8 @@ namespace ResourceManagerSystem.Controllers
         public IActionResult AddMasiveEmployees(int quantity)
         {
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
-            List<EmployeModelView> model=new List<EmployeModelView>();
+            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name");
+            List<EmployeModelView> model = new List<EmployeModelView>();
             for (int i = 0; i < quantity; i++)
             {
                 model.Add(new EmployeModelView() { });
@@ -164,44 +165,49 @@ namespace ResourceManagerSystem.Controllers
         {
             foreach (var item in model)
             {
-                Employee employee = new Employee() {
-                    CI =item.CI,
-                    AdmissionDate =item.AdmissionDate,
-                    Basic =item.Basic,
-                    BirthDate =item.BirthDate,
-                    CivilState =item.CivilState,
-                    Degree =item.Degree,
-                    Email=item.Email,
-                    FirstName=item.FirstName,
-                    LastName=item.LastName,
-                    Name=item.Name,
-                    Height=item.Height,
-                    Weight=item.Weight,
-                    HighSchool=item.HighSchool,
-                    Illiterate=item.Illiterate,
-                    Mental=item.Mental,
-                    MiddleTechnician=item.MiddleTechnician,
-                    Motor=item.Motor,
-                    Sex=item.Sex,
-                    Visual=item.Visual,
-                    Phone=item.Phone,
+                Employee employee = new Employee()
+                {
+                    CI = item.CI,
+                    AdmissionDate = item.AdmissionDate,
+                    Basic = item.Basic,
+                    BirthDate = item.BirthDate,
+                    CivilState = item.CivilState,
+                    Degree = item.Degree,
+                    Email = item.Email,
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    Name = item.Name,
+                    Height = item.Height,
+                    Weight = item.Weight,
+                    HighSchool = item.HighSchool,
+                    Illiterate = item.Illiterate,
+                    IsDisabled=item.IsDisabled,
+                    InhabilitiesGrade=item.InhabilitiesGrade,
+                    MiddleTechnician = item.MiddleTechnician,
+                    Sex = item.Sex, 
+                    Phone = item.Phone,
                 };
-                Contrat contrat = new Contrat() {
-                    CI=item.CI,
-                    DateEnd=item.DateEnd,
-                    DateStart=item.DateStart,
-                    OperativeID=item.OperativeID,
-                    TypeContrat=item.TypeContrat,
+                Contrat contrat = new Contrat()
+                {
+                    CI = item.CI,
+                    DateEnd = item.DateEnd,
+                    DateStart = item.DateStart,
+                    OperativeID = item.OperativeID,
+                    AdministrativeID=item.AdministrativeID,
+                    TypeContrat = item.TypeContrat,
                 };
                 if (!EmployeeExists(employee.CI))
                 {
-                    _context.Employee.Add(employee);                    
+                    _context.Employee.Add(employee);
                     _context.Contrat.Add(contrat);
                     await _context.SaveChangesAsync();
                 }
             }
             return RedirectToAction(nameof(Index));
         }
+
+
+
         private bool EmployeeExists(string id)
         {
             return _context.Employee.Any(e => e.CI == id);

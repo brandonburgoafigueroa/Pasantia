@@ -1,207 +1,395 @@
 ﻿@model List<ResourceManagerSystem.Models.EmployeModelView>
 
+
+
 @{
+
     ViewData["Title"] = "AddMasiveEmployees";
+
 }
+
+
+
+
 
 
 
 <hr />
+
 <div class="row">
+
     <div class="col-md-4">
+
         <form asp-action="AddMasiveEmployees" enctype="multipart/form-data">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
+
+
+
             <div id="exTab1" class="container">
+
                 <ul class="nav nav-pills">
 
+
+
                     @for (int i = 0; i < Model.Count; i++)
-    {
-                <li>
-                    <a href="#@i" data-toggle="tab">@i</a>
-                </li>
-}
+
+                    {
+
+                        <li>
+
+                            <a href="#@i" data-toggle="tab">@i</a>
+
+                        </li>
+
+                    }
+
                     <div class="navbar-fixed-bottom">
+
                         <div class="col-lg-1">
+
                             <input type="submit" value="Guardar" class="btn btn-success" />
+
                             <a class="btn btn-danger" asp-action="Index">Cancelar</a>
+
                             <br />
+
                             <br />
+
                             <br />
+
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                         </div>
+
                     </div>
-                   
+
+
+
+
+
 
 
                 </ul>
 
+
+
                 <div class="tab-content clearfix">
+
                     @for (int i = 0; i < Model.Count; i++)
+
                     {
-                        <div class="tab-pane" id="@i">
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].CI" class="control-label"></label>
-                                <input asp-for="@Model[i].CI" class="form-control" />
-                                <span asp-validation-for="@Model[i].CI" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].Name" class="control-label"></label>
-                                <input asp-for="@Model[i].Name" class="form-control" />
-                                <span asp-validation-for="@Model[i].Name" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].Name" class="control-label"></label>
-                                <input asp-for="@Model[i].Name" class="form-control" />
-                                <span asp-validation-for="@Model[i].Name" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].FirstName" class="control-label"></label>
-                                <input asp-for="@Model[i].FirstName" class="form-control" />
-                                <span asp-validation-for="@Model[i].FirstName" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].LastName" class="control-label"></label>
-                                <input asp-for="@Model[i].LastName" class="form-control" />
-                                <span asp-validation-for="@Model[i].LastName" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].Phone" class="control-label"></label>
-                                <input asp-for="@Model[i].Phone" class="form-control" />
-                                <span asp-validation-for="@Model[i].Phone" class="text-danger"></span>
-                            </div>
 
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].Email" class="control-label"></label>
-                                <input asp-for="@Model[i].Email" class="form-control" />
-                                <span asp-validation-for="@Model[i].Email" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].Sex" class="control-label"></label>
-                                <select asp-for="@Model[i].Sex" class="form-control" asp-items="Html.GetEnumSelectList<Sex>()"></select>
-                                <span asp-validation-for="@Model[i].Sex" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].BirthDate" class="control-label"></label>
-                                <input asp-for="@Model[i].BirthDate" class="form-control" />
-                                <span asp-validation-for="@Model[i].BirthDate" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].CivilState" class="control-label"></label>
-                                <select asp-for="@Model[i].CivilState" class="form-control" asp-items="Html.GetEnumSelectList<CivilState>()"></select>
-                                <span asp-validation-for="@Model[i].CivilState" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].Height" class="control-label"></label>
-                                <input asp-for="@Model[i].Height" class="form-control" />
-                                <span asp-validation-for="@Model[i].Height" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].Weight" class="control-label"></label>
-                                <input asp-for="@Model[i].Weight" class="form-control" />
-                                <span asp-validation-for="@Model[i].Weight" class="text-danger"></span>
-                            </div>
+                    <div class="tab-pane" id="@i">
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].CI" class="control-label"></label>
+
+                            <input asp-for="@Model[i].CI" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].CI" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].Name" class="control-label"></label>
+
+                            <input asp-for="@Model[i].Name" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].Name" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].Name" class="control-label"></label>
+
+                            <input asp-for="@Model[i].Name" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].Name" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].FirstName" class="control-label"></label>
+
+                            <input asp-for="@Model[i].FirstName" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].FirstName" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].LastName" class="control-label"></label>
+
+                            <input asp-for="@Model[i].LastName" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].LastName" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].Phone" class="control-label"></label>
+
+                            <input asp-for="@Model[i].Phone" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].Phone" class="text-danger"></span>
+
+                        </div>
 
 
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].AdmissionDate" class="control-label"></label>
-                                <input asp-for="@Model[i].AdmissionDate" class="form-control" />
-                                <span asp-validation-for="@Model[i].AdmissionDate" class="text-danger"></span>
-                            </div>
 
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="@Model[i].Illiterate" /> @Html.DisplayNameFor(model => model[i].Illiterate)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="@Model[i].Basic" /> @Html.DisplayNameFor(model => @Model[i].Basic)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="@Model[i].HighSchool" /> @Html.DisplayNameFor(model => @Model[i].HighSchool)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="@Model[i].MiddleTechnician" /> @Html.DisplayNameFor(model => @Model[i].MiddleTechnician)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="@Model[i].Degree" /> @Html.DisplayNameFor(model => @Model[i].Degree)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="@Model[i].Visual" /> @Html.DisplayNameFor(model => @Model[i].Visual)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="@Model[i].Motor" /> @Html.DisplayNameFor(model => @Model[i].Motor)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="@Model[i].Mental" /> @Html.DisplayNameFor(model => @Model[i].Mental)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].OperativeID" class="control-label"></label>
-                                <select asp-for="@Model[i].OperativeID" class="form-control" asp-items="ViewBag.OperativeID"></select>
-                            </div>
+                        <div class="col-md-4">
 
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].TypeContrat" class="control-label"></label>
-                                <select asp-for="@Model[i].TypeContrat" class="form-control" asp-items="Html.GetEnumSelectList<TypeContrat>()"></select>
-                                <span asp-validation-for="@Model[i].TypeContrat" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].DateStart" class="control-label"></label>
-                                <input asp-for="@Model[i].DateStart" class="form-control" />
-                                <span asp-validation-for="@Model[i].DateStart" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-4">
-                                <label asp-for="@Model[i].DateEnd" class="control-label"></label>
-                                <input asp-for="@Model[i].DateEnd" class="form-control" />
-                                <span asp-validation-for="@Model[i].DateEnd" class="text-danger"></span>
+                            <label asp-for="@Model[i].Email" class="control-label"></label>
+
+                            <input asp-for="@Model[i].Email" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].Email" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].Sex" class="control-label"></label>
+
+                            <select asp-for="@Model[i].Sex" class="form-control" asp-items="Html.GetEnumSelectList<Sex>()"></select>
+
+                            <span asp-validation-for="@Model[i].Sex" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].BirthDate" class="control-label"></label>
+
+                            <input asp-for="@Model[i].BirthDate" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].BirthDate" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].CivilState" class="control-label"></label>
+
+                            <select asp-for="@Model[i].CivilState" class="form-control" asp-items="Html.GetEnumSelectList<CivilState>()"></select>
+
+                            <span asp-validation-for="@Model[i].CivilState" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].Height" class="control-label"></label>
+
+                            <input asp-for="@Model[i].Height" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].Height" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].Weight" class="control-label"></label>
+
+                            <input asp-for="@Model[i].Weight" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].Weight" class="text-danger"></span>
+
+                        </div>
+
+
+
+
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].AdmissionDate" class="control-label"></label>
+
+                            <input asp-for="@Model[i].AdmissionDate" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].AdmissionDate" class="text-danger"></span>
+
+                        </div>
+
+
+
+                        <div class="col-md-4">
+
+                            <div class="checkbox">
+
+                                <label>
+
+                                    <input asp-for="@Model[i].Illiterate" /> @Html.DisplayNameFor(model => model[i].Illiterate)
+
+                                </label>
+
                             </div>
 
                         </div>
+
+                        <div class="col-md-4">
+
+                            <div class="checkbox">
+
+                                <label>
+
+                                    <input asp-for="@Model[i].Basic" /> @Html.DisplayNameFor(model => @Model[i].Basic)
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="checkbox">
+
+                                <label>
+
+                                    <input asp-for="@Model[i].HighSchool" /> @Html.DisplayNameFor(model => @Model[i].HighSchool)
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="checkbox">
+
+                                <label>
+
+                                    <input asp-for="@Model[i].MiddleTechnician" /> @Html.DisplayNameFor(model => @Model[i].MiddleTechnician)
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="checkbox">
+
+                                <label>
+
+                                    <input asp-for="@Model[i].Degree" /> @Html.DisplayNameFor(model => @Model[i].Degree)
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="checkbox">
+
+                                <label>
+
+                                    <input asp-for="@Model[i].IsDisabled" /> @Html.DisplayNameFor(model => @Model[i].IsDisabled)
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <label asp-for="@Model[i].InhabilitiesGrade" class="control-label"></label>
+                            <input asp-for="@Model[i].InhabilitiesGrade" class="form-control" />
+                            <span asp-validation-for="@Model[i].InhabilitiesGrade" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].OperativeID" class="control-label"></label>
+
+                            <select asp-for="@Model[i].OperativeID" class="form-control" asp-items="ViewBag.OperativeID"></select>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="@Model[i].AdministrativeID" class="control-label"></label>
+                            <select asp-for="@Model[i].AdministrativeID" class="form-control" asp-items="ViewBag.AdministrativeID"></select>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].TypeContrat" class="control-label"></label>
+
+                            <select asp-for="@Model[i].TypeContrat" class="form-control" asp-items="Html.GetEnumSelectList<TypeContrat>()"></select>
+
+                            <span asp-validation-for="@Model[i].TypeContrat" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].DateStart" class="control-label"></label>
+
+                            <input asp-for="@Model[i].DateStart" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].DateStart" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label asp-for="@Model[i].DateEnd" class="control-label"></label>
+
+                            <input asp-for="@Model[i].DateEnd" class="form-control" />
+
+                            <span asp-validation-for="@Model[i].DateEnd" class="text-danger"></span>
+
+                        </div>
+
+
+
+                    </div>
+
                     }
 
 
+
+
+
                 </div>
+
             </div>
 
 
 
 
+
+
+
+
+
         </form>
+
     </div>
+
 </div>
 
 
+
+
+
 @section Scripts {
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }
