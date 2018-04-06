@@ -27,6 +27,7 @@ namespace ResourceManagerSystem.Models
         public string Brand { set; get; }
         [DisplayName("Cantidad")]
         public int Quantity { set; get; }
+        public Unit Unit { set; get; }
 
         public Color Color { set; get; }
         public Size Size { set; get; }

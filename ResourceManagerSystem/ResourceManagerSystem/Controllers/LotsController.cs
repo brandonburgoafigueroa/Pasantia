@@ -57,7 +57,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LotID,ProviderID,Description,Unit")] Lot lot)
+        public async Task<IActionResult> Create([Bind("LotID,ProviderID,Description")] Lot lot)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("LotID,ProviderID,Description,Unit")] Lot lot)
+        public async Task<IActionResult> Edit(string id, [Bind("LotID,ProviderID,Description")] Lot lot)
         {
             if (id != lot.LotID)
             {
@@ -178,7 +178,7 @@ namespace ResourceManagerSystem.Controllers
         }
         public IActionResult AddItems(int quantity, string lot)
         {
-
+                
             ViewData["ReppID"] = new SelectList(_context.REPPS.GroupBy(x => x.Name).Select(x => x.FirstOrDefault()), "ReppID", "Name");
             ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName");
             ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName");
@@ -235,7 +235,7 @@ namespace ResourceManagerSystem.Controllers
 
         private async Task AddDeliveryAsync(DeliveryModelView item, REPP ReppExist)
         {
-            Delivery delivery = new Delivery() { Brand = item.Brand, ReppID = ReppExist.ReppID, LotID = item.LotID, Description = item.Description, Quantity = item.Quantity };
+            Delivery delivery = new Delivery() { Brand = item.Brand, ReppID = ReppExist.ReppID, LotID = item.LotID, Description = item.Description, Quantity = item.Quantity , Unit=item.Unit};
             _context.Deliveries.Add(delivery);
             await _context.SaveChangesAsync();
         }

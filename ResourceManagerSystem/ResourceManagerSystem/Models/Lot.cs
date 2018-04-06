@@ -15,15 +15,10 @@ namespace ResourceManagerSystem.Models
         public int ProviderID { set; get; }
         public string Description { set; get; }
         
-        public Unit Unit { set; get; }
+        
 
         public Provider Provider { set; get; }
         public ICollection<Delivery> Delivery { set; get; }
     }
-    public enum Unit {
-        [Display(Name ="Par")]
-        Pair,
-        [Display(Name = "Unidad")]
-        Unity
-    }
+   
 }

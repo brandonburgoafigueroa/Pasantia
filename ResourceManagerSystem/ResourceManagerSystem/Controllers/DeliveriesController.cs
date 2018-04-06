@@ -50,7 +50,7 @@ namespace ResourceManagerSystem.Controllers
         public IActionResult Create()
         {
             ViewData["LotID"] = new SelectList(_context.Lot, "LotID", "LotID");
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name");
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Description");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DeliveryID,ReppID,LotID,Quantity,Description,Brand")] Delivery delivery)
+        public async Task<IActionResult> Create([Bind("DeliveryID,ReppID,LotID,Quantity,Description,Brand,Unit")] Delivery delivery)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace ResourceManagerSystem.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["LotID"] = new SelectList(_context.Lot, "LotID", "LotID", delivery.LotID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", delivery.ReppID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Description", delivery.ReppID);
             return View(delivery);
         }
 
@@ -86,7 +86,7 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
             ViewData["LotID"] = new SelectList(_context.Lot, "LotID", "LotID", delivery.LotID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", delivery.ReppID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Description", delivery.ReppID);
             return View(delivery);
         }
 
@@ -95,7 +95,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DeliveryID,ReppID,LotID,Quantity,Description,Brand")] Delivery delivery)
+        public async Task<IActionResult> Edit(int id, [Bind("DeliveryID,ReppID,LotID,Quantity,Description,Brand,Unit")] Delivery delivery)
         {
             if (id != delivery.DeliveryID)
             {
@@ -123,7 +123,7 @@ namespace ResourceManagerSystem.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["LotID"] = new SelectList(_context.Lot, "LotID", "LotID", delivery.LotID);
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", delivery.ReppID);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Description", delivery.ReppID);
             return View(delivery);
         }
 

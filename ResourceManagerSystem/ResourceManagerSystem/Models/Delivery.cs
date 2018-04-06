@@ -22,7 +22,16 @@ namespace ResourceManagerSystem.Models
         [DisplayName("Marca")]
         public string Brand { set; get; }
 
+        public Unit Unit { set; get; }
+
         public REPP Reep { set; get; }
         public Lot Lot { set; get; }
+    }
+    public enum Unit
+    {
+        [Display(Name = "Par")]
+        Pair,
+        [Display(Name = "Unidad")]
+        Unity
     }
 }

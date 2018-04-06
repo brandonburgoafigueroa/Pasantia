@@ -27,7 +27,7 @@
             <div class="modal-body">
                 <form asp-action="AddItems" method="get" enctype="multipart/form-data" id="FormQuantity">
                     <div>Ingrese la cantidad de repps que agregara en el lote</div>
-                    <input type="hidden" name="lot" id="lot" value="@Model["Lot"].First()" />
+                    <input type="text" name="lot" id="lot" value="@Model["Lot"].First()" />
                     <input type="number" class="form-controL" id="quantity" name="quantity" />
                     <input type="submit" class="btn btn-primary" value="Continuar" />
                 </form>

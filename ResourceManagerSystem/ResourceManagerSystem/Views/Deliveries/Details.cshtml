@@ -29,6 +29,12 @@
             @Html.DisplayFor(model => model.Brand)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Unit)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Unit)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Lot)
         </dt>
         <dd>
@@ -38,7 +44,7 @@
             @Html.DisplayNameFor(model => model.Reep)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Reep.Name)
+            @Html.DisplayFor(model => model.Reep.Description)
         </dd>
     </dl>
 </div>
