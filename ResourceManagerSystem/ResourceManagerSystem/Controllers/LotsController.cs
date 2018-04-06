@@ -44,11 +44,11 @@ namespace ResourceManagerSystem.Controllers
 
             return View(lot);
         }
-       
+
         // GET: Lots/Create
         public IActionResult Create()
         {
-            ViewData["ProviderID"] = new SelectList(_context.Provider, "ProviderID", "CompleteName", null, "City");
+            ViewData["ProviderID"] = new SelectList(_context.Provider, "ProviderID", "Address");
             return View();
         }
 
@@ -57,13 +57,13 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LotID,ProviderID,Description")] Lot lot)
+        public async Task<IActionResult> Create([Bind("LotID,ProviderID,Description,Unit")] Lot lot)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(lot);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(CreateItemsQuestion), new { id=lot.LotID});
+                return RedirectToAction(nameof(CreateItemsQuestion), new { id = lot.LotID });
             }
             ViewData["ProviderID"] = new SelectList(_context.Provider, "ProviderID", "Address", lot.ProviderID);
             return View(lot);
@@ -91,7 +91,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("LotID,ProviderID,Description")] Lot lot)
+        public async Task<IActionResult> Edit(string id, [Bind("LotID,ProviderID,Description,Unit")] Lot lot)
         {
             if (id != lot.LotID)
             {
@@ -151,6 +151,7 @@ namespace ResourceManagerSystem.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
         public IActionResult CreateItemsQuestion(string id)
         {
             List<string> Params = new List<string>() { id };
@@ -160,13 +161,13 @@ namespace ResourceManagerSystem.Controllers
         {
             IEnumerable<string> ReppsAvaiable = _context.REPPS.GroupBy(x => x.Name).Select(x => x.FirstOrDefault()).Select(x => x.Name);
             IEnumerable<string> ColorsAvaiable = _context.Color.ToList().Select(x => x.ColorName);
-            IEnumerable<string> SizesAvaiables= _context.Size.ToList().Select(x => x.SizeName);
+            IEnumerable<string> SizesAvaiables = _context.Size.ToList().Select(x => x.SizeName);
             IEnumerable<string> InfoAditional = new List<string>() {
                lot
             };
             ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName");
             ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName");
-            Dictionary<string, IEnumerable<string>> ComponentsAvaiable = new Dictionary<string, IEnumerable<string>> 
+            Dictionary<string, IEnumerable<string>> ComponentsAvaiable = new Dictionary<string, IEnumerable<string>>
             {
                 { "Repps", ReppsAvaiable },
                 { "Colors", ColorsAvaiable },
@@ -178,13 +179,13 @@ namespace ResourceManagerSystem.Controllers
         public IActionResult AddItems(int quantity, string lot)
         {
 
-            ViewData["ReppID"] = new SelectList(_context.REPPS.GroupBy(x=>x.Name).Select(x=>x.FirstOrDefault()), "ReppID", "Name");
+            ViewData["ReppID"] = new SelectList(_context.REPPS.GroupBy(x => x.Name).Select(x => x.FirstOrDefault()), "ReppID", "Name");
             ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName");
             ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName");
             List<DeliveryModelView> model = new List<DeliveryModelView>();
             for (int i = 0; i < quantity; i++)
             {
-                model.Add(new DeliveryModelView() { LotID=lot});
+                model.Add(new DeliveryModelView() { LotID = lot });
             }
             return View(model);
         }
@@ -200,7 +201,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 foreach (var item in model)
                 {
-                  await AddItemAsync(item);
+                    await AddItemAsync(item);
                 }
                 await _context.SaveChangesAsync();
 
@@ -218,7 +219,7 @@ namespace ResourceManagerSystem.Controllers
 
         private async Task AddQuantityToStockAsync(DeliveryModelView item, REPP ReppExist)
         {
-            Stock stockExist = _context.Stock.ToList().Find(x => x.ReppID == ReppExist.ReppID && x.ColorName==item.ColorName && x.SizeName==item.SizeName);
+            Stock stockExist = _context.Stock.ToList().Find(x => x.ReppID == ReppExist.ReppID && x.ColorName == item.ColorName && x.SizeName == item.SizeName);
             if (stockExist == null)
             {
                 _context.Stock.Add(new Stock() { ReppID = ReppExist.ReppID, Quantity = item.Quantity, ColorName = item.ColorName, SizeName = item.SizeName });
@@ -226,7 +227,7 @@ namespace ResourceManagerSystem.Controllers
             }
             else
             {
-                var stock = _context.Stock.ToList().Find(x=>x.StockID==stockExist.StockID);
+                var stock = _context.Stock.ToList().Find(x => x.StockID == stockExist.StockID);
                 stock.Quantity += item.Quantity;
                 await _context.SaveChangesAsync();
             }
@@ -234,7 +235,7 @@ namespace ResourceManagerSystem.Controllers
 
         private async Task AddDeliveryAsync(DeliveryModelView item, REPP ReppExist)
         {
-            Delivery delivery = new Delivery() {Brand=item.Brand, ReppID = ReppExist.ReppID, LotID = item.LotID, Description = item.Description, Quantity = item.Quantity };
+            Delivery delivery = new Delivery() { Brand = item.Brand, ReppID = ReppExist.ReppID, LotID = item.LotID, Description = item.Description, Quantity = item.Quantity };
             _context.Deliveries.Add(delivery);
             await _context.SaveChangesAsync();
         }
@@ -242,7 +243,7 @@ namespace ResourceManagerSystem.Controllers
         private async Task<REPP> GetInfoOfReppAsync(DeliveryModelView item)
         {
             REPP reference = _context.REPPS.Find(item.ReppID);
-            REPP repp = new REPP() {Name = reference.Name };
+            REPP repp = new REPP() { Name = reference.Name };
             REPP ReppExist = _context.REPPS.ToList().Find(x => x.Name == repp.Name);
             if (ReppExist == null)
             {
@@ -257,5 +258,8 @@ namespace ResourceManagerSystem.Controllers
         {
             return _context.Lot.Any(e => e.LotID == id);
         }
+
+
+       
     }
 }
