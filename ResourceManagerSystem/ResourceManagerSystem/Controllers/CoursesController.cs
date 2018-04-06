@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -14,11 +13,10 @@ namespace ResourceManagerSystem.Controllers
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        protected readonly IToastNotification _toastNotification;
-        public CoursesController(ApplicationDbContext context, IToastNotification toastNotification)
+
+        public CoursesController(ApplicationDbContext context)
         {
             _context = context;
-            _toastNotification = toastNotification;
         }
 
         // GET: Courses
@@ -59,13 +57,12 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseID,OrganizingEntityID,Name,DurationWeek,Description,Location,AttendanceType,IsRequired,IsExternal")] Course course)
+        public async Task<IActionResult> Create([Bind("CourseID,OrganizingEntityID,Name,Duration,InDays,InWeeks,InMonths,Description,Location,AttendanceType,IsRequired,IsExternal,HasCertified")] Course course)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(course);
                 await _context.SaveChangesAsync();
-                _toastNotification.AddSuccessToastMessage("Curso creado correctamente");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OrganizingEntityID"] = new SelectList(_context.OrganizingEntity, "OrganizingEntityID", "Name", course.OrganizingEntityID);
@@ -94,7 +91,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CourseID,OrganizingEntityID,Name,DurationWeek,Description,Location,AttendanceType,IsRequired,IsExternal")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("CourseID,OrganizingEntityID,Name,Duration,InDays,InWeeks,InMonths,Description,Location,AttendanceType,IsRequired,IsExternal,HasCertified")] Course course)
         {
             if (id != course.CourseID)
             {

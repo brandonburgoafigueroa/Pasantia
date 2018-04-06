@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,22 +13,29 @@ namespace ResourceManagerSystem.Models
         [Key]
         public int CourseID { set; get; }
 
-        [Display(Name="Entidad organizadora")]
+        [Display(Name = "Entidad organizadora")]
         public int OrganizingEntityID { set; get; }
 
-        [Display(Name="Nombre de Curso")]
-        [Required(ErrorMessage ="El nombre no puede estar vacio")]
+        [Display(Name = "Nombre de Curso")]
+        [Required(ErrorMessage = "El nombre no puede estar vacio")]
         public string Name { set; get; }
 
-        [Display(Name = "Duracion (En semanas)")]
+        [DisplayName("Duracion")]
         [Required(ErrorMessage = "La duracion no puede estar vacia")]
-        public int DurationWeek { set; get; }
+        public int Duration { set; get; }
+
+        [Display(Name = "En Dias?")]
+        public bool InDays { set; get; }
+        [Display(Name = "En Semanas?")]
+        public bool InWeeks { set; get; }
+        [Display(Name = "En Meses?")]
+        public bool InMonths{set;get;}
 
         [Display(Name = "Descripcion")]
         [Required(ErrorMessage = "La descripcion no puede estar vacia")]
         public string Description { set; get; }
 
-        [Display(Name = "Ubicacion")]
+        [Display(Name = "Direccion")]
         [Required(ErrorMessage = "La ubicacion no puede estar vacia")]
         public string Location { set; get; }
 
@@ -39,17 +48,35 @@ namespace ResourceManagerSystem.Models
         [Display(Name = "¿Es un curso externo?")]
         public bool IsExternal { set; get; }
 
+        [Display(Name = "¿Tiene certificado?")]
+        public bool HasCertified { set; get; }
+
+        [NotMapped]
+        public string DurationText {
+            get {
+                string Type = "";
+                if (InDays)
+                    Type = " Dias";
+                if (InMonths)
+                    Type = " Meses";
+                if (InWeeks)
+                    Type = " Semanas";
+                return Duration + Type; 
+            }
+        }
+
         public OrganizingEntity OrganizingEntity { set; get; }
         public IEnumerable<Enrolment> Enrolments { set; get; }
 
     }
     public enum AttendanceType
     {
-        [Display(Name = "Asistencia completa")]
+        [Display(Name = "Asistencia presencial")]
         Complete_Assistant,
-        [Display(Name = "Asistencia parcial")]
-        Partial_Assistant,
-        [Display(Name = "En linea")]
-        Online
+        [Display(Name = "Virtual")]
+        Online,
+        [Display(Name = "Combinada (presencial y virtual)")]
+        Combined,
+        
     }
 }

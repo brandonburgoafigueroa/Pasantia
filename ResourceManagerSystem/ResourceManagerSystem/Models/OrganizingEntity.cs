@@ -22,7 +22,7 @@ namespace ResourceManagerSystem.Models
     {
         [Display(Name = "Empresa")]
         Bussiness,
-        [Display(Name = "Persona")]
-        Personal
+        [Display(Name = "Unidad")]
+        Unity
     };
 }

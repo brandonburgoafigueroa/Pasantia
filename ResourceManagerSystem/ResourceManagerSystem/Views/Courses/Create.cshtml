@@ -9,53 +9,81 @@
 <h4>Course</h4>
 <hr />
 <div class="row">
-    <div class="">
+    <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="col-md-4">
+            <div class="form-group">
                 <label asp-for="OrganizingEntityID" class="control-label"></label>
                 <select asp-for="OrganizingEntityID" class ="form-control" asp-items="ViewBag.OrganizingEntityID"></select>
             </div>
-            <div class="col-md-4">
+            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="col-md-4">
-                <label asp-for="DurationWeek" class="control-label"></label>
-                <input asp-for="DurationWeek" class="form-control" />
-                <span asp-validation-for="DurationWeek" class="text-danger"></span>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
-            <div class="col-md-4">
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="InDays" /> @Html.DisplayNameFor(model => model.InDays)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="InWeeks" /> @Html.DisplayNameFor(model => model.InWeeks)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="InMonths" /> @Html.DisplayNameFor(model => model.InMonths)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="col-md-4">
+            <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
                 <input asp-for="Location" class="form-control" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
-            <div class="col-md-4">
+            <div class="form-group">
                 <label asp-for="AttendanceType" class="control-label"></label>
                 <select asp-for="AttendanceType" class="form-control" asp-items="Html.GetEnumSelectList<AttendanceType>()"></select>
                 <span asp-validation-for="AttendanceType" class="text-danger"></span>
             </div>
-            <div class="col-md-4">
+            <div class="form-group">
                 <div class="checkbox">
                     <label>
                         <input asp-for="IsRequired" /> @Html.DisplayNameFor(model => model.IsRequired)
                     </label>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="form-group">
                 <div class="checkbox">
                     <label>
                         <input asp-for="IsExternal" /> @Html.DisplayNameFor(model => model.IsExternal)
                     </label>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="HasCertified" /> @Html.DisplayNameFor(model => model.HasCertified)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>

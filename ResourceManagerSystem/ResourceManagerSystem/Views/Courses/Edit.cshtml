@@ -24,9 +24,30 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DurationWeek" class="control-label"></label>
-                <input asp-for="DurationWeek" class="form-control" />
-                <span asp-validation-for="DurationWeek" class="text-danger"></span>
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="InDays" /> @Html.DisplayNameFor(model => model.InDays)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="InWeeks" /> @Html.DisplayNameFor(model => model.InWeeks)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="InMonths" /> @Html.DisplayNameFor(model => model.InMonths)
+                    </label>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -40,7 +61,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="AttendanceType" class="control-label"></label>
-                <select asp-for="AttendanceType" class="form-control" asp-items="Html.GetEnumSelectList<AttendanceType>()"></select>
+                <select asp-for="AttendanceType" class="form-control"></select>
                 <span asp-validation-for="AttendanceType" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -54,6 +75,13 @@
                 <div class="checkbox">
                     <label>
                         <input asp-for="IsExternal" /> @Html.DisplayNameFor(model => model.IsExternal)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="HasCertified" /> @Html.DisplayNameFor(model => model.HasCertified)
                     </label>
                 </div>
             </div>
