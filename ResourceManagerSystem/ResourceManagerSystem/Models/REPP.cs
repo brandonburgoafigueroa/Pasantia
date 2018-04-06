@@ -18,40 +18,10 @@ namespace ResourceManagerSystem.Models
         [Required(ErrorMessage ="El nombre no puede estar vacio")]
         public string Name { set; get; }
 
-        [DisplayName("Talla")]
-        public string SizeName { set; get; }
+        [Display(Name = "Descripcion")]
+        [Required(ErrorMessage = "La descripcion no puede estar vacia")]
+        public string Description { set; get; }
 
-        [Display(Name = "Color")]
-        public string ColorName { set; get; }
-
-   
-
-
-        public Color Color { set; get; }
-        public Size Size { set; get; }
-        public virtual ICollection<CollectionREPP> CollectionsREPPs { set; get; }
-        [NotMapped]
-        public string ReppName {
-            get {
-                return Name + "-" + ColorName;
-            }
-        }
-        [NotMapped]
-        public string ReppNameSize
-        {
-            get
-            {
-                return Name + "-" + SizeName;
-            }
-        }
-        [NotMapped]
-        public string ReppCompleteName
-        {
-            get
-            {
-                return Name + "-" +"-"+ColorName + "-" + SizeName;
-            }
-        }
     }
     
 }

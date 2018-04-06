@@ -24,8 +24,13 @@
                 <span asp-validation-for="OperativeID" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="AdministrativeID" class="control-label"></label>
+                <select asp-for="AdministrativeID" class="form-control" asp-items="ViewBag.AdministrativeID"></select>
+                <span asp-validation-for="AdministrativeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="TypeContrat" class="control-label"></label>
-                <select asp-for="TypeContrat" class="form-control" asp-items="Html.GetEnumSelectList<TypeContrat>()"></select>
+                <select asp-for="TypeContrat" class="form-control"></select>
                 <span asp-validation-for="TypeContrat" class="text-danger"></span>
             </div>
             <div class="form-group">

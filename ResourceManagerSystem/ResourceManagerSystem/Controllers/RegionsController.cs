@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -14,11 +13,10 @@ namespace ResourceManagerSystem.Controllers
     public class RegionsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        protected readonly IToastNotification _toastNotification;
-        public RegionsController(ApplicationDbContext context, IToastNotification toastNotification)
+
+        public RegionsController(ApplicationDbContext context)
         {
             _context = context;
-            _toastNotification = toastNotification;
         }
 
         // GET: Regions
@@ -62,10 +60,8 @@ namespace ResourceManagerSystem.Controllers
             {
                 _context.Add(region);
                 await _context.SaveChangesAsync();
-                _toastNotification.AddSuccessToastMessage("Region administrativa creada exitosamente");
                 return RedirectToAction(nameof(Index));
             }
-            _toastNotification.AddErrorToastMessage("La region ya existe");
             return View(region);
         }
 

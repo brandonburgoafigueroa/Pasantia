@@ -12,50 +12,54 @@
 <table class="table">
     <thead>
         <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TypeContrat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateEnd)
+                </th>
             <th>
-                @Html.DisplayNameFor(model => model.TypeContrat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateStart)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateEnd)
+                @Html.DisplayNameFor(model => model.Administrative)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Employee)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Position)
+                @Html.DisplayNameFor(model => model.Operative)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TypeContrat)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateStart)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateEnd)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Employee.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Position.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ContratID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ContratID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ContratID">Delete</a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeContrat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Administrative.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.CI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Operative.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ContratID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ContratID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ContratID">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>
-@Html.Partial("_ContentDataTable")

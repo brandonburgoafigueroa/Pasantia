@@ -30,16 +30,22 @@
             @Html.DisplayFor(model => model.DateEnd)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Administrative)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Administrative.Name)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Employee)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Employee.FirstName)
+            @Html.DisplayFor(model => model.Employee.CI)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Position)
+            @Html.DisplayNameFor(model => model.Operative)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Position.Name)
+            @Html.DisplayFor(model => model.Operative.Name)
         </dd>
     </dl>
     

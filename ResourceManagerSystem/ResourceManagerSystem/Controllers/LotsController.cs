@@ -243,14 +243,14 @@ namespace ResourceManagerSystem.Controllers
         private async Task<REPP> GetInfoOfReppAsync(DeliveryModelView item)
         {
             REPP reference = _context.REPPS.Find(item.ReppID);
-            REPP repp = new REPP() {ColorName = item.ColorName, SizeName = item.SizeName, Name = reference.Name };
-            REPP ReppExist = _context.REPPS.ToList().Find(x => x.ReppName == repp.ReppName && x.ColorName == repp.ColorName && x.SizeName == repp.SizeName);
+            REPP repp = new REPP() {Name = reference.Name };
+            REPP ReppExist = _context.REPPS.ToList().Find(x => x.Name == repp.Name);
             if (ReppExist == null)
             {
                 _context.REPPS.Add(repp);
                 await _context.SaveChangesAsync();
             }
-            ReppExist = _context.REPPS.ToList().Find(x => x.ReppName == repp.ReppName && x.ColorName == repp.ColorName && x.SizeName == repp.SizeName);
+            ReppExist = _context.REPPS.ToList().Find(x => x.Name == repp.Name);
             return ReppExist;
         }
 

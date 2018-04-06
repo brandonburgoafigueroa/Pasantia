@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NToastNotify;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
@@ -14,18 +13,16 @@ namespace ResourceManagerSystem.Controllers
     public class OperativesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        protected readonly IToastNotification _toastNotification;
-        public OperativesController(ApplicationDbContext context, IToastNotification toastNotification)
+
+        public OperativesController(ApplicationDbContext context)
         {
             _context = context;
-            _toastNotification = toastNotification;
         }
 
         // GET: Operatives
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Operative.Include(o => o.Administrative).Include(o => o.Region);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Operative.ToListAsync());
         }
 
         // GET: Operatives/Details/5
@@ -37,8 +34,6 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var operative = await _context.Operative
-                .Include(o => o.Administrative)
-                .Include(o => o.Region)
                 .SingleOrDefaultAsync(m => m.OperativeID == id);
             if (operative == null)
             {
@@ -51,8 +46,6 @@ namespace ResourceManagerSystem.Controllers
         // GET: Operatives/Create
         public IActionResult Create()
         {
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name");
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name");
             return View();
         }
 
@@ -61,17 +54,14 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OperativeID,RegionID,AdministrativeID,Name")] Operative operative)
+        public async Task<IActionResult> Create([Bind("OperativeID,Name")] Operative operative)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(operative);
                 await _context.SaveChangesAsync();
-                _toastNotification.AddSuccessToastMessage("Cargo operativo creado exitosamente");
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name", operative.AdministrativeID);
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", operative.RegionID);
             return View(operative);
         }
 
@@ -88,8 +78,6 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name", operative.AdministrativeID);
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", operative.RegionID);
             return View(operative);
         }
 
@@ -98,7 +86,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OperativeID,RegionID,AdministrativeID,Name")] Operative operative)
+        public async Task<IActionResult> Edit(int id, [Bind("OperativeID,Name")] Operative operative)
         {
             if (id != operative.OperativeID)
             {
@@ -125,8 +113,6 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name", operative.AdministrativeID);
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", operative.RegionID);
             return View(operative);
         }
 
@@ -139,8 +125,6 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var operative = await _context.Operative
-                .Include(o => o.Administrative)
-                .Include(o => o.Region)
                 .SingleOrDefaultAsync(m => m.OperativeID == id);
             if (operative == null)
             {

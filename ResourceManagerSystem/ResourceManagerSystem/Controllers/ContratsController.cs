@@ -22,7 +22,7 @@ namespace ResourceManagerSystem.Controllers
         // GET: Contrats
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Contrat.Include(c => c.Employee).Include(c => c.Position);
+            var applicationDbContext = _context.Contrat.Include(c => c.Administrative).Include(c => c.Employee).Include(c => c.Operative);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,8 +35,9 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var contrat = await _context.Contrat
+                .Include(c => c.Administrative)
                 .Include(c => c.Employee)
-                .Include(c => c.Position)
+                .Include(c => c.Operative)
                 .SingleOrDefaultAsync(m => m.ContratID == id);
             if (contrat == null)
             {
@@ -49,8 +50,9 @@ namespace ResourceManagerSystem.Controllers
         // GET: Contrats/Create
         public IActionResult Create()
         {
-            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
+            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name");
             ViewData["CI"] = new SelectList(_context.Employee, "CI", "CI");
+            ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name");
             return View();
         }
 
@@ -59,7 +61,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContratID,CI,OperativeID,TypeContrat,DateStart,DateEnd")] Contrat contrat)
+        public async Task<IActionResult> Create([Bind("ContratID,CI,OperativeID,AdministrativeID,TypeContrat,DateStart,DateEnd")] Contrat contrat)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +69,7 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name", contrat.AdministrativeID);
             ViewData["CI"] = new SelectList(_context.Employee, "CI", "CI", contrat.CI);
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", contrat.OperativeID);
             return View(contrat);
@@ -85,6 +88,7 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name", contrat.AdministrativeID);
             ViewData["CI"] = new SelectList(_context.Employee, "CI", "CI", contrat.CI);
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", contrat.OperativeID);
             return View(contrat);
@@ -95,7 +99,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContratID,CI,OperativeID,TypeContrat,DateStart,DateEnd")] Contrat contrat)
+        public async Task<IActionResult> Edit(int id, [Bind("ContratID,CI,OperativeID,AdministrativeID,TypeContrat,DateStart,DateEnd")] Contrat contrat)
         {
             if (id != contrat.ContratID)
             {
@@ -122,7 +126,8 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CI"] = new SelectList(_context.Employee, "CI", "FirstName", contrat.CI);
+            ViewData["AdministrativeID"] = new SelectList(_context.Administrative, "AdministrativeID", "Name", contrat.AdministrativeID);
+            ViewData["CI"] = new SelectList(_context.Employee, "CI", "CI", contrat.CI);
             ViewData["OperativeID"] = new SelectList(_context.Operative, "OperativeID", "Name", contrat.OperativeID);
             return View(contrat);
         }
@@ -136,8 +141,9 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var contrat = await _context.Contrat
+                .Include(c => c.Administrative)
                 .Include(c => c.Employee)
-                .Include(c => c.Position)
+                .Include(c => c.Operative)
                 .SingleOrDefaultAsync(m => m.ContratID == id);
             if (contrat == null)
             {

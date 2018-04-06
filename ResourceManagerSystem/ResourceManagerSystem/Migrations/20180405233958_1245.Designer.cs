@@ -12,9 +12,10 @@ using System;
 namespace ResourceManagerSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180405233958_1245")]
+    partial class _1245
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,11 +138,7 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("RegionID");
-
                     b.HasKey("AdministrativeID");
-
-                    b.HasIndex("RegionID");
 
                     b.ToTable("Administrative");
                 });
@@ -252,8 +249,6 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<int>("ContratID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AdministrativeID");
-
                     b.Property<string>("CI");
 
                     b.Property<DateTime>("DateEnd");
@@ -265,8 +260,6 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<int>("TypeContrat");
 
                     b.HasKey("ContratID");
-
-                    b.HasIndex("AdministrativeID");
 
                     b.HasIndex("CI");
 
@@ -519,10 +512,18 @@ namespace ResourceManagerSystem.Migrations
                     b.Property<int>("OperativeID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AdministrativeID");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.Property<int>("RegionID");
+
                     b.HasKey("OperativeID");
+
+                    b.HasIndex("AdministrativeID");
+
+                    b.HasIndex("RegionID");
 
                     b.ToTable("Operative");
                 });
@@ -665,14 +666,6 @@ namespace ResourceManagerSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ResourceManagerSystem.Models.Administrative", b =>
-                {
-                    b.HasOne("ResourceManagerSystem.Models.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("ResourceManagerSystem.Models.CollectionREPP", b =>
                 {
                     b.HasOne("ResourceManagerSystem.Models.Operative", "Operative")
@@ -688,16 +681,11 @@ namespace ResourceManagerSystem.Migrations
 
             modelBuilder.Entity("ResourceManagerSystem.Models.Contrat", b =>
                 {
-                    b.HasOne("ResourceManagerSystem.Models.Administrative", "Administrative")
-                        .WithMany()
-                        .HasForeignKey("AdministrativeID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("ResourceManagerSystem.Models.Employee", "Employee")
                         .WithMany("Contrats")
                         .HasForeignKey("CI");
 
-                    b.HasOne("ResourceManagerSystem.Models.Operative", "Operative")
+                    b.HasOne("ResourceManagerSystem.Models.Operative", "Position")
                         .WithMany()
                         .HasForeignKey("OperativeID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -775,6 +763,19 @@ namespace ResourceManagerSystem.Migrations
                     b.HasOne("ResourceManagerSystem.Models.Provider", "Provider")
                         .WithMany()
                         .HasForeignKey("ProviderID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ResourceManagerSystem.Models.Operative", b =>
+                {
+                    b.HasOne("ResourceManagerSystem.Models.Administrative", "Administrative")
+                        .WithMany()
+                        .HasForeignKey("AdministrativeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ResourceManagerSystem.Models.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

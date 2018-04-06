@@ -8,25 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using ResourceManagerSystem.Data;
 using ResourceManagerSystem.Models;
 
-namespace ResourceManagerSystem.Controllers
+namespace ResourceManagerSystem.Api
 {
-    public class AdministrativesController : Controller
+    public class OperativesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AdministrativesController(ApplicationDbContext context)
+        public OperativesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Administratives
+        // GET: Operatives
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Administrative.Include(a => a.Region);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Operative.ToListAsync());
         }
 
-        // GET: Administratives/Details/5
+        // GET: Operatives/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var administrative = await _context.Administrative
-                .Include(a => a.Region)
-                .SingleOrDefaultAsync(m => m.AdministrativeID == id);
-            if (administrative == null)
+            var operative = await _context.Operative
+                .SingleOrDefaultAsync(m => m.OperativeID == id);
+            if (operative == null)
             {
                 return NotFound();
             }
 
-            return View(administrative);
+            return View(operative);
         }
 
-        // GET: Administratives/Create
+        // GET: Operatives/Create
         public IActionResult Create()
         {
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name");
             return View();
         }
 
-        // POST: Administratives/Create
+        // POST: Operatives/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AdministrativeID,Name,RegionID")] Administrative administrative)
+        public async Task<IActionResult> Create([Bind("OperativeID,Name")] Operative operative)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(administrative);
+                _context.Add(operative);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", administrative.RegionID);
-            return View(administrative);
+            return View(operative);
         }
 
-        // GET: Administratives/Edit/5
+        // GET: Operatives/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var administrative = await _context.Administrative.SingleOrDefaultAsync(m => m.AdministrativeID == id);
-            if (administrative == null)
+            var operative = await _context.Operative.SingleOrDefaultAsync(m => m.OperativeID == id);
+            if (operative == null)
             {
                 return NotFound();
             }
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", administrative.RegionID);
-            return View(administrative);
+            return View(operative);
         }
 
-        // POST: Administratives/Edit/5
+        // POST: Operatives/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AdministrativeID,Name,RegionID")] Administrative administrative)
+        public async Task<IActionResult> Edit(int id, [Bind("OperativeID,Name")] Operative operative)
         {
-            if (id != administrative.AdministrativeID)
+            if (id != operative.OperativeID)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace ResourceManagerSystem.Controllers
             {
                 try
                 {
-                    _context.Update(administrative);
+                    _context.Update(operative);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdministrativeExists(administrative.AdministrativeID))
+                    if (!OperativeExists(operative.OperativeID))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RegionID"] = new SelectList(_context.Region, "RegionID", "Name", administrative.RegionID);
-            return View(administrative);
+            return View(operative);
         }
 
-        // GET: Administratives/Delete/5
+        // GET: Operatives/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +124,30 @@ namespace ResourceManagerSystem.Controllers
                 return NotFound();
             }
 
-            var administrative = await _context.Administrative
-                .Include(a => a.Region)
-                .SingleOrDefaultAsync(m => m.AdministrativeID == id);
-            if (administrative == null)
+            var operative = await _context.Operative
+                .SingleOrDefaultAsync(m => m.OperativeID == id);
+            if (operative == null)
             {
                 return NotFound();
             }
 
-            return View(administrative);
+            return View(operative);
         }
 
-        // POST: Administratives/Delete/5
+        // POST: Operatives/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var administrative = await _context.Administrative.SingleOrDefaultAsync(m => m.AdministrativeID == id);
-            _context.Administrative.Remove(administrative);
+            var operative = await _context.Operative.SingleOrDefaultAsync(m => m.OperativeID == id);
+            _context.Operative.Remove(operative);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdministrativeExists(int id)
+        private bool OperativeExists(int id)
         {
-            return _context.Administrative.Any(e => e.AdministrativeID == id);
+            return _context.Operative.Any(e => e.OperativeID == id);
         }
     }
 }
