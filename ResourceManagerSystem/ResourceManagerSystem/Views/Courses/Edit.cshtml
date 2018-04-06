@@ -29,25 +29,9 @@
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="InDays" /> @Html.DisplayNameFor(model => model.InDays)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="InWeeks" /> @Html.DisplayNameFor(model => model.InWeeks)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="InMonths" /> @Html.DisplayNameFor(model => model.InMonths)
-                    </label>
-                </div>
+                <label asp-for="TypeDuration" class="control-label"></label>
+                <select asp-for="TypeDuration" class="form-control"></select>
+                <span asp-validation-for="TypeDuration" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>

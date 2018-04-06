@@ -57,7 +57,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseID,OrganizingEntityID,Name,Duration,InDays,InWeeks,InMonths,Description,Location,AttendanceType,IsRequired,IsExternal,HasCertified")] Course course)
+        public async Task<IActionResult> Create([Bind("CourseID,OrganizingEntityID,Name,Duration,TypeDuration,Description,Location,AttendanceType,IsRequired,IsExternal,HasCertified")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CourseID,OrganizingEntityID,Name,Duration,InDays,InWeeks,InMonths,Description,Location,AttendanceType,IsRequired,IsExternal,HasCertified")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("CourseID,OrganizingEntityID,Name,Duration,TypeDuration,Description,Location,AttendanceType,IsRequired,IsExternal,HasCertified")] Course course)
         {
             if (id != course.CourseID)
             {

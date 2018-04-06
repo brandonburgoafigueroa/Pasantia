@@ -24,12 +24,8 @@ namespace ResourceManagerSystem.Models
         [Required(ErrorMessage = "La duracion no puede estar vacia")]
         public int Duration { set; get; }
 
-        [Display(Name = "En Dias?")]
-        public bool InDays { set; get; }
-        [Display(Name = "En Semanas?")]
-        public bool InWeeks { set; get; }
-        [Display(Name = "En Meses?")]
-        public bool InMonths{set;get;}
+        [DisplayName("Tipo de duracion")]
+        public DurationType TypeDuration { set; get; }
 
         [Display(Name = "Descripcion")]
         [Required(ErrorMessage = "La descripcion no puede estar vacia")]
@@ -55,11 +51,11 @@ namespace ResourceManagerSystem.Models
         public string DurationText {
             get {
                 string Type = "";
-                if (InDays)
+                if (TypeDuration==DurationType.Days)
                     Type = " Dias";
-                if (InMonths)
+                if (TypeDuration == DurationType.Weeks)
                     Type = " Meses";
-                if (InWeeks)
+                if (TypeDuration == DurationType.Month)
                     Type = " Semanas";
                 return Duration + Type; 
             }
@@ -78,5 +74,14 @@ namespace ResourceManagerSystem.Models
         [Display(Name = "Combinada (presencial y virtual)")]
         Combined,
         
+    }
+    public enum DurationType
+    {
+        [Display(Name ="Dias")]
+        Days,
+        [Display(Name = "Semanas")]
+        Weeks,
+        [Display(Name = "Meses")]
+        Month
     }
 }
