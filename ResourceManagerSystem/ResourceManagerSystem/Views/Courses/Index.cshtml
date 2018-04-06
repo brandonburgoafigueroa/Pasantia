@@ -19,9 +19,6 @@
                     @Html.DisplayNameFor(model => model.Duration)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TypeDuration)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
                 <th>
@@ -52,10 +49,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeDuration)
+                @Html.DisplayFor(modelItem => item.DurationText)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
