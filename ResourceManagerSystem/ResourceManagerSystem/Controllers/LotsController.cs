@@ -218,17 +218,16 @@ namespace ResourceManagerSystem.Controllers
 
         private async Task AddQuantityToStockAsync(DeliveryModelView item, REPP ReppExist)
         {
-            Stock stockExist = _context.Stock.ToList().Find(x => x.ReppID == ReppExist.ReppID);
+            Stock stockExist = _context.Stock.ToList().Find(x => x.ReppID == ReppExist.ReppID && x.ColorName==item.ColorName && x.SizeName==item.SizeName);
             if (stockExist == null)
             {
-                _context.Stock.Add(new Stock() { ReppID = ReppExist.ReppID, Quantity = item.Quantity });
+                _context.Stock.Add(new Stock() { ReppID = ReppExist.ReppID, Quantity = item.Quantity, ColorName = item.ColorName, SizeName = item.SizeName });
                 await _context.SaveChangesAsync();
             }
             else
             {
-                var stock = _context.Stock.ToList().Find(x => x.ReppID == ReppExist.ReppID);
-                var update = _context.Stock.Find(stock.ReppID);
-                update.Quantity += item.Quantity;
+                var stock = _context.Stock.ToList().Find(x=>x.StockID==stockExist.StockID);
+                stock.Quantity += item.Quantity;
                 await _context.SaveChangesAsync();
             }
         }

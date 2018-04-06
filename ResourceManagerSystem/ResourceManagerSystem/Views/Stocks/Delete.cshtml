@@ -18,9 +18,23 @@
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Color.ColorName)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Repp)
         </dt>
-
+        <dd>
+            @Html.DisplayFor(model => model.Repp.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Size)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Size.SizeName)
+        </dd>
     </dl>
     
     <form asp-action="Delete">

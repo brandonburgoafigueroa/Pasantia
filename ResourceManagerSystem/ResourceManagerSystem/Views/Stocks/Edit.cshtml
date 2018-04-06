@@ -24,6 +24,16 @@
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ColorName" class="control-label"></label>
+                <select asp-for="ColorName" class="form-control" asp-items="ViewBag.ColorName"></select>
+                <span asp-validation-for="ColorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SizeName" class="control-label"></label>
+                <select asp-for="SizeName" class="form-control" asp-items="ViewBag.SizeName"></select>
+                <span asp-validation-for="SizeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
@@ -34,3 +44,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

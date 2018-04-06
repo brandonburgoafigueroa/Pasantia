@@ -22,7 +22,7 @@ namespace ResourceManagerSystem.Controllers
         // GET: Stocks
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Stock.Include(s => s.Repp);
+            var applicationDbContext = _context.Stock.Include(s => s.Color).Include(s => s.Repp).Include(s => s.Size);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,7 +35,9 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var stock = await _context.Stock
+                .Include(s => s.Color)
                 .Include(s => s.Repp)
+                .Include(s => s.Size)
                 .SingleOrDefaultAsync(m => m.StockID == id);
             if (stock == null)
             {
@@ -48,7 +50,9 @@ namespace ResourceManagerSystem.Controllers
         // GET: Stocks/Create
         public IActionResult Create()
         {
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand");
+            ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName");
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name");
+            ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName");
             return View();
         }
 
@@ -57,7 +61,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StockID,ReppID,Quantity")] Stock stock)
+        public async Task<IActionResult> Create([Bind("StockID,ReppID,Quantity,ColorName,SizeName")] Stock stock)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +69,9 @@ namespace ResourceManagerSystem.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand", stock.ReppID);
+            ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName", stock.ColorName);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", stock.ReppID);
+            ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName", stock.SizeName);
             return View(stock);
         }
 
@@ -82,7 +88,9 @@ namespace ResourceManagerSystem.Controllers
             {
                 return NotFound();
             }
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand", stock.ReppID);
+            ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName", stock.ColorName);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", stock.ReppID);
+            ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName", stock.SizeName);
             return View(stock);
         }
 
@@ -91,7 +99,7 @@ namespace ResourceManagerSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StockID,ReppID,Quantity")] Stock stock)
+        public async Task<IActionResult> Edit(int id, [Bind("StockID,ReppID,Quantity,ColorName,SizeName")] Stock stock)
         {
             if (id != stock.StockID)
             {
@@ -118,7 +126,9 @@ namespace ResourceManagerSystem.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Brand", stock.ReppID);
+            ViewData["ColorName"] = new SelectList(_context.Color, "ColorName", "ColorName", stock.ColorName);
+            ViewData["ReppID"] = new SelectList(_context.REPPS, "ReppID", "Name", stock.ReppID);
+            ViewData["SizeName"] = new SelectList(_context.Size, "SizeName", "SizeName", stock.SizeName);
             return View(stock);
         }
 
@@ -131,7 +141,9 @@ namespace ResourceManagerSystem.Controllers
             }
 
             var stock = await _context.Stock
+                .Include(s => s.Color)
                 .Include(s => s.Repp)
+                .Include(s => s.Size)
                 .SingleOrDefaultAsync(m => m.StockID == id);
             if (stock == null)
             {
